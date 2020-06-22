@@ -11,6 +11,9 @@ package org.proyectoa2.ventas.vista;
  */
 public class MainVentas extends javax.swing.JPanel {
     private NuevaOrdenForm nuevaOrdenFormulario;
+    private AtenderOrdenForm atenderOrden;
+    private CobrarOrdenForm cobrarOrden;
+    private CobrarSaldoForm cobrarSaldo;
     /**
      * Creates new form MainVentas
      */
@@ -35,8 +38,9 @@ public class MainVentas extends javax.swing.JPanel {
         cancelarOrdenBoton = new javax.swing.JButton();
         editarOrdenBoton = new javax.swing.JButton();
         atenderOrdenBoton = new javax.swing.JButton();
-        cobrarOrdenBoton = new javax.swing.JButton();
+        botonCobrarOrden = new javax.swing.JButton();
         etiquetaOpciones = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(1080, 700));
         setName(""); // NOI18N
@@ -89,15 +93,34 @@ public class MainVentas extends javax.swing.JPanel {
 
         atenderOrdenBoton.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         atenderOrdenBoton.setText("Atender Orden");
+        atenderOrdenBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atenderOrdenBotonActionPerformed(evt);
+            }
+        });
         add(atenderOrdenBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 380, 50));
 
-        cobrarOrdenBoton.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        cobrarOrdenBoton.setText("Cobrar Orden Seleccionada");
-        add(cobrarOrdenBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 380, 50));
+        botonCobrarOrden.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        botonCobrarOrden.setText("Cobrar Orden Seleccionada");
+        botonCobrarOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCobrarOrdenActionPerformed(evt);
+            }
+        });
+        add(botonCobrarOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 380, 50));
 
         etiquetaOpciones.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         etiquetaOpciones.setText("Opciones");
         add(etiquetaOpciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, -1, -1));
+
+        jButton1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jButton1.setText("Cancelar Saldo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 520, 380, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonNuevaOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevaOrdenActionPerformed
@@ -112,15 +135,35 @@ public class MainVentas extends javax.swing.JPanel {
         nuevaOrdenFormulario.setVisible(true);
     }//GEN-LAST:event_editarOrdenBotonActionPerformed
 
+    private void atenderOrdenBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atenderOrdenBotonActionPerformed
+        // TODO add your handling code here:
+        this.atenderOrden = new AtenderOrdenForm();
+        this.atenderOrden.setVisible(true);
+        
+    }//GEN-LAST:event_atenderOrdenBotonActionPerformed
+
+    private void botonCobrarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCobrarOrdenActionPerformed
+        // TODO add your handling code here:
+        this.cobrarOrden = new CobrarOrdenForm();
+        this.cobrarOrden.setVisible(true);
+    }//GEN-LAST:event_botonCobrarOrdenActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.cobrarSaldo = new CobrarSaldoForm();
+        this.cobrarSaldo.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atenderOrdenBoton;
+    private javax.swing.JButton botonCobrarOrden;
     private javax.swing.JButton botonNuevaOrden;
     private javax.swing.JButton cancelarOrdenBoton;
-    private javax.swing.JButton cobrarOrdenBoton;
     private javax.swing.JButton editarOrdenBoton;
     private javax.swing.JLabel etiquetaColaOrdenes;
     private javax.swing.JLabel etiquetaOpciones;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable tablaColaOrdenes;

@@ -10,7 +10,7 @@ package org.proyectoa2.ventas.vista;
  * @author marcos
  */
 public class AgregarPlatilloForm extends javax.swing.JFrame {
-
+    private VisualizarDetallesPlatilloForm visualizarPlatillos;
     /**
      * Creates new form AgregarPlatilloForm
      */
@@ -55,6 +55,11 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
 
         botonConsultarDetalles.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         botonConsultarDetalles.setText("Consultar Detalles Platillo");
+        botonConsultarDetalles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonConsultarDetallesActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonConsultarDetalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 330, 40));
 
         botonAgregarPlatillo.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
@@ -99,6 +104,12 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
     private void ingresoPrecioVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresoPrecioVentaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ingresoPrecioVentaActionPerformed
+
+    private void botonConsultarDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConsultarDetallesActionPerformed
+        // TODO add your handling code here:
+        this.visualizarPlatillos = new VisualizarDetallesPlatilloForm();
+        this.visualizarPlatillos.setVisible(true);
+    }//GEN-LAST:event_botonConsultarDetallesActionPerformed
 
     /**
      * @param args the command line arguments
