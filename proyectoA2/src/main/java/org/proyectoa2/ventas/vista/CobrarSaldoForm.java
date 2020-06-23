@@ -38,8 +38,8 @@ public class CobrarSaldoForm extends javax.swing.JFrame {
         botonCancelar = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
 
-        setMinimumSize(new java.awt.Dimension(640, 439));
-        setPreferredSize(new java.awt.Dimension(640, 439));
+        setMinimumSize(new java.awt.Dimension(657, 488));
+        setPreferredSize(new java.awt.Dimension(657, 488));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         labelNombre.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
