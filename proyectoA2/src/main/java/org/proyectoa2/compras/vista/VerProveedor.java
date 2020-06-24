@@ -45,7 +45,6 @@ public class VerProveedor extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         botonEditarProveedor = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(600, 460));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

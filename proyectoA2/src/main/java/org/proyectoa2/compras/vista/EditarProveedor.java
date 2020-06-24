@@ -40,7 +40,6 @@ public class EditarProveedor extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(520, 415));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

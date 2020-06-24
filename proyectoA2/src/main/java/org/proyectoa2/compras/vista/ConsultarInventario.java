@@ -31,7 +31,6 @@ public class ConsultarInventario extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaConsultaInsumos = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(555, 375));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
