@@ -81,9 +81,19 @@ public class CobrarOrdenForm extends javax.swing.JFrame {
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, -1, -1));
 
         botonConfirmarPago.setText("Confirmar Pago");
+        botonConfirmarPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonConfirmarPagoActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonConfirmarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, -1, -1));
 
         botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCancelarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 280, 130, -1));
         getContentPane().add(textoCantidadCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 270, 30));
 
@@ -96,6 +106,14 @@ public class CobrarOrdenForm extends javax.swing.JFrame {
     private void textoNitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoNitActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textoNitActionPerformed
+
+    private void botonConfirmarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConfirmarPagoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonConfirmarPagoActionPerformed
+
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCancelarActionPerformed
 
     /**
      * @param args the command line arguments

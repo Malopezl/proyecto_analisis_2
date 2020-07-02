@@ -64,10 +64,20 @@ public class AtenderOrdenForm extends javax.swing.JFrame {
 
         botonMarcarAtendido.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         botonMarcarAtendido.setText("Marcar como Atendida");
+        botonMarcarAtendido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonMarcarAtendidoActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonMarcarAtendido, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 220, -1));
 
         botonRegresar.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         botonRegresar.setText("Regresar");
+        botonRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRegresarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 220, -1));
 
         etiquetaDetallesOrden.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
@@ -82,6 +92,14 @@ public class AtenderOrdenForm extends javax.swing.JFrame {
         this.visualizarDetalles = new VisualizarDetallesPlatilloForm();
         this.visualizarDetalles.setVisible(true);
     }//GEN-LAST:event_botonVerDetallesPlatilloActionPerformed
+
+    private void botonMarcarAtendidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMarcarAtendidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonMarcarAtendidoActionPerformed
+
+    private void botonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegresarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonRegresarActionPerformed
 
     /**
      * @param args the command line arguments

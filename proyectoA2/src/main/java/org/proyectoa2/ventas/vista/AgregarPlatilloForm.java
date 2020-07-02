@@ -64,10 +64,20 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
 
         botonAgregarPlatillo.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         botonAgregarPlatillo.setText("Agregar Platillo");
+        botonAgregarPlatillo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAgregarPlatilloActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonAgregarPlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 330, 40));
 
         botonCancelar.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCancelarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 330, 40));
 
         etiquetaCantidad.setText("Cantidad");
@@ -110,6 +120,14 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
         this.visualizarPlatillos = new VisualizarDetallesPlatilloForm();
         this.visualizarPlatillos.setVisible(true);
     }//GEN-LAST:event_botonConsultarDetallesActionPerformed
+
+    private void botonAgregarPlatilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarPlatilloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonAgregarPlatilloActionPerformed
+
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCancelarActionPerformed
 
     /**
      * @param args the command line arguments

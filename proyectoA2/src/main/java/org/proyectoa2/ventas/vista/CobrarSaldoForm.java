@@ -76,10 +76,20 @@ public class CobrarSaldoForm extends javax.swing.JFrame {
 
         botonConfirmarPago.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         botonConfirmarPago.setText("Confirmar Pago");
+        botonConfirmarPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonConfirmarPagoActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonConfirmarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 310, -1));
 
         botonCancelar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCancelarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(336, 410, 280, -1));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " -- Seleccione el cliente --"}));
@@ -91,6 +101,14 @@ public class CobrarSaldoForm extends javax.swing.JFrame {
     private void textoCantidadPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoCantidadPagarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textoCantidadPagarActionPerformed
+
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCancelarActionPerformed
+
+    private void botonConfirmarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConfirmarPagoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonConfirmarPagoActionPerformed
 
     /**
      * @param args the command line arguments
