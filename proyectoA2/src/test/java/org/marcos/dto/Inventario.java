@@ -18,7 +18,8 @@ public class Inventario {
     private String lote;
     private Date fechaCaducidad;
     private String nombre;
-
+    
+    
     public Inventario() {
     }
 

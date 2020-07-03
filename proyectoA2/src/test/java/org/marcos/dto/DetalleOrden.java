@@ -14,7 +14,10 @@ public class DetalleOrden {
     private int idMenu;
     private int cantidad;
     private double precioVenta;
-
+    private double total;
+    private Menu menu;
+    private Orden orden;
+    
     public DetalleOrden() {
     }
 
@@ -58,6 +61,31 @@ public class DetalleOrden {
     public void setPrecioVenta(double precioVenta) {
         this.precioVenta = precioVenta;
     }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    public Orden getOrden() {
+        return orden;
+    }
+
+    public void setOrden(Orden orden) {
+        this.orden = orden;
+    }
+    
     
     
 }

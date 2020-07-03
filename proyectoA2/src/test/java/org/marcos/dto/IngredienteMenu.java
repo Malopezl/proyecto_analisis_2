@@ -13,7 +13,9 @@ public class IngredienteMenu {
     private int idMenu;
     private int idInventario;
     private double cantidad;
-
+    private Inventario inventario;
+    private Menu menu;
+    
     public IngredienteMenu() {
     }
 
@@ -45,6 +47,22 @@ public class IngredienteMenu {
 
     public void setCantidad(double cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public Inventario getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(Inventario inventario) {
+        this.inventario = inventario;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
     
     

@@ -16,18 +16,20 @@ public class Orden {
     private int idOrden;
     private String noFactura;
     private Date fechaOrden;
-    private double subTotal;
+    private double total;
     private int idUsuario;
     private int idCliente;
+    private Cliente cliente;
+    private Usuario usuario;
     private ArrayList<DetalleOrden> detalles;
 
     public Orden() {
     }
 
-    public Orden(String noFactura, Date fechaOrden, double subTotal, int idUsuario, int idCliente) {
+    public Orden(String noFactura, Date fechaOrden, double total, int idUsuario, int idCliente) {
         this.noFactura = noFactura;
         this.fechaOrden = fechaOrden;
-        this.subTotal = subTotal;
+        this.total = total;
         this.idUsuario = idUsuario;
         this.idCliente = idCliente;
     }
@@ -50,12 +52,12 @@ public class Orden {
         this.fechaOrden = fechaOrden;
     }
 
-    public double getSubTotal() {
-        return subTotal;
+    public double getTotal() {
+        return total;
     }
 
-    public void setSubTotal(double subTotal) {
-        this.subTotal = subTotal;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     public int getIdUsuario() {
@@ -82,9 +84,35 @@ public class Orden {
         this.detalles = detalles;
     }
 
+    public int getIdOrden() {
+        return idOrden;
+    }
+
+    public void setIdOrden(int idOrden) {
+        this.idOrden = idOrden;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
+    
+
     @Override
     public String toString() {
-        return "Orden{" + "idOrden=" + idOrden + ", noFactura=" + noFactura + ", fechaOrden=" + fechaOrden + ", subTotal=" + subTotal + ", idUsuario=" + idUsuario + ", idCliente=" + idCliente + ", detalles=" + detalles + '}';
+        return "Orden{" + "idOrden=" + idOrden + ", noFactura=" + noFactura + ", fechaOrden=" + fechaOrden + ", subTotal=" + total + ", idUsuario=" + idUsuario + ", idCliente=" + idCliente + ", detalles=" + detalles + '}';
     }
     
     

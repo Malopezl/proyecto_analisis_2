@@ -10,13 +10,14 @@ package org.marcos.dto;
  * @author marcos
  */
 public class Usuario {
-    public int idUsuario;
-    public String nombreUsuario;
-    public String password;
-    public String direccion;
-    public String correo;
-    public String telefono;
-    public Puesto puesto;
+    private int idUsuario;
+    private String nombreUsuario;
+    private String password;
+    private String direccion;
+    private String correo;
+    private String telefono;
+    private Puesto puesto;
+    private int idPuesto;
 
     public Usuario() {
     }
@@ -80,6 +81,23 @@ public class Usuario {
         this.puesto = puesto;
     }
 
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public int getIdPuesto() {
+        return idPuesto;
+    }
+
+    public void setIdPuesto(int idPuesto) {
+        this.idPuesto = idPuesto;
+    }
+
+    
     @Override
     public String toString() {
         return "Usuario{" + "idUsuario=" + idUsuario + ", nombreUsuario=" + nombreUsuario + ", password=" + password + ", direccion=" + direccion + ", correo=" + correo + ", telefono=" + telefono + ", puesto=" + puesto + '}';
