@@ -40,7 +40,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
         campoCorreo = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         campoTelefono = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        botonAceptar = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(485, 450));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -91,8 +91,8 @@ public class AgregarProveedor extends javax.swing.JFrame {
         campoTelefono.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         getContentPane().add(campoTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 180, -1));
 
-        jButton1.setText("Aceptar");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, -1, -1));
+        botonAceptar.setText("Aceptar");
+        getContentPane().add(botonAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -133,13 +133,13 @@ public class AgregarProveedor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonAceptar;
     private javax.swing.JTextField campoCorreo;
     private javax.swing.JTextField campoCuenta;
     private javax.swing.JTextField campoDireccion;
     private javax.swing.JTextField campoNit;
     private javax.swing.JTextField campoNombre;
     private javax.swing.JTextField campoTelefono;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

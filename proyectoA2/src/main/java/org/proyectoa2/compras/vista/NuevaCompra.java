@@ -82,7 +82,7 @@ public class NuevaCompra extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 480, 100));
 
-        jLabel4.setText("Seleccione insumo");
+        jLabel4.setText("Insumo");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, -1));
         getContentPane().add(campoCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 220, 80, 30));
 
