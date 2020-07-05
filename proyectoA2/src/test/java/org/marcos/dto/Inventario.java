@@ -10,34 +10,26 @@ import java.util.Date;
 /**
  *
  * @author marcos
+ * @author Gilda
  */
 public class Inventario {
+
     private int idInventario;
     private String descripcionInventario;
     private int existencia;
     private String lote;
     private Date fechaCaducidad;
     private String nombre;
-    
-    
+
     public Inventario() {
     }
 
-    public Inventario(int idInventario, String descripcionInventario, int existencia, String lote, Date fechaCaducidad, String nombre) {
-        this.idInventario = idInventario;
+    public Inventario(String descripcionInventario, int existencia, String lote, Date fechaCaducidad, String nombre) {
         this.descripcionInventario = descripcionInventario;
         this.existencia = existencia;
         this.lote = lote;
         this.fechaCaducidad = fechaCaducidad;
         this.nombre = nombre;
-    }
-
-    public int getIdInventario() {
-        return idInventario;
-    }
-
-    public void setIdInventario(int idInventario) {
-        this.idInventario = idInventario;
     }
 
     public String getDescripcionInventario() {
@@ -79,6 +71,5 @@ public class Inventario {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
-    
+
 }
