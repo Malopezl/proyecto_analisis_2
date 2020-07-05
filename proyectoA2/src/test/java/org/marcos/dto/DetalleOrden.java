@@ -14,18 +14,19 @@ public class DetalleOrden {
     private int idMenu;
     private int cantidad;
     private double precioVenta;
-    private double total;
+    private double subTotal;
     private Menu menu;
     private Orden orden;
     
     public DetalleOrden() {
     }
 
-    public DetalleOrden(int idOrden, int idMenu, int cantidad, double precioVenta) {
+    public DetalleOrden(int idOrden, int idMenu, int cantidad, double precioVenta, double subTotal) {
         this.idOrden = idOrden;
         this.idMenu = idMenu;
         this.cantidad = cantidad;
         this.precioVenta = precioVenta;
+        this.subTotal = subTotal;
     }
 
     
@@ -62,12 +63,12 @@ public class DetalleOrden {
         this.precioVenta = precioVenta;
     }
 
-    public double getTotal() {
-        return total;
+    public double getSubTotal() {
+        return subTotal;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
+    public void setSubTotal(double SubTotal) {
+        this.subTotal = subTotal;
     }
 
     public Menu getMenu() {
