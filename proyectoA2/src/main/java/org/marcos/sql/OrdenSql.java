@@ -43,9 +43,10 @@ public class OrdenSql {
             stmt.setString(3, nuevaOrden.getNoFactura());
             rs = stmt.executeQuery();
             int id = rs.getInt(1);
+            nuevaOrden.setIdOrden(id);
             DetalleOrdenSql detalle = new DetalleOrdenSql();
-            detalle.insertarListaDetalleOrden(nuevaOrden.getDetalles());
-           
+            detalle.insertarListaDetalleOrden(nuevaOrden.getDetalles(), id);
+            
         } catch (SQLException ex) {
             Logger.getLogger(OrdenSql.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
