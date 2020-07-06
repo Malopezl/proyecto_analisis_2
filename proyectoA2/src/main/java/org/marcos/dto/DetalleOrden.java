@@ -5,6 +5,8 @@
  */
 package org.marcos.dto;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author marcos
@@ -17,7 +19,7 @@ public class DetalleOrden {
     private double subTotal;
     private Menu menu;
     private Orden orden;
-    
+    private ArrayList<DetalleComplementos> listaComplementos;
     public DetalleOrden() {
     }
 
@@ -86,7 +88,17 @@ public class DetalleOrden {
     public void setOrden(Orden orden) {
         this.orden = orden;
     }
+
+    public ArrayList<DetalleComplementos> getListaComplementos() {
+        return listaComplementos;
+    }
+
+    public void setListaComplementos(ArrayList<DetalleComplementos> listaComplementos) {
+        this.listaComplementos = listaComplementos;
+    }
     
-    
+    public void addDetalleComplementos(DetalleComplementos detalle){
+        listaComplementos.add(detalle);
+    }
     
 }

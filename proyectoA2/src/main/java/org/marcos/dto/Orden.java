@@ -22,11 +22,14 @@ public class Orden {
     private Cliente cliente;
     private Usuario usuario;
     private ArrayList<DetalleOrden> detalles;
-
+    
     public Orden() {
+        detalles = new ArrayList<>();
+        
     }
 
     public Orden(String noFactura, Date fechaOrden, double total, int idUsuario, int idCliente) {
+         detalles = new ArrayList<>();
         this.noFactura = noFactura;
         this.fechaOrden = fechaOrden;
         this.total = total;
@@ -111,6 +114,7 @@ public class Orden {
     public void addDetalleOrden(DetalleOrden detalle){
         detalles.add(detalle);
     }
+
 
     @Override
     public String toString() {
