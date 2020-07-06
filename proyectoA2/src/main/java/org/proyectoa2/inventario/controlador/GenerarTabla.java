@@ -14,11 +14,13 @@ import org.proyectoa2.inventario.interfaces.Opcion;
  * @author tito88
  */
 public class GenerarTabla {
+
     private Opcion opcion;
-    public DefaultTableModel GenerarTabla(String tipo, Inventario inventario){
+
+    public DefaultTableModel GenerarTabla(String tipo, Inventario inventario) {
         Factory_RevisionInventario revisar = new Factory_RevisionInventario();
-       this.opcion = revisar.CrearObjeto(tipo);
+        this.opcion = revisar.CrearObjeto(tipo);
         return this.opcion.Crear(inventario);
-        
+
     }
 }

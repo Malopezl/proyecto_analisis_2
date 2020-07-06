@@ -21,8 +21,8 @@ public class ListarInventario extends javax.swing.JFrame {
         initComponents();
         Generartabla();
     }
-    
-    public void Generartabla(){
+
+    public void Generartabla() {
         GenerarTabla tabla = new GenerarTabla();
         DefaultTableModel modelo = tabla.GenerarTabla("General", null);
         jTable1.setModel(modelo);

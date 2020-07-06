@@ -5,8 +5,9 @@
  */
 package org.proyectoa2.inventario.controlador;
 
-import java.util.Date;
+import static javax.swing.text.html.HTML.Attribute.ID;
 import org.marcos.dto.Inventario;
+import static org.marcos.sql.InventarioSql.ELIMINAR;
 import static org.marcos.sql.InventarioSql.Insertar;
 import org.proyectoa2.inventario.interfaces.TipoProducto;
 
@@ -14,16 +15,10 @@ import org.proyectoa2.inventario.interfaces.TipoProducto;
  *
  * @author tito88
  */
-public class Ingresar_Producto {
+public class Eliminar_inventario {
 
-    private TipoProducto tipo;
+    public void Eliminar(int id) {
 
-    public void Crear(String descripcion, int existencia, String lote, Date fecha, String nombre, TipoProducto tp) {
-
-        this.tipo = tp;
-        Inventario i = new Inventario(descripcion, existencia, lote, fecha, nombre);
-        i = this.tipo.tipoProducto(fecha, i);
-
-        String g = Insertar(i);
+        String g = ELIMINAR(id);
     }
 }

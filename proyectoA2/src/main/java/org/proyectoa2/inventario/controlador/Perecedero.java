@@ -23,9 +23,9 @@ public class Perecedero implements TipoProducto {
     public Inventario tipoProducto(Date fecha, Inventario inventario) {
         try {
             String fecha1 = "0000-00-00";
-            Date fecha2=new SimpleDateFormat("yyyy-mm-dd").parse(fecha1);
+            Date fecha2 = new SimpleDateFormat("yyyy-mm-dd").parse(fecha1);
             inventario.setFechaCaducidad(fecha2);
-            return(inventario);
+            return (inventario);
         } catch (ParseException ex) {
             Logger.getLogger(NoPerecedero.class.getName()).log(Level.SEVERE, null, ex);
         }

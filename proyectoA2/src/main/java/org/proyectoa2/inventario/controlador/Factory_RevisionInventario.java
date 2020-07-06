@@ -21,21 +21,21 @@ public class Factory_RevisionInventario {
         switch (tipo) {
             case "General": {
                 return new Revision_general();
-              
+
             }
             case "Nombre": {
-              return new Revision_nombre();  
+                return new Revision_nombre();
             }
 
             case "Existencia": {
-                 return new Revision_existencia();
+                return new Revision_existencia();
             }
             case "Fecha": {
-                 return new Revision_FechaCaducidad();
-               
+                return new Revision_FechaCaducidad();
+
             }
         }
-        
-return null;
+
+        return null;
     }
 }
