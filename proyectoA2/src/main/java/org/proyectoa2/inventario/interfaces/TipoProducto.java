@@ -10,7 +10,7 @@ import org.marcos.dto.Inventario;
 
 /**
  *
- * @author tito88
+ * @author Gilda
  */
 public interface TipoProducto {
     public Inventario tipoProducto(Date fecha, Inventario inventario);

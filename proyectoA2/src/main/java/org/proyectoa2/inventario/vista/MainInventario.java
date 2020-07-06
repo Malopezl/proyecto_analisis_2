@@ -7,7 +7,7 @@ package org.proyectoa2.inventario.vista;
 
 /**
  *
- * @author tito88
+ * @author Gilda
  */
 public class MainInventario extends javax.swing.JFrame {
 

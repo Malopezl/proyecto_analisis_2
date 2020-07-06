@@ -10,7 +10,7 @@ import org.proyectoa2.inventario.controlador.GenerarTabla;
 
 /**
  *
- * @author tito88
+ * @author Gilda
  */
 public class ListarInventario extends javax.swing.JFrame {
 

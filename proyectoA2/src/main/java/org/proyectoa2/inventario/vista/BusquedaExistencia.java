@@ -11,7 +11,7 @@ import org.proyectoa2.inventario.controlador.GenerarTabla;
 
 /**
  *
- * @author tito88
+ * @author Gilda
  */
 public class BusquedaExistencia extends javax.swing.JFrame {
 
@@ -105,13 +105,17 @@ public class BusquedaExistencia extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int existencia = Integer.parseInt(jTextField1.getText());
-        GenerarTabla generar = new GenerarTabla();
-        Inventario inventario = new Inventario();
-        inventario.setExistencia(existencia);
+        try {
+            int existencia = Integer.parseInt(jTextField1.getText());
+            GenerarTabla generar = new GenerarTabla();
+            Inventario inventario = new Inventario();
+            inventario.setExistencia(existencia);
 
-        DefaultTableModel modelo = generar.GenerarTabla("Existencia", inventario);
-        jTable1.setModel(modelo);
+            DefaultTableModel modelo = generar.GenerarTabla("Existencia", inventario);
+            jTable1.setModel(modelo);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

@@ -10,7 +10,7 @@ import org.marcos.dto.Inventario;
 
 /**
  *
- * @author tito88
+ * @author Gilda
  */
 public interface Opcion {
     public DefaultTableModel Crear(Inventario inventario);

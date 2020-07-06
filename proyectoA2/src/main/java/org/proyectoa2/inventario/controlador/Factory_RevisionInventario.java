@@ -13,7 +13,7 @@ import org.proyectoa2.inventario.interfaces.Opcion;
 
 /**
  *
- * @author tito88
+ * @author Gilda
  */
 public class Factory_RevisionInventario {
 

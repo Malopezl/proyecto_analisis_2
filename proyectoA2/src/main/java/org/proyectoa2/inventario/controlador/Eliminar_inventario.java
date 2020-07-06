@@ -13,7 +13,7 @@ import org.proyectoa2.inventario.interfaces.TipoProducto;
 
 /**
  *
- * @author tito88
+ * @author Gilda
  */
 public class Eliminar_inventario {
 

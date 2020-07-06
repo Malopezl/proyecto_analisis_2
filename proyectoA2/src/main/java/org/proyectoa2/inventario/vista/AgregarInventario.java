@@ -13,7 +13,7 @@ import org.proyectoa2.inventario.interfaces.TipoProducto;
 
 /**
  *
- * @author tito88
+ * @author Gilda
  */
 public class AgregarInventario extends javax.swing.JFrame {
 
@@ -176,33 +176,38 @@ public class AgregarInventario extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        String nombre = JTextnombre.getText();
-        int existencia = Integer.parseInt(JTexistencia.getText());
-        String descripcion = JTextDescripcion.getText();
-        String lote = JTextLote.getText();
-        String opcion = "";
-        opcion = (String) JProducto.getSelectedItem();
-        Date fecha = null;
-        TipoProducto tipo;
-        if (opcion.equals("Perecedero")) {
+        try {
 
-            tipo = new Perecedero();
-        } else {
-            fecha = JDateFecha.getDate();
-            tipo = new NoPerecedero();
+            String nombre = JTextnombre.getText();
+            int existencia = Integer.parseInt(JTexistencia.getText());
+            String descripcion = JTextDescripcion.getText();
+            String lote = JTextLote.getText();
+            String opcion = "";
+            opcion = (String) JProducto.getSelectedItem();
+            Date fecha = null;
+            TipoProducto tipo;
+            if (opcion.equals("Perecedero")) {
+
+                tipo = new Perecedero();
+            } else {
+                fecha = JDateFecha.getDate();
+                tipo = new NoPerecedero();
+            }
+            Ingresar_Producto ingresar = new Ingresar_Producto();
+
+            //ingresar.Crear(descripcion, existencia, lote, fecha, nombre, tipo);
+            limpiar();
+        } catch (Exception e) {
+
         }
-        Ingresar_Producto ingresar = new Ingresar_Producto();
-        
-        //ingresar.Crear(descripcion, existencia, lote, fecha, nombre, tipo);
-        limpiar();
 
     }//GEN-LAST:event_jButton1ActionPerformed
-    private void limpiar(){
+    private void limpiar() {
         JTextnombre.setText("");
         JTexistencia.setText("");
         JTextDescripcion.setText("");
         JTextLote.setText("");
-        
+
     }
     private void JProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JProductoActionPerformed
         String opcion = "";

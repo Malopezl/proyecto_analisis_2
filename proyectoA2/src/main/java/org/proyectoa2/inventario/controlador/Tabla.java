@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author tito88
+ * @author Gilda
  */
 public class Tabla {
 

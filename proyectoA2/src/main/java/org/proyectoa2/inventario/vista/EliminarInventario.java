@@ -13,7 +13,7 @@ import org.proyectoa2.inventario.controlador.GenerarTabla;
 
 /**
  *
- * @author tito88
+ * @author Gilda
  */
 public class EliminarInventario extends javax.swing.JFrame {
 
@@ -153,28 +153,36 @@ public class EliminarInventario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Date fecha = jDateChooser1.getDate();
-        GenerarTabla generar = new GenerarTabla();
-        Inventario inventario = new Inventario();
-        inventario.setFechaCaducidad(fecha);
+        try {
+            Date fecha = jDateChooser1.getDate();
+            GenerarTabla generar = new GenerarTabla();
+            Inventario inventario = new Inventario();
+            inventario.setFechaCaducidad(fecha);
 
-        DefaultTableModel modelo = generar.GenerarTabla("Fecha", inventario);
-        jTable2.setModel(modelo);
+            DefaultTableModel modelo = generar.GenerarTabla("Fecha", inventario);
+            jTable2.setModel(modelo);
+        } catch (Exception e) {
+
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        DefaultTableModel tm = (DefaultTableModel) jTable2.getModel();
-        int cuenta = jTable2.getSelectedRowCount();
-        if (cuenta == 0) {
+        try {
+            DefaultTableModel tm = (DefaultTableModel) jTable2.getModel();
+            int cuenta = jTable2.getSelectedRowCount();
+            if (cuenta == 0) {
 
-        } else {
-            String dato = String.valueOf(tm.getValueAt(jTable2.getSelectedRow(), 0));
-            Eliminar_inventario eliminar = new Eliminar_inventario();
-            int dato1 = Integer.parseInt(dato);
-            eliminar.Eliminar(dato1);
-            DefaultTableModel dm = (DefaultTableModel) jTable2.getModel();
-            dm.getDataVector().removeAllElements();
-            dm.fireTableDataChanged();
+            } else {
+                String dato = String.valueOf(tm.getValueAt(jTable2.getSelectedRow(), 0));
+                Eliminar_inventario eliminar = new Eliminar_inventario();
+                int dato1 = Integer.parseInt(dato);
+                eliminar.Eliminar(dato1);
+                DefaultTableModel dm = (DefaultTableModel) jTable2.getModel();
+                dm.getDataVector().removeAllElements();
+                dm.fireTableDataChanged();
+            }
+        } catch (Exception e) {
+
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
