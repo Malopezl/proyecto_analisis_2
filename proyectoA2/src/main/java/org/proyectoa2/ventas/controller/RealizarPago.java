@@ -5,6 +5,8 @@
  */
 package org.proyectoa2.ventas.controller;
 
+import org.marcos.dto.Orden;
+
 /**
  *
  * @author marcos
@@ -14,5 +16,5 @@ public abstract class RealizarPago {
     public void generarFactura(){
         System.out.println("esto es una factura");
     }
-    public abstract void realizarPago();
+    public abstract void realizarPago(Orden cobrar);
 }

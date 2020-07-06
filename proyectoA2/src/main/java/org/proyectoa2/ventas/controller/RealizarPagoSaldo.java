@@ -5,6 +5,10 @@
  */
 package org.proyectoa2.ventas.controller;
 
+import org.marcos.dto.Cliente;
+import org.marcos.dto.Orden;
+import org.marcos.sql.ClienteSql;
+
 /**
  *
  * @author marcos
@@ -12,8 +16,8 @@ package org.proyectoa2.ventas.controller;
 public class RealizarPagoSaldo extends RealizarPago {
 
     @Override
-    public void realizarPago() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void realizarPago(Orden cobrar) {
+            super.generarFactura();
     }
     
 }

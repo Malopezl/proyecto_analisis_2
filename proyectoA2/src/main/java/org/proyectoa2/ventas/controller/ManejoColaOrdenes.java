@@ -20,6 +20,7 @@ public class ManejoColaOrdenes {
     private ArrayList<ObservadorVentas> observadores;
     private OrdenSql ordenSql;
     private ClienteSql clienteSql;
+    private RealizarPago pago;
     
     public Orden atenderOrden(){
         if(!(colaOrdenesPendientes.isEmpty())){
@@ -44,16 +45,13 @@ public class ManejoColaOrdenes {
         ordenSql.insertNuevaOrden(cobrar);
         
         if(tipoCobro == 1){
+            pago = new RealizarPagoEfectivo();
+            pago.realizarPago(cobrar);
             double cambio = cantidadPagada - cobrar.getTotal(); 
             return cambio;
         }else{
-            Cliente cliente = cobrar.getCliente();
-            double nuevoSaldo = cobrar.getTotal() + cliente.getSaldo();
-            cliente.setSaldo(nuevoSaldo);
-            clienteSql.actualizarSaldo(cliente);
-            /*
-                agregar actualizar lista clientes
-            */ 
+            pago = new RealizarPagoSaldo();
+            pago.realizarPago(cobrar);
             return 0;
         }
     }
