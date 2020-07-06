@@ -61,9 +61,11 @@ public class ManejoColaOrdenes {
         }
         return colaOrdenesPendientes.get(indexCola);
     }
-    public void editarOrden(int indexCola, Orden orden){
-        colaOrdenesPendientes.remove(indexCola);
-        colaOrdenesPendientes.add(indexCola, orden);
+    public void editarOrden( Orden orden){
+        int indice = colaOrdenesPendientes.indexOf(orden);
+        
+        colaOrdenesPendientes.remove(indice);
+        colaOrdenesPendientes.add(indice, orden);
     }
     public ArrayList<Orden> obtenerCola(){
         if(colaOrdenesPendientes.isEmpty()){

@@ -21,17 +21,17 @@ public class ManejoOrden {
     public void ManejoOrdenes(){
         manejadorColaOrdenes = ManejoColaOrdenes.obtenerControlador();
     }
-    
-    public void crearOrden(){
-        
+    public void ManejoOrdenes(Orden orden){
+        manejadorColaOrdenes = ManejoColaOrdenes.obtenerControlador();
+        this.orden = orden;
     }
     public void agregarDetalleOrden(DetalleOrden detalleOrden){
-
+        orden.addDetalleOrden(detalleOrden);
     }
-    public void confirmarOrden(Orden orden){
+    public void confirmarOrden(){
         manejadorColaOrdenes.agregarNuevaOrden(orden);
     }
-    public void setOrden(Orden orden){
-        
+    public void confirmarModificacionOrden(){
+        manejadorColaOrdenes.editarOrden(orden);
     }
 }
