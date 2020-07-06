@@ -18,16 +18,22 @@ public class Tabla {
     public Tabla() {
         this.modelo = new DefaultTableModel();
         this.modelo.addColumn("Id");
-        this.modelo.addColumn("Nombre");
         this.modelo.addColumn("Descripcion");
-        this.modelo.addColumn("Existencia");
+        this.modelo.addColumn("Existencia"); 
         this.modelo.addColumn("Lote");
         this.modelo.addColumn("Fecha Caducidad");
+        this.modelo.addColumn("Nombre");
+
 
     }
 
     public DefaultTableModel getModelo() {
         return this.modelo;
     }
+
+    public void setModelo(DefaultTableModel modelo) {
+        this.modelo = modelo;
+    }
+    
 
 }
