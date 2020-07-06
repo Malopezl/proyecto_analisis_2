@@ -5,12 +5,13 @@
  */
 package org.proyectoa2.ventas.vista;
 
+import org.proyectoa2.ventas.controller.ObservadorVentas;
 
 /**
  *
  * @author marcos
  */
-public class MainVentas extends javax.swing.JPanel {
+public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
     private NuevaOrdenForm nuevaOrdenFormulario;
     private AtenderOrdenForm atenderOrden;
     private CobrarOrdenForm cobrarOrden;
@@ -169,4 +170,9 @@ public class MainVentas extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable tablaColaOrdenes;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actualizar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
