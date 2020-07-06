@@ -108,7 +108,9 @@ public class Orden {
         this.usuario = usuario;
     }
     
-    
+    public void addDetalleOrden(DetalleOrden detalle){
+        detalles.add(detalle);
+    }
 
     @Override
     public String toString() {
