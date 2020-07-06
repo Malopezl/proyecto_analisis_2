@@ -11,7 +11,7 @@ package org.proyectoa2.ventas.vista;
  */
 public class NuevaOrdenForm extends javax.swing.JFrame {
     private AgregarPlatilloForm agregarPlatillo;
-            
+    private AgregarClienteForm agregarCliente;
     /**
      * Creates new form NuevaOrdenForm
      */
@@ -46,6 +46,7 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         etiquetaTitulo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        botonAgregarCliente = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(1080, 720));
         setPreferredSize(new java.awt.Dimension(1080, 720));
@@ -82,15 +83,15 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         getContentPane().add(listaSeleccionCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 560, 30));
 
         etiquetaTotal.setText("Total");
-        getContentPane().add(etiquetaTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, -1, -1));
+        getContentPane().add(etiquetaTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
 
         etiquetaTotalOrden.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(etiquetaTotalOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 510, 40));
+        getContentPane().add(etiquetaTotalOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 510, 40));
 
         botonEliminarPlatillo.setText("Eliminar Platillo");
         getContentPane().add(botonEliminarPlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 420, 480, -1));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, 610, 10));
-        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 620, 10));
+        getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 620, 10));
 
         etiquetaTitulo.setFont(new java.awt.Font("sansserif", 0, 36)); // NOI18N
         etiquetaTitulo.setText("Nueva Orden");
@@ -100,6 +101,14 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         jLabel1.setText("Platillos de la orden");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 30, -1, -1));
 
+        botonAgregarCliente.setText("Agregar Cliente");
+        botonAgregarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAgregarClienteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonAgregarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 183, 540, 40));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -108,6 +117,12 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         this.agregarPlatillo = new AgregarPlatilloForm();
         this.agregarPlatillo.setVisible(true);
     }//GEN-LAST:event_botonAgregarPlatilloActionPerformed
+
+    private void botonAgregarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarClienteActionPerformed
+        // TODO add your handling code here:
+        agregarCliente = new AgregarClienteForm();
+        agregarCliente.setVisible(true);
+    }//GEN-LAST:event_botonAgregarClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,6 +160,7 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonAgregarCliente;
     private javax.swing.JButton botonAgregarPlatillo;
     private javax.swing.JButton botonCancelarOrden;
     private javax.swing.JButton botonConfirmarOrden;
