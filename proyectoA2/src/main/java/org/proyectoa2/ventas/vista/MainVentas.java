@@ -5,6 +5,7 @@
  */
 package org.proyectoa2.ventas.vista;
 
+
 /**
  *
  * @author marcos
