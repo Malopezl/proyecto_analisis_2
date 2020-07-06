@@ -5,7 +5,7 @@
     <artifactId>proyectoA2</artifactId>
     <version>1</version>
     <packaging>jar</packaging>
-<<<<<<< HEAD
+
     <repositories>
         <repository>
             <id>unknown-jars-temp-repo</id>
@@ -23,13 +23,12 @@
             <groupId>unknown.binary</groupId>
             <artifactId>jcalendar-1.4</artifactId>
             <version>SNAPSHOT</version>
-=======
-    <dependencies>
+        </dependency>
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
             <version>2.6.1</version>
->>>>>>> modelo
+
         </dependency>
     </dependencies>
     <properties>

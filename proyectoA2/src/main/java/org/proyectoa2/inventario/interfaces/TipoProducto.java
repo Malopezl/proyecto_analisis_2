@@ -5,10 +5,13 @@
  */
 package org.proyectoa2.inventario.interfaces;
 
+import java.util.Date;
+import org.marcos.dto.Inventario;
+
 /**
  *
  * @author tito88
  */
 public interface TipoProducto {
-    
+    public Inventario tipoProducto(Date fecha, Inventario inventario);
 }
