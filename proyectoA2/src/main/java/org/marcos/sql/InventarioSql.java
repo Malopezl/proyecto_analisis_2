@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.marcos.dto.Inventario;
@@ -137,5 +138,37 @@ public class InventarioSql {
             ConexionSql.close(conn);
         }
         return (rs);
+    }
+    public ArrayList<Inventario> selectAll(){
+        Connection conn = null;
+        String sentencia = "SELECT idInventario, descripcionInventario, existencia, lote, fechaCaducidad, nombre FROM Inventario";
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        ArrayList<Inventario> lista = new ArrayList<>();
+        try{
+            conn = ConexionSql.getConnection();
+            stmt = conn.prepareStatement(sentencia);
+            rs = stmt.executeQuery();
+            Inventario tmp;
+            while(rs.next()){
+                tmp = new Inventario();
+                tmp.setIdInventario(rs.getInt("idInventario"));
+                tmp.setDescripcionInventario(rs.getString("descripcionInventario"));
+                tmp.setExistencia(rs.getInt("existencia"));
+                tmp.setLote(rs.getString("lote"));
+                tmp.setFechaCaducidad(rs.getDate("fechaCaducidad"));
+                tmp.setNombre(rs.getString("nombre"));
+                lista.add(tmp);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InventarioSql.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(conn != null){
+                ConexionSql.close(rs);
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return lista;
     }
 }
