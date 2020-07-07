@@ -16,7 +16,7 @@ import org.marcos.sql.OrdenSql;
  */
 public class ManejoColaOrdenes {
     private ArrayList<Orden> colaOrdenesPendientes;
-    private static ManejoColaOrdenes manejo;
+    private static ManejoColaOrdenes manejo = null;
     private ArrayList<ObservadorVentas> observadores;
     private OrdenSql ordenSql;
     private ClienteSql clienteSql;
@@ -68,10 +68,6 @@ public class ManejoColaOrdenes {
         colaOrdenesPendientes.add(indice, orden);
     }
     public ArrayList<Orden> obtenerCola(){
-        if(colaOrdenesPendientes.isEmpty()){
-            return null;
-        
-        }
         return colaOrdenesPendientes;
     }
     private ManejoColaOrdenes(){

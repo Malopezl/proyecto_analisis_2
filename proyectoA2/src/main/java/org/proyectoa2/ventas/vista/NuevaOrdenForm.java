@@ -5,6 +5,12 @@
  */
 package org.proyectoa2.ventas.vista;
 
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import org.marcos.dto.Cliente;
+import org.proyectoa2.ventas.controller.ManejoListaClientes;
+
 /**
  *
  * @author marcos
@@ -12,6 +18,8 @@ package org.proyectoa2.ventas.vista;
 public class NuevaOrdenForm extends javax.swing.JFrame {
     private AgregarPlatilloForm agregarPlatillo;
     private AgregarClienteForm agregarCliente;
+    private ManejoListaClientes manejador;
+    
     /**
      * Creates new form NuevaOrdenForm
      */
@@ -21,6 +29,8 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
     public NuevaOrdenForm(String titulo) {
         initComponents();
         this.etiquetaTitulo.setText(titulo);
+        manejador = ManejoListaClientes.obtenerManejador();
+        this.ActualizarListaClientes();
     }
 
     /**
@@ -79,7 +89,7 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         getContentPane().add(botonCancelarOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 600, 480, -1));
 
         listaSeleccionCliente.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        listaSeleccionCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        listaSeleccionCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"---- Seleccione al Cliente ----"}));
         getContentPane().add(listaSeleccionCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 560, 30));
 
         etiquetaTotal.setText("Total");
@@ -120,7 +130,7 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
 
     private void botonAgregarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarClienteActionPerformed
         // TODO add your handling code here:
-        agregarCliente = new AgregarClienteForm();
+        agregarCliente = new AgregarClienteForm(this);
         agregarCliente.setVisible(true);
     }//GEN-LAST:event_botonAgregarClienteActionPerformed
 
@@ -176,4 +186,17 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JComboBox<String> listaSeleccionCliente;
     // End of variables declaration//GEN-END:variables
+
+    public void ActualizarListaClientes(){
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel<>(new String[] {"---- Seleccione al Cliente ----"});
+        manejador.actualizarClientes();
+        listaSeleccionCliente.setModel(modelo);
+        ArrayList<Cliente> lista = manejador.geListaClientes();
+        String tmp;
+        for(Cliente item : lista){
+            tmp = item.getNombreCliente() + " | Saldo: " + item.getSaldo();
+            System.out.println("item = " + item);
+            listaSeleccionCliente.addItem(tmp);
+        }
+    }
 }

@@ -5,6 +5,10 @@
  */
 package org.proyectoa2.ventas.vista;
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import org.marcos.dto.Orden;
+import org.proyectoa2.ventas.controller.ManejoColaOrdenes;
 import org.proyectoa2.ventas.controller.ObservadorVentas;
 
 /**
@@ -16,11 +20,17 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
     private AtenderOrdenForm atenderOrden;
     private CobrarOrdenForm cobrarOrden;
     private CobrarSaldoForm cobrarSaldo;
+    private ManejoColaOrdenes manejador;
+    private DefaultTableModel modeloTabla;
     /**
      * Creates new form MainVentas
      */
     public MainVentas() {
         initComponents();
+        manejador = ManejoColaOrdenes.obtenerControlador();
+        System.out.println("Holiiiiiiiiiiiiii" + manejador);
+        this.actualizar();
+        
     }
 
     /**
@@ -57,7 +67,7 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
                 {null, null, null}
             },
             new String [] {
-                "No. Orden", "Cliente", "Hora"
+                "Cliente", "Total"
             }
         ));
         jScrollPane2.setViewportView(tablaColaOrdenes);
@@ -173,6 +183,16 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
 
     @Override
     public void actualizar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Orden> lista = manejador.obtenerCola();
+        this.modeloTabla = new DefaultTableModel();
+        tablaColaOrdenes.setModel(modeloTabla);
+        System.out.println();
+        int columna = 1;
+        for(Orden item : lista){
+            modeloTabla.addColumn(columna);
+            modeloTabla.setValueAt(item.getCliente().getNombreCliente(), 0, columna);
+            modeloTabla.setValueAt(item.getTotal(), 1, columna);
+            columna+=1;
+        }
     }
 }

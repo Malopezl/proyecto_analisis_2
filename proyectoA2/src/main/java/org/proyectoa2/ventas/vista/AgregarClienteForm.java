@@ -5,17 +5,25 @@
  */
 package org.proyectoa2.ventas.vista;
 
+import org.marcos.dto.Cliente;
+import org.marcos.sql.ClienteSql;
+
 /**
  *
  * @author marcos
  */
 public class AgregarClienteForm extends javax.swing.JFrame {
-
+    
+    private NuevaOrdenForm nuevaOrden;
     /**
      * Creates new form agregarCliente
      */
     public AgregarClienteForm() {
         initComponents();
+    }
+    public AgregarClienteForm(NuevaOrdenForm nuevaOrden) {
+        initComponents();
+        this.nuevaOrden = nuevaOrden;
     }
 
     /**
@@ -51,9 +59,19 @@ public class AgregarClienteForm extends javax.swing.JFrame {
         getContentPane().add(textSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 540, 40));
 
         Confirmar.setText("Confirmar");
+        Confirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConfirmarActionPerformed(evt);
+            }
+        });
         getContentPane().add(Confirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 470, 250, -1));
 
         Cancelar.setText("cancelar");
+        Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelarActionPerformed(evt);
+            }
+        });
         getContentPane().add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 470, 250, -1));
 
         jLabel1.setText("Nombre");
@@ -74,6 +92,30 @@ public class AgregarClienteForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarActionPerformed
+        // TODO add your handling code here:
+        if(textNombre.getText().length() == 0 || textDireccion.getText().length() == 0
+                || textSaldo.getText().length() == 0
+                || textTelefono.getText().length() == 0 ){
+            
+        }else{
+            Cliente cliente = new Cliente();
+            cliente.setNombreCliente(textNombre.getText());
+            cliente.setDireccion(textDireccion.getText());
+            cliente.setSaldo(Double.valueOf(textSaldo.getText()));
+            cliente.setTelefono(textTelefono.getText());
+            ClienteSql clienteSql = new ClienteSql();
+            clienteSql.insertarClienteVentas(cliente);
+            nuevaOrden.ActualizarListaClientes();
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_ConfirmarActionPerformed
+
+    private void CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelarActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_CancelarActionPerformed
 
     /**
      * @param args the command line arguments
