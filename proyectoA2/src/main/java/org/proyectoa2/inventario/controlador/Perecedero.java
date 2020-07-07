@@ -22,14 +22,13 @@ public class Perecedero implements TipoProducto {
     @Override
     public Inventario tipoProducto(Date fecha, Inventario inventario) {
         try {
-            String fecha1 = "0000-00-00";
-            Date fecha2 = new SimpleDateFormat("yyyy-mm-dd").parse(fecha1);
-            inventario.setFechaCaducidad(fecha2);
-            return (inventario);
-        } catch (ParseException ex) {
-            Logger.getLogger(NoPerecedero.class.getName()).log(Level.SEVERE, null, ex);
+            inventario.setFechaCaducidad(null);
+            return inventario;
+        } catch (Exception e) {
+            
         }
-        return inventario;
+        return null;
+
     }
 
 }

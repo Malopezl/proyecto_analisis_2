@@ -195,7 +195,7 @@ public class AgregarInventario extends javax.swing.JFrame {
             }
             Ingresar_Producto ingresar = new Ingresar_Producto();
 
-            //ingresar.Crear(descripcion, existencia, lote, fecha, nombre, tipo);
+            ingresar.Crear(descripcion, existencia, lote, fecha, nombre, tipo);
             limpiar();
         } catch (Exception e) {
 
