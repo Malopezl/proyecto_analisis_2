@@ -18,7 +18,7 @@ public class Inventario {
     private String descripcionInventario;
     private int existencia;
     private String lote;
-    private Date fechaCaducidad;
+private Date fechaCaducidad;
     private String nombre;
 
     public Inventario() {
@@ -72,12 +72,4 @@ public class Inventario {
         this.nombre = nombre;
     }
 
-    public int getIdInventario() {
-        return idInventario;
-    }
-
-    public void setIdInventario(int idInventario) {
-        this.idInventario = idInventario;
-    }
-    
 }

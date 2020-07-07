@@ -18,7 +18,7 @@ public class DetalleComplementosSql {
     private final String statementInsertarDetalles = "INSERT INTO DetalleComplementos(idOrden, idInventario, cantidad, precioVenta, subTotal, idMenu) VALUES(?, ?, ?, ?, ?, ?) ";
     
     
-    public int insertarDetallleCompelementosVenta(ArrayList<DetalleComplementos> lista, int idOrden, int idMenu){
+    public int insertarDetallleCompelentosVenta(ArrayList<DetalleComplementos> lista, int idOrden, int idMenu){
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;

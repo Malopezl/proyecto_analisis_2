@@ -22,8 +22,7 @@ public class Orden {
     private Cliente cliente;
     private Usuario usuario;
     private ArrayList<DetalleOrden> detalles;
-    private int estado;
-    // estado 1 = en espera, estado 2 = atendido
+    
     public Orden() {
         detalles = new ArrayList<>();
         
@@ -114,14 +113,6 @@ public class Orden {
     
     public void addDetalleOrden(DetalleOrden detalle){
         detalles.add(detalle);
-    }
-
-    public int getEstado() {
-        return estado;
-    }
-
-    public void setEstado(int estado) {
-        this.estado = estado;
     }
 
 

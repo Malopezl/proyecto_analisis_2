@@ -18,7 +18,7 @@ public class ClienteSql {
     
     private final String setenciaSelectAll = "SELECT idCliente, nombreCliente, direccionCliente, correoCliente, telefonoCliente, saldo FROM Cliente";
     private final String sentenciaActualizarSaldo = "UPDATE Cliente SET saldo=? WHERE idCliente=?";
-    private final String sentenciaInserVentas = "INSERT INTO Cliente(nombreCliente, direccionCliente, correoCliente, telefonoCliente, saldo) VALUES(?, ?, ?, ?, ?)";
+    private final String sentenciaInserVentas = "INSERT INTO Cliente(nombreCliente, direccionCliente, correoCliente, telefonoCliente, saldo) VALUES(?, ?, ?, ?. ?)";
     
     public ArrayList<Cliente> selectAllClientes(){
         Connection conn = null;
@@ -94,10 +94,7 @@ public class ClienteSql {
             stmt.setString(3, cliente.getCorreo());
             stmt.setString(4, cliente.getTelefono());
             rs = stmt.executeQuery();
-            while(rs.next()){
-                cliente.setIdCliente(rs.getInt(1));
-                break;
-            }
+            cliente.setIdCliente(rs.getInt("idCliente"));
             
         } catch (SQLException ex) {
             Logger.getLogger(ClienteSql.class.getName()).log(Level.SEVERE, null, ex);

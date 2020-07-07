@@ -38,7 +38,7 @@ public class DetalleOrdenSql {
                 indice = 1;
                 tmp = stmt.executeUpdate();
                 rows = tmp + rows;
-                listaComplementos.insertarDetallleCompelementosVenta(detalle.getListaComplementos() , idOrden, detalle.getIdMenu());
+                listaComplementos.insertarDetallleCompelentosVenta(detalle.getListaComplementos() , idOrden, detalle.getIdMenu());
             }
         
         } catch (SQLException ex) {
