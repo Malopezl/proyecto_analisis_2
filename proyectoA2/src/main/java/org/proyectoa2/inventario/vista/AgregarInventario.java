@@ -22,7 +22,7 @@ public class AgregarInventario extends javax.swing.JFrame {
      */
     public AgregarInventario() {
         initComponents();
-        JDateFecha.setEnabled(false);
+        JDateFecha.setEnabled(true);
 
     }
 
@@ -187,10 +187,10 @@ public class AgregarInventario extends javax.swing.JFrame {
             Date fecha = null;
             TipoProducto tipo;
             if (opcion.equals("Perecedero")) {
-
+                fecha = JDateFecha.getDate();
                 tipo = new Perecedero();
             } else {
-                fecha = JDateFecha.getDate();
+
                 tipo = new NoPerecedero();
             }
             Ingresar_Producto ingresar = new Ingresar_Producto();
@@ -213,9 +213,9 @@ public class AgregarInventario extends javax.swing.JFrame {
         String opcion = "";
         opcion = (String) JProducto.getSelectedItem();
         if (opcion.equals("Perecedero")) {
-            JDateFecha.setEnabled(false);
-        } else {
             JDateFecha.setEnabled(true);
+        } else {
+            JDateFecha.setEnabled(false);
         }
     }//GEN-LAST:event_JProductoActionPerformed
 
