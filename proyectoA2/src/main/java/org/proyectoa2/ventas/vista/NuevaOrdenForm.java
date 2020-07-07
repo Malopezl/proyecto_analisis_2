@@ -10,6 +10,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import org.marcos.dto.Cliente;
 import org.proyectoa2.ventas.controller.ManejoListaClientes;
+import org.proyectoa2.ventas.controller.ManejoOrden;
 
 /**
  *
@@ -19,6 +20,7 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
     private AgregarPlatilloForm agregarPlatillo;
     private AgregarClienteForm agregarCliente;
     private ManejoListaClientes manejador;
+    private ManejoOrden manejadorOrden;
     
     /**
      * Creates new form NuevaOrdenForm
@@ -31,6 +33,7 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         this.etiquetaTitulo.setText(titulo);
         manejador = ManejoListaClientes.obtenerManejador();
         this.ActualizarListaClientes();
+        manejadorOrden = new ManejoOrden();
     }
 
     /**
@@ -124,7 +127,7 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
 
     private void botonAgregarPlatilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarPlatilloActionPerformed
         // TODO add your handling code here:
-        this.agregarPlatillo = new AgregarPlatilloForm();
+        this.agregarPlatillo = new AgregarPlatilloForm(this , manejadorOrden);
         this.agregarPlatillo.setVisible(true);
     }//GEN-LAST:event_botonAgregarPlatilloActionPerformed
 

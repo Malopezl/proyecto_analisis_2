@@ -6,15 +6,24 @@
 
 package org.proyectoa2.ventas.vista;
 
+import org.marcos.dto.Menu;
+
 /**
  *
  * @author marcos
  */
 public class VisualizarDetallesPlatilloForm extends javax.swing.JFrame {
-
+    
     /** Creates new form VisualizarDetallesPlatilloForm */
     public VisualizarDetallesPlatilloForm() {
         initComponents();
+    }
+    public VisualizarDetallesPlatilloForm(Menu menu) {
+        initComponents();
+        this.labelNombre.setText(" " + menu.getNombreMenu());
+        this.labelPrecio.setText(" Q." + Double.toString(menu.getPrecio()));
+        this.textDescripcion.setText(menu.getDescripcionMenu());
+        this.textReceta.setText(menu.getReceta());
     }
 
     /** This method is called from within the constructor to
@@ -31,15 +40,16 @@ public class VisualizarDetallesPlatilloForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        textDescripcion = new javax.swing.JTextArea();
+        labelNombre = new javax.swing.JLabel();
+        labelPrecio = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        textReceta = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
 
-        setMinimumSize(new java.awt.Dimension(690, 482));
-        setPreferredSize(new java.awt.Dimension(690, 482));
+        setMinimumSize(new java.awt.Dimension(701, 491));
+        setPreferredSize(new java.awt.Dimension(701, 491));
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Nombre");
@@ -54,25 +64,23 @@ public class VisualizarDetallesPlatilloForm extends javax.swing.JFrame {
         jLabel4.setText("Receta");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 50, -1));
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        textDescripcion.setEditable(false);
+        textDescripcion.setColumns(20);
+        textDescripcion.setRows(5);
+        jScrollPane1.setViewportView(textDescripcion);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 540, 130));
 
-        jLabel5.setText("jLabel5");
-        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 540, -1));
+        labelNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(labelNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, 540, 30));
 
-        jLabel6.setText("jLabel6");
-        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, 550, -1));
+        labelPrecio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(labelPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 550, 30));
 
-        jTextArea2.setEditable(false);
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        textReceta.setEditable(false);
+        textReceta.setColumns(20);
+        textReceta.setRows(5);
+        jScrollPane2.setViewportView(textReceta);
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, 550, 140));
 
@@ -123,13 +131,13 @@ public class VisualizarDetallesPlatilloForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JLabel labelNombre;
+    private javax.swing.JLabel labelPrecio;
+    private javax.swing.JTextArea textDescripcion;
+    private javax.swing.JTextArea textReceta;
     // End of variables declaration//GEN-END:variables
 
 }

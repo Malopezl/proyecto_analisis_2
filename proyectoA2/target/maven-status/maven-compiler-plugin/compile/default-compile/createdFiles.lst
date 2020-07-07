@@ -7,6 +7,7 @@ org/marcos/sql/DetalleComplementosSql.class
 org/proyectoa2/ventas/vista/AgregarPlatilloForm$2.class
 org/proyectoa2/ventas/vista/NuevaOrdenForm$3.class
 org/marcos/sql/ProveedorSql.class
+org/proyectoa2/ventas/vista/AgregarPlatilloForm$9.class
 org/proyectoa2/ventas/vista/NuevaOrdenForm.class
 org/proyectoa2/ventas/vista/CobrarSaldoForm.class
 org/proyectoa2/ventas/vista/MainVentas$5.class
@@ -29,6 +30,7 @@ org/proyectoa2/ventas/controller/RealizarPagoSaldo.class
 org/marcos/sql/DetalleOrdenSql.class
 org/proyectoa2/ventas/vista/CobrarOrdenForm$2.class
 org/proyectoa2/ventas/vista/AgregarPlatilloForm.class
+org/proyectoa2/ventas/vista/AgregarPlatilloForm$7.class
 org/marcos/sql/InventarioSql.class
 org/proyectoa2/ventas/vista/AtenderOrdenForm$2.class
 org/proyectoa2/ventas/vista/AgregarPlatilloForm$4.class
@@ -57,6 +59,7 @@ org/marcos/dto/Menu.class
 org/proyectoa2/ventas/vista/CobrarOrdenForm.class
 org/proyectoa2/ventas/vista/MainVentas.class
 org/proyectoa2/ventas/vista/NuevaOrdenForm$2.class
+org/proyectoa2/ventas/vista/AgregarPlatilloForm$8.class
 org/proyectoa2/ventas/vista/pruebas.class
 org/proyectoa2/ventas/vista/CobrarOrdenForm$4.class
 org/marcos/dto/DetalleOrden.class

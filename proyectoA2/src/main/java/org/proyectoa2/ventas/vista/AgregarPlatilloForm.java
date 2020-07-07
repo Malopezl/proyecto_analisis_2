@@ -5,17 +5,45 @@
  */
 package org.proyectoa2.ventas.vista;
 
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import org.marcos.dto.DetalleComplementos;
+import org.marcos.dto.DetalleOrden;
+import org.marcos.dto.Menu;
+import org.proyectoa2.ventas.controller.ManejoListaPlatillos;
+import org.proyectoa2.ventas.controller.ManejoOrden;
+
 /**
  *
  * @author marcos
  */
 public class AgregarPlatilloForm extends javax.swing.JFrame {
     private VisualizarDetallesPlatilloForm visualizarPlatillos;
+    private ManejoOrden manejoOrden;
+    private ManejoListaPlatillos manejadorPlatillos;
+    private NuevaOrdenForm nuevaOrden;
+    private DetalleOrden nuevoPlatillo;
     /**
      * Creates new form AgregarPlatilloForm
      */
     public AgregarPlatilloForm() {
         initComponents();
+    }
+    public AgregarPlatilloForm(NuevaOrdenForm nuevaOrden, ManejoOrden manejoOrden) {
+        initComponents();
+        this.nuevaOrden = nuevaOrden;
+        this.manejoOrden = manejoOrden;
+        manejadorPlatillos = ManejoListaPlatillos.getManejador();
+        DefaultListModel modelo = new DefaultListModel();
+        ArrayList<Menu> platillos = manejadorPlatillos.getListaPlatillos();
+        System.out.println(platillos.size());
+        String tmp;
+        for(Menu item : platillos){
+            tmp = item.getNombreMenu();
+            modelo.addElement(tmp);
+        }
+        this.listaPlatillosIncluidos.setModel(modelo);
+        this.nuevoPlatillo = new DetalleOrden();
     }
 
     /**
@@ -39,15 +67,25 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
         ingresoPrecioVenta = new javax.swing.JTextField();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listacomplementos = new javax.swing.JList<>();
+        jLabel2 = new javax.swing.JLabel();
+        botonAgregarComplemento = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
-        setMinimumSize(new java.awt.Dimension(650, 465));
-        setPreferredSize(new java.awt.Dimension(650, 465));
+        setMinimumSize(new java.awt.Dimension(657, 630));
+        setPreferredSize(new java.awt.Dimension(657, 630));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         listaPlatillosIncluidos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        listaPlatillosIncluidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaPlatillosIncluidosMouseClicked(evt);
+            }
         });
         jScrollPane1.setViewportView(listaPlatillosIncluidos);
 
@@ -60,16 +98,16 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
                 botonConsultarDetallesActionPerformed(evt);
             }
         });
-        getContentPane().add(botonConsultarDetalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 330, 40));
+        getContentPane().add(botonConsultarDetalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 330, 40));
 
         botonAgregarPlatillo.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
-        botonAgregarPlatillo.setText("Agregar Platillo");
+        botonAgregarPlatillo.setText("Confirmar");
         botonAgregarPlatillo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonAgregarPlatilloActionPerformed(evt);
             }
         });
-        getContentPane().add(botonAgregarPlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 330, 40));
+        getContentPane().add(botonAgregarPlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 330, 40));
 
         botonCancelar.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         botonCancelar.setText("Cancelar");
@@ -78,20 +116,20 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
                 botonCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 330, 40));
+        getContentPane().add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, 330, 40));
 
         etiquetaCantidad.setText("Cantidad");
-        getContentPane().add(etiquetaCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, -1));
+        getContentPane().add(etiquetaCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
 
         etiquetaPrecioUnitario.setText("Precio Unitario");
-        getContentPane().add(etiquetaPrecioUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
+        getContentPane().add(etiquetaPrecioUnitario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
         etiquetaMostrarPrecio.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         etiquetaMostrarPrecio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(etiquetaMostrarPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 210, 30));
+        getContentPane().add(etiquetaMostrarPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 210, 30));
 
         jLabel4.setText("Precio de Venta");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
 
         ingresoPrecioVenta.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         ingresoPrecioVenta.addActionListener(new java.awt.event.ActionListener() {
@@ -99,14 +137,40 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
                 ingresoPrecioVentaActionPerformed(evt);
             }
         });
-        getContentPane().add(ingresoPrecioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 210, -1));
+        getContentPane().add(ingresoPrecioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 210, -1));
 
         jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
-        getContentPane().add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 210, 30));
+        getContentPane().add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, 210, 30));
 
         jLabel1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel1.setText("Platillos");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, -1, -1));
+
+        listacomplementos.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(listacomplementos);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 460, 250, 130));
+
+        jLabel2.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jLabel2.setText("Complementos");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 430, -1, -1));
+
+        botonAgregarComplemento.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        botonAgregarComplemento.setText("Agregar Complemento");
+        botonAgregarComplemento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAgregarComplementoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonAgregarComplemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 330, 40));
+
+        jLabel3.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel3.setText("Agregar Platillo a la Orden");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -116,9 +180,13 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
     }//GEN-LAST:event_ingresoPrecioVentaActionPerformed
 
     private void botonConsultarDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConsultarDetallesActionPerformed
+
         // TODO add your handling code here:
-        this.visualizarPlatillos = new VisualizarDetallesPlatilloForm();
-        this.visualizarPlatillos.setVisible(true);
+        if(listaPlatillosIncluidos.getSelectedIndex() >= 0){
+        
+            this.visualizarPlatillos = new VisualizarDetallesPlatilloForm(manejadorPlatillos.getPlatillo(listaPlatillosIncluidos.getSelectedIndex()));
+            this.visualizarPlatillos.setVisible(true);
+        }
     }//GEN-LAST:event_botonConsultarDetallesActionPerformed
 
     private void botonAgregarPlatilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarPlatilloActionPerformed
@@ -128,6 +196,19 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botonCancelarActionPerformed
+
+    private void listaPlatillosIncluidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaPlatillosIncluidosMouseClicked
+        // TODO add your handling code here:
+        if(listaPlatillosIncluidos.getSelectedIndex() >= 0){
+        
+            this.etiquetaMostrarPrecio.setText(" Q." +  Double.toString(manejadorPlatillos.getPlatillo(listaPlatillosIncluidos.getSelectedIndex()).getPrecio()));
+            this.ingresoPrecioVenta.setText(Double.toString(manejadorPlatillos.getPlatillo(listaPlatillosIncluidos.getSelectedIndex()).getPrecio()));
+        }
+    }//GEN-LAST:event_listaPlatillosIncluidosMouseClicked
+
+    private void botonAgregarComplementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarComplementoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonAgregarComplementoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,6 +246,7 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonAgregarComplemento;
     private javax.swing.JButton botonAgregarPlatillo;
     private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonConsultarDetalles;
@@ -173,9 +255,24 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
     private javax.swing.JLabel etiquetaPrecioUnitario;
     private javax.swing.JTextField ingresoPrecioVenta;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JList<String> listaPlatillosIncluidos;
+    private javax.swing.JList<String> listacomplementos;
     // End of variables declaration//GEN-END:variables
+
+    public void actualizarComplementos(){
+        String tmp;
+        
+        DefaultListModel modelo = new DefaultListModel();
+        for(DetalleComplementos item : nuevoPlatillo.getListaComplementos()){
+            tmp = item.getInventario().getNombre() +  " || Cantidad: " + item.getCantidad();
+            modelo.addElement(tmp);
+        }
+        listacomplementos.setModel(modelo);
+    }
 }
