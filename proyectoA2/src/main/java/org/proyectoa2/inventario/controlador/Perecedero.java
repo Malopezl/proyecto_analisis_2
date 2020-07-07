@@ -21,13 +21,7 @@ public class Perecedero implements TipoProducto {
 
     @Override
     public Inventario tipoProducto(Date fecha, Inventario inventario) {
-        try {
-            inventario.setFechaCaducidad(null);
-            return inventario;
-        } catch (Exception e) {
-            
-        }
-        return null;
+        return inventario;
 
     }
 

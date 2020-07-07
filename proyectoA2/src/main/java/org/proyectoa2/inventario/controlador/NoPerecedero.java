@@ -21,8 +21,13 @@ public class NoPerecedero implements TipoProducto {
 
     @Override
     public Inventario tipoProducto(Date fecha, Inventario inventario) {
-        return inventario;
+        try {
+            inventario.setFechaCaducidad(null);
+            return inventario;
+        } catch (Exception e) {
 
+        }
+        return null;
     }
 
 }
