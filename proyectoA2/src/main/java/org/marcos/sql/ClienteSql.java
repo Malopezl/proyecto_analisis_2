@@ -94,7 +94,10 @@ public class ClienteSql {
             stmt.setString(3, cliente.getCorreo());
             stmt.setString(4, cliente.getTelefono());
             rs = stmt.executeQuery();
-            cliente.setIdCliente(rs.getInt("idCliente"));
+            while(rs.next()){
+                cliente.setIdCliente(rs.getInt(1));
+                break;
+            }
             
         } catch (SQLException ex) {
             Logger.getLogger(ClienteSql.class.getName()).log(Level.SEVERE, null, ex);
