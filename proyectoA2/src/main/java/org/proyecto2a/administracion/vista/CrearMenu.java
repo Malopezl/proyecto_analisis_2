@@ -6,6 +6,7 @@
 package org.proyecto2a.administracion.vista;
 
 import java.awt.Dimension;
+import org.proyecto2a.administracion.controller.listar.listarIngredientes;
 
 /**
  *
@@ -16,14 +17,18 @@ public class CrearMenu extends javax.swing.JFrame {
     /**
      * Creates new form CrearMenu
      */
+    
     public CrearMenu() {
         initComponents();
         this.inicializar();
+       
     }
      private void inicializar(){
         this.setSize(new Dimension(1000, 700));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        this.listaIngredientes.setModel(listarIngredientes.listarInventario());
+   
     }
 
     /**
@@ -40,8 +45,8 @@ public class CrearMenu extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        botonCancelar = new javax.swing.JButton();
+        botonGuardar = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -50,14 +55,14 @@ public class CrearMenu extends javax.swing.JFrame {
         jTextArea2 = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listaIngredientes = new javax.swing.JList<>();
         jTextField4 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        botonAgregarIngrediente = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
-        jButton4 = new javax.swing.JButton();
+        listaIngredientesSeleccionados = new javax.swing.JList<>();
+        botonEliminarIngrediente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,19 +81,19 @@ public class CrearMenu extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         jLabel5.setText("Ingrese la receta de preparación del menú:");
 
-        jButton1.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jButton1.setText("Cancelar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonCancelar.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonCancelarActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jButton2.setText("Guardar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonGuardar.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        botonGuardar.setText("Guardar");
+        botonGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botonGuardarActionPerformed(evt);
             }
         });
 
@@ -112,33 +117,38 @@ public class CrearMenu extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         jLabel6.setText("Seleccione los ingredientes:");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        listaIngredientes.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane4.setViewportView(jList1);
+        jScrollPane4.setViewportView(listaIngredientes);
 
         jTextField4.setFont(new java.awt.Font("FreeSerif", 0, 18)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         jLabel7.setText("Ingrese la cantidad del ingrediente utilizar:");
 
-        jButton3.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jButton3.setText("Agregar ingrediente al menú");
+        botonAgregarIngrediente.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        botonAgregarIngrediente.setText("Agregar ingrediente al menú");
+        botonAgregarIngrediente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAgregarIngredienteActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         jLabel8.setText("Lista de ingrediente añadidos:");
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+        listaIngredientesSeleccionados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane5.setViewportView(jList2);
+        jScrollPane5.setViewportView(listaIngredientesSeleccionados);
 
-        jButton4.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jButton4.setText("Eliminar ingrediente del menú");
+        botonEliminarIngrediente.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        botonEliminarIngrediente.setText("Eliminar ingrediente del menú");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -164,24 +174,24 @@ public class CrearMenu extends javax.swing.JFrame {
                                     .addComponent(jTextField1))))
                         .addGap(89, 89, 89)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jButton3)
+                            .addComponent(botonAgregarIngrediente)
                             .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane5)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(160, 160, 160)
-                        .addComponent(jButton1)
+                        .addComponent(botonCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(botonGuardar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton4)
+                .addComponent(botonEliminarIngrediente)
                 .addGap(14, 14, 14))
         );
         layout.setVerticalGroup(
@@ -215,7 +225,7 @@ public class CrearMenu extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(jButton3)))
+                        .addComponent(botonAgregarIngrediente)))
                 .addGap(36, 36, 36)
                 .addComponent(jLabel4)
                 .addGap(8, 8, 8)
@@ -225,7 +235,7 @@ public class CrearMenu extends javax.swing.JFrame {
                         .addGap(5, 5, 5)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4))
+                        .addComponent(botonEliminarIngrediente))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
@@ -234,8 +244,8 @@ public class CrearMenu extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(68, 68, 68)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1))))
+                            .addComponent(botonGuardar)
+                            .addComponent(botonCancelar))))
                 .addGap(28, 28, 28))
         );
 
@@ -247,15 +257,19 @@ public class CrearMenu extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botonCancelarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_botonGuardarActionPerformed
+
+    private void botonAgregarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarIngredienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonAgregarIngredienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -293,10 +307,10 @@ public class CrearMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton botonAgregarIngrediente;
+    private javax.swing.JButton botonCancelar;
+    private javax.swing.JButton botonEliminarIngrediente;
+    private javax.swing.JButton botonGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -305,8 +319,6 @@ public class CrearMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
@@ -316,5 +328,7 @@ public class CrearMenu extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JList<String> listaIngredientes;
+    private javax.swing.JList<String> listaIngredientesSeleccionados;
     // End of variables declaration//GEN-END:variables
 }
