@@ -66,6 +66,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="botonAgregarPlatillo">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="16" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Agregar Platillo"/>
       </Properties>
       <Events>
@@ -73,12 +76,15 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="100" y="350" width="480" height="-1"/>
+          <AbsoluteConstraints x="100" y="350" width="480" height="40"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="botonConfirmarOrden">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="16" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Confirmar Orden"/>
       </Properties>
       <Events>
@@ -86,12 +92,15 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="100" y="550" width="480" height="-1"/>
+          <AbsoluteConstraints x="100" y="520" width="480" height="40"/>
         </Constraint>
       </Constraints>
     </Component>
     <Component class="javax.swing.JButton" name="botonCancelarOrden">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="16" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
       <Events>
@@ -99,7 +108,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="100" y="600" width="480" height="-1"/>
+          <AbsoluteConstraints x="100" y="583" width="480" height="40"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -147,6 +156,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="botonEliminarPlatillo">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="sansserif" size="16" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Eliminar Platillo"/>
       </Properties>
       <Events>
@@ -154,7 +166,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="100" y="420" width="480" height="-1"/>
+          <AbsoluteConstraints x="100" y="420" width="480" height="40"/>
         </Constraint>
       </Constraints>
     </Component>

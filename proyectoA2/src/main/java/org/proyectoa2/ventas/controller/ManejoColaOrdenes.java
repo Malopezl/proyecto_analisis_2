@@ -21,10 +21,13 @@ public class ManejoColaOrdenes {
     private OrdenSql ordenSql;
     private ClienteSql clienteSql;
     private RealizarPago pago;
+    private int indiceAtender;
     
     public Orden atenderOrden(){
+        if(indiceAtender == this.colaOrdenesPendientes.size())
+            return null;
         if(!(colaOrdenesPendientes.isEmpty())){
-            return colaOrdenesPendientes.get(0);
+            return colaOrdenesPendientes.get(indiceAtender);
         }
         return null;
     }
@@ -47,13 +50,18 @@ public class ManejoColaOrdenes {
         if(tipoCobro == 1){
             pago = new RealizarPagoEfectivo();
             pago.realizarPago(cobrar);
-            double cambio = cantidadPagada - cobrar.getTotal(); 
+            double cambio = cantidadPagada - cobrar.getTotal();
+            this.colaOrdenesPendientes.remove(indexCola);
+            this.indiceAtender -= 1;
             return cambio;
         }else{
             pago = new RealizarPagoSaldo();
             pago.realizarPago(cobrar);
+            this.colaOrdenesPendientes.remove(indexCola);
+            this.indiceAtender -= 1;
             return 0;
         }
+        
     }
     public Orden obtenerOrden(int indexCola){
         if(colaOrdenesPendientes.isEmpty()){
@@ -61,11 +69,10 @@ public class ManejoColaOrdenes {
         }
         return colaOrdenesPendientes.get(indexCola);
     }
-    public void editarOrden( Orden orden){
-        int indice = colaOrdenesPendientes.indexOf(orden);
-        
-        colaOrdenesPendientes.remove(indice);
-        colaOrdenesPendientes.add(indice, orden);
+    public void editarOrden( Orden orden){        
+        colaOrdenesPendientes.remove(orden);
+        colaOrdenesPendientes.add(orden);
+        this.notificar();
     }
     public ArrayList<Orden> obtenerCola(){
         return colaOrdenesPendientes;
@@ -75,6 +82,7 @@ public class ManejoColaOrdenes {
         observadores = new ArrayList<>();
         ordenSql = new OrdenSql();
         clienteSql = new ClienteSql();
+        this.indiceAtender = 0;
     }
     public static ManejoColaOrdenes obtenerControlador(){
         if(manejo == null){
@@ -92,5 +100,14 @@ public class ManejoColaOrdenes {
         for(ObservadorVentas observer : observadores){
             observer.actualizar();
         }
+    }
+    public void eliminarOrden(Orden orden){
+        this.colaOrdenesPendientes.remove(orden);
+        this.notificar();
+    }
+    public void cambiarEstado(){
+        this.colaOrdenesPendientes.get(indiceAtender).setEstado(2);
+        this.indiceAtender+=1;
+        this.notificar();
     }
 }

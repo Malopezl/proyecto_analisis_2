@@ -49,9 +49,9 @@ public class AgregarClienteForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         textCorreo = new javax.swing.JTextField();
 
-        setMaximumSize(new java.awt.Dimension(652, 541));
-        setMinimumSize(new java.awt.Dimension(652, 541));
-        setPreferredSize(new java.awt.Dimension(652, 541));
+        setMaximumSize(new java.awt.Dimension(635, 597));
+        setMinimumSize(new java.awt.Dimension(635, 597));
+        setPreferredSize(new java.awt.Dimension(635, 597));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(textNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 540, 30));
         getContentPane().add(textDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 540, 40));

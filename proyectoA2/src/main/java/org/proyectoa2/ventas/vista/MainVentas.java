@@ -7,6 +7,7 @@ package org.proyectoa2.ventas.vista;
 
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import org.marcos.dto.Orden;
 import org.proyectoa2.ventas.controller.ManejoColaOrdenes;
 import org.proyectoa2.ventas.controller.ObservadorVentas;
@@ -77,6 +78,11 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
 
         cancelarOrdenBoton.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         cancelarOrdenBoton.setText("Cancelar Orden Seleccionada");
+        cancelarOrdenBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarOrdenBotonActionPerformed(evt);
+            }
+        });
         add(cancelarOrdenBoton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 380, 50));
 
         editarOrdenBoton.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
@@ -136,15 +142,26 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
     }//GEN-LAST:event_botonNuevaOrdenActionPerformed
 
     private void editarOrdenBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarOrdenBotonActionPerformed
-        // TODO add your handling code here:
-        nuevaOrdenFormulario = new NuevaOrdenForm("Editar Orden");
-        nuevaOrdenFormulario.setVisible(true);
+        // TODO add your handling code here:\
+        Orden ordent = this.manejador.obtenerOrden(this.displayColaOrdenes.getSelectedIndex());
+        if(ordent.getEstado() == 1){
+            nuevaOrdenFormulario = new NuevaOrdenForm("Editar Orden", ordent);
+            nuevaOrdenFormulario.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Las ordenes que ya han sido atendidas\n no pueden editarse", "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_editarOrdenBotonActionPerformed
 
     private void atenderOrdenBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atenderOrdenBotonActionPerformed
         // TODO add your handling code here:
-        this.atenderOrden = new AtenderOrdenForm();
-        this.atenderOrden.setVisible(true);
+        Orden ordent = this.manejador.atenderOrden();
+        if(ordent != null){
+        
+            this.atenderOrden = new AtenderOrdenForm(ordent);
+            this.atenderOrden.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "No quedan ordenes por atender", "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
+        }
         
     }//GEN-LAST:event_atenderOrdenBotonActionPerformed
 
@@ -159,6 +176,29 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
         this.cobrarSaldo = new CobrarSaldoForm();
         this.cobrarSaldo.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cancelarOrdenBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarOrdenBotonActionPerformed
+        // TODO add your handling code here:
+        if(this.displayColaOrdenes.getSelectedIndex() < 0 ){
+            String tmp = "Error, no se la seleccionado un complemento de la lista";
+            if(this.displayColaOrdenes.getSelectedIndex() < 0)
+            {
+                tmp += "\n   * Seleccione una orden valida";
+            }
+            if(manejador.obtenerCola().isEmpty())
+            {
+                tmp += "\n   * No se encontro ninguna orden";
+            }
+            JOptionPane.showMessageDialog(null, tmp, "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
+        }else{
+            Orden temp = manejador.obtenerCola().get(this.displayColaOrdenes.getSelectedIndex());
+            if(temp.getEstado() == 1){
+                manejador.eliminarOrden(temp);
+            }else{
+                JOptionPane.showMessageDialog(null, "Las ordenes que ya han sido atendidas\n no pueden eliminarse", "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_cancelarOrdenBotonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -182,7 +222,12 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
         String tmp;
         int contador = 1;
         for(Orden item : lista){
-            tmp = " " + contador++ +".) " + item.getCliente().getNombreCliente()+ " || Total: " + item.getTotal();
+            tmp = " " + contador++ +".) " + item.getCliente().getNombreCliente();
+            if(item.getEstado() == 1){
+                tmp = tmp + " || estado: En espera || Total: "+ + item.getTotal();
+            }else{
+                tmp = tmp + " || estado: Atendido || Total: "+ + item.getTotal();
+            }
             modelo.addElement(tmp);
             
         }

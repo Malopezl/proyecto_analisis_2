@@ -57,6 +57,7 @@ public class ManejoOrden {
         orden.getDetalles().remove(indice);
     }
     public void prepararOrden(Cliente cliente, String total){
+        this.orden.setEstado(1);
         this.orden.setCliente(cliente);
         Date fecha = new Date();
         this.orden.setFechaOrden(fecha);

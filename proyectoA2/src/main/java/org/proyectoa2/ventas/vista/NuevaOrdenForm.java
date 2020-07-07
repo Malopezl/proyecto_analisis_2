@@ -49,6 +49,8 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         this.etiquetaTitulo.setText(titulo);
         manejador = ManejoListaClientes.obtenerManejador();
         this.ActualizarListaClientes();
+        int indice = manejador.geListaClientes().indexOf(orden.getCliente());
+        this.listaSeleccionCliente.setSelectedIndex(indice);
         
         manejadorOrden = new ManejoOrden(orden);
         this.ActualizarListaPlatillos();
@@ -96,29 +98,32 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         etiquetaSeleccionarCliente.setText("Seleccionar Cliente");
         getContentPane().add(etiquetaSeleccionarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, -1));
 
+        botonAgregarPlatillo.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         botonAgregarPlatillo.setText("Agregar Platillo");
         botonAgregarPlatillo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonAgregarPlatilloActionPerformed(evt);
             }
         });
-        getContentPane().add(botonAgregarPlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 480, -1));
+        getContentPane().add(botonAgregarPlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 480, 40));
 
+        botonConfirmarOrden.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         botonConfirmarOrden.setText("Confirmar Orden");
         botonConfirmarOrden.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonConfirmarOrdenActionPerformed(evt);
             }
         });
-        getContentPane().add(botonConfirmarOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 550, 480, -1));
+        getContentPane().add(botonConfirmarOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 520, 480, 40));
 
+        botonCancelarOrden.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         botonCancelarOrden.setText("Cancelar");
         botonCancelarOrden.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonCancelarOrdenActionPerformed(evt);
             }
         });
-        getContentPane().add(botonCancelarOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 600, 480, -1));
+        getContentPane().add(botonCancelarOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 583, 480, 40));
 
         listaSeleccionCliente.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         listaSeleccionCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {"---- Seleccione al Cliente ----"}));
@@ -130,13 +135,14 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         etiquetaTotalOrden.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         getContentPane().add(etiquetaTotalOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 510, 40));
 
+        botonEliminarPlatillo.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         botonEliminarPlatillo.setText("Eliminar Platillo");
         botonEliminarPlatillo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonEliminarPlatilloActionPerformed(evt);
             }
         });
-        getContentPane().add(botonEliminarPlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 420, 480, -1));
+        getContentPane().add(botonEliminarPlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 420, 480, 40));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, 610, 10));
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 620, 10));
 
@@ -184,11 +190,10 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
             }
             JOptionPane.showMessageDialog(null, tmp, "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
         }else{
-            this.manejadorOrden.prepararOrden(manejador.getCliente(this.listaSeleccionCliente.getSelectedIndex() - 1), this.etiquetaTotal.getText());
+            this.manejadorOrden.prepararOrden(manejador.getCliente(this.listaSeleccionCliente.getSelectedIndex() - 1), this.etiquetaTotalOrden.getText());
             if(this.etiquetaTitulo.getText().equals("Nueva Orden")){
                 this.manejadorOrden.confirmarOrden();
             }else{
-                System.out.println("2");
                 this.manejadorOrden.confirmarModificacionOrden();
             }
             this.setVisible(false);
@@ -284,7 +289,7 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
             modelo.addElement(tmp);
             total += precio;
         }
-        this.etiquetaTotal.setText(Double.toString(total));
+        this.etiquetaTotalOrden.setText(Double.toString(total));
         this.listaPlatillos.setModel(modelo);
     }
 }
