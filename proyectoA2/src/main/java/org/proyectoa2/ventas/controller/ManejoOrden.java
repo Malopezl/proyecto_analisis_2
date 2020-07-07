@@ -6,6 +6,8 @@
 package org.proyectoa2.ventas.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
+import org.marcos.dto.Cliente;
 import org.marcos.dto.DetalleComplementos;
 import org.marcos.dto.DetalleOrden;
 import org.marcos.dto.Orden;
@@ -41,12 +43,25 @@ public class ManejoOrden {
         return orden;
     }
     public double getTotalDetalle(DetalleOrden detalle){
-        double total;
+        double total ;
         total = detalle.getSubTotal();
-        System.out.println("total = " + total);
-        for(DetalleComplementos item : detalle.getListaComplementos()){
-            total += item.getSubTotal();
+        for(int i = 0 ; i <  detalle.getCantidad(); i++){
+            for(DetalleComplementos item : detalle.getListaComplementos()){
+                total += item.getSubTotal();
+            }
+        
         }
         return total;
+    }
+    public void eliminarPlatillo(int indice){
+        orden.getDetalles().remove(indice);
+    }
+    public void prepararOrden(Cliente cliente, String total){
+        this.orden.setCliente(cliente);
+        Date fecha = new Date();
+        this.orden.setFechaOrden(fecha);
+        this.orden.setIdCliente(cliente.getIdCliente());
+        this.orden.setIdUsuario(1);
+        this.orden.setTotal(Double.valueOf(total));
     }
 }

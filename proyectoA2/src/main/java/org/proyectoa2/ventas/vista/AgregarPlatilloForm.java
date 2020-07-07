@@ -218,9 +218,7 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
             this.nuevoPlatillo.setIdMenu(this.nuevoPlatillo.getMenu().getIdMenu());
             this.nuevoPlatillo.setCantidad((int) this.jSpinner1.getValue());
             double total = this.nuevoPlatillo.getPrecioVenta() * this.nuevoPlatillo.getCantidad();
-            System.out.println(total);
             this.nuevoPlatillo.setSubTotal(total);
-            System.out.println(this.nuevoPlatillo.getSubTotal());
             for(DetalleComplementos detallet : this.nuevoPlatillo.getListaComplementos()){
                 detallet.setMenu(this.nuevoPlatillo.getMenu());
                 detallet.setIdMenu(detallet.getMenu().getIdMenu());

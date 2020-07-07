@@ -42,4 +42,7 @@ public class ManejoListaClientes {
         }
         listaClientes = clienteSql.selectAllClientes();
     }
+    public Cliente getCliente(int index){
+        return this.listaClientes.get(index);
+    }
 }

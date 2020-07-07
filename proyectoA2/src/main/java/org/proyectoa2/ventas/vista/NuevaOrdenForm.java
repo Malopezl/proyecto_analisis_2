@@ -9,9 +9,12 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import org.marcos.dto.Cliente;
 import org.marcos.dto.DetalleComplementos;
 import org.marcos.dto.DetalleOrden;
+import org.marcos.dto.Orden;
+import org.proyectoa2.ventas.controller.ManejoColaOrdenes;
 import org.proyectoa2.ventas.controller.ManejoListaClientes;
 import org.proyectoa2.ventas.controller.ManejoOrden;
 
@@ -36,7 +39,20 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         this.etiquetaTitulo.setText(titulo);
         manejador = ManejoListaClientes.obtenerManejador();
         this.ActualizarListaClientes();
+        
         manejadorOrden = new ManejoOrden();
+        
+            
+    }
+    public NuevaOrdenForm(String titulo, Orden orden) {
+        initComponents();
+        this.etiquetaTitulo.setText(titulo);
+        manejador = ManejoListaClientes.obtenerManejador();
+        this.ActualizarListaClientes();
+        
+        manejadorOrden = new ManejoOrden(orden);
+        this.ActualizarListaPlatillos();
+            
     }
 
     /**
@@ -89,9 +105,19 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         getContentPane().add(botonAgregarPlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 480, -1));
 
         botonConfirmarOrden.setText("Confirmar Orden");
+        botonConfirmarOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonConfirmarOrdenActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonConfirmarOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 550, 480, -1));
 
-        botonCancelarOrden.setText("Cancelar Orden");
+        botonCancelarOrden.setText("Cancelar");
+        botonCancelarOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCancelarOrdenActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonCancelarOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 600, 480, -1));
 
         listaSeleccionCliente.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
@@ -105,6 +131,11 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         getContentPane().add(etiquetaTotalOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 510, 40));
 
         botonEliminarPlatillo.setText("Eliminar Platillo");
+        botonEliminarPlatillo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarPlatilloActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonEliminarPlatillo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 420, 480, -1));
         getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, 610, 10));
         getContentPane().add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 620, 10));
@@ -139,6 +170,44 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         agregarCliente = new AgregarClienteForm(this);
         agregarCliente.setVisible(true);
     }//GEN-LAST:event_botonAgregarClienteActionPerformed
+
+    private void botonConfirmarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConfirmarOrdenActionPerformed
+        // TODO add your handling code here:
+        if(this.listaSeleccionCliente.getSelectedIndex() <= 0 ||
+                manejadorOrden.getOrden().getDetalles().isEmpty()){
+            String tmp = "Error, no se la seleccionado un platillo de la lista";
+            if(this.listaSeleccionCliente.getSelectedIndex() <= 0 ){
+                tmp += "\n   * Seleccione un cliente valido";
+            }
+            if(manejadorOrden.getOrden().getDetalles().isEmpty() ){
+                tmp += "\n   * No hay ningun platillo agregado";
+            }
+            JOptionPane.showMessageDialog(null, tmp, "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
+        }else{
+            this.manejadorOrden.prepararOrden(manejador.getCliente(this.listaSeleccionCliente.getSelectedIndex() - 1), this.etiquetaTotal.getText());
+            if(this.etiquetaTitulo.getText().equals("Nueva Orden")){
+                this.manejadorOrden.confirmarOrden();
+            }else{
+                System.out.println("2");
+                this.manejadorOrden.confirmarModificacionOrden();
+            }
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_botonConfirmarOrdenActionPerformed
+
+    private void botonCancelarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarOrdenActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_botonCancelarOrdenActionPerformed
+
+    private void botonEliminarPlatilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarPlatilloActionPerformed
+        // TODO add your handling code here:
+        if(this.listaPlatillos.getSelectedIndex() < 0){
+            JOptionPane.showMessageDialog(null, "Error, no se la seleccionado un platillo de la lista", "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
+        }else{
+            this.manejadorOrden.eliminarPlatillo(this.listaPlatillos.getSelectedIndex());
+        }
+    }//GEN-LAST:event_botonEliminarPlatilloActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,12 +275,16 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
     }
     public void ActualizarListaPlatillos(){
         String tmp;
-        double total;
+        double total = 0;
+        double precio;
         DefaultListModel modelo = new DefaultListModel();
         for(DetalleOrden item : manejadorOrden.getOrden().getDetalles()){
-            tmp = item.getMenu().getNombreMenu()+  " || Cantidad: " + item.getCantidad() + " || subtotal: " +manejadorOrden.getTotalDetalle(item);
+            precio = manejadorOrden.getTotalDetalle(item);
+            tmp = item.getMenu().getNombreMenu()+  " || Cantidad: " + item.getCantidad() + " || subtotal: " + precio;
             modelo.addElement(tmp);
+            total += precio;
         }
+        this.etiquetaTotal.setText(Double.toString(total));
         this.listaPlatillos.setModel(modelo);
     }
 }
