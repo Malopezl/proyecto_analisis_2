@@ -22,7 +22,8 @@ public class Orden {
     private Cliente cliente;
     private Usuario usuario;
     private ArrayList<DetalleOrden> detalles;
-    
+    private int estado;
+    // estado 1 = en espera, estado 2 = atendido
     public Orden() {
         detalles = new ArrayList<>();
         
