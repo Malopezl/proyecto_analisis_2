@@ -18,7 +18,7 @@ public class ClienteSql {
     
     private final String setenciaSelectAll = "SELECT idCliente, nombreCliente, direccionCliente, correoCliente, telefonoCliente, saldo FROM Cliente";
     private final String sentenciaActualizarSaldo = "UPDATE Cliente SET saldo=? WHERE idCliente=?";
-    private final String sentenciaInserVentas = "INSERT INTO Cliente(nombreCliente, direccionCliente, correoCliente, telefonoCliente, saldo) VALUES(?, ?, ?, ?. ?)";
+    private final String sentenciaInserVentas = "INSERT INTO Cliente(nombreCliente, direccionCliente, correoCliente, telefonoCliente, saldo) VALUES(?, ?, ?, ?, ?)";
     
     public ArrayList<Cliente> selectAllClientes(){
         Connection conn = null;
