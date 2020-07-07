@@ -55,9 +55,9 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
         jScrollPane1 = new javax.swing.JScrollPane();
         displayColaOrdenes = new javax.swing.JList<>();
 
-        setMinimumSize(new java.awt.Dimension(1080, 700));
+        setMinimumSize(new java.awt.Dimension(1080, 740));
         setName(""); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1080, 700));
+        setPreferredSize(new java.awt.Dimension(1080, 740));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         etiquetaColaOrdenes.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
@@ -143,12 +143,17 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
 
     private void editarOrdenBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarOrdenBotonActionPerformed
         // TODO add your handling code here:\
-        Orden ordent = this.manejador.obtenerOrden(this.displayColaOrdenes.getSelectedIndex());
-        if(ordent.getEstado() == 1){
-            nuevaOrdenFormulario = new NuevaOrdenForm("Editar Orden", ordent);
-            nuevaOrdenFormulario.setVisible(true);
+        if(this.displayColaOrdenes.getSelectedIndex() < 0){
+            JOptionPane.showMessageDialog(null, "Seleccione una orden valida para editar", "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(null, "Las ordenes que ya han sido atendidas\n no pueden editarse", "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
+        
+            Orden ordent = this.manejador.obtenerOrden(this.displayColaOrdenes.getSelectedIndex());
+            if(ordent.getEstado() == 1){
+                nuevaOrdenFormulario = new NuevaOrdenForm("Editar Orden", ordent);
+                nuevaOrdenFormulario.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(null, "Las ordenes que ya han sido atendidas\n no pueden editarse", "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }//GEN-LAST:event_editarOrdenBotonActionPerformed
 
