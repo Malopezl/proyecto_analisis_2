@@ -9,13 +9,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.marcos.dto.Inventario;
 
 /**
  *
- * @author marcos 
+ * @author marcos
  * @author Gilda
  */
 public class InventarioSql {
@@ -30,8 +32,16 @@ public class InventarioSql {
             stmt.setString(1, inventario.getDescripcionInventario());
             stmt.setInt(2, inventario.getExistencia());
             stmt.setString(3, inventario.getLote());
-            java.sql.Date sqlDate = new java.sql.Date(inventario.getFechaCaducidad().getTime());
+            System.out.println(inventario.getFechaCaducidad());
+            Date d = inventario.getFechaCaducidad();
+            if(d == null){
+            stmt.setDate(4, null);     
+            }
+            else{
+            java.sql.Date sqlDate = new java.sql.Date(inventario.getFechaCaducidad().getTime());    
             stmt.setDate(4, sqlDate);
+            }
+            
             stmt.setString(5, inventario.getNombre());
             int rows = stmt.executeUpdate();
 
@@ -44,7 +54,6 @@ public class InventarioSql {
         return ("");
     }
 
-    
     public static String ELIMINAR(int id) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -137,5 +146,37 @@ public class InventarioSql {
             ConexionSql.close(conn);
         }
         return (rs);
+    }
+    public ArrayList<Inventario> selectAll(){
+        Connection conn = null;
+        String sentencia = "SELECT idInventario, descripcionInventario, existencia, lote, fechaCaducidad, nombre FROM Inventario";
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        ArrayList<Inventario> lista = new ArrayList<>();
+        try{
+            conn = ConexionSql.getConnection();
+            stmt = conn.prepareStatement(sentencia);
+            rs = stmt.executeQuery();
+            Inventario tmp;
+            while(rs.next()){
+                tmp = new Inventario();
+                tmp.setIdInventario(rs.getInt("idInventario"));
+                tmp.setDescripcionInventario(rs.getString("descripcionInventario"));
+                tmp.setExistencia(rs.getInt("existencia"));
+                tmp.setLote(rs.getString("lote"));
+                tmp.setFechaCaducidad(rs.getDate("fechaCaducidad"));
+                tmp.setNombre(rs.getString("nombre"));
+                lista.add(tmp);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InventarioSql.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(conn != null){
+                ConexionSql.close(rs);
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return lista;
     }
 }

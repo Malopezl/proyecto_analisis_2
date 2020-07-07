@@ -72,4 +72,12 @@ public class Inventario {
         this.nombre = nombre;
     }
 
+    public int getIdInventario() {
+        return idInventario;
+    }
+
+    public void setIdInventario(int idInventario) {
+        this.idInventario = idInventario;
+    }
+    
 }
