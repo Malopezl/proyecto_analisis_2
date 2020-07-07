@@ -18,11 +18,10 @@ import org.marcos.dto.DetalleOrden;
 public class DetalleOrdenSql {
     
     
-    public int insertarListaDetalleOrden(ArrayList<DetalleOrden> lista, int idOrden){
+    public int insertarListaDetalleOrden(ArrayList<DetalleOrden> lista){
         String sentencia = "INSERT INTO DetalleOrden(idOrden, idMenu, cantidad, precioVenta, subtotal) VALUES(?, ?, ?, ?, ?) ";
         Connection conn = null;
         int rows = 0;
-        DetalleComplementosSql listaComplementos = new DetalleComplementosSql();
         int tmp;
         PreparedStatement stmt = null;
         int indice = 1;
@@ -30,15 +29,15 @@ public class DetalleOrdenSql {
             conn = ConexionSql.getConnection();
             for(DetalleOrden detalle : lista){
                 stmt = conn.prepareStatement(sentencia);
-                stmt.setInt(indice++, idOrden);
+                stmt.setInt(indice++, detalle.getIdOrden());
                 stmt.setInt(indice++, detalle.getIdMenu());
                 stmt.setInt(indice++, detalle.getCantidad());
                 stmt.setDouble(indice++, detalle.getPrecioVenta());
                 stmt.setDouble(indice, detalle.getSubTotal());
                 indice = 1;
+                
                 tmp = stmt.executeUpdate();
                 rows = tmp + rows;
-                listaComplementos.insertarDetallleCompelementosVenta(detalle.getListaComplementos() , idOrden, detalle.getIdMenu());
             }
         
         } catch (SQLException ex) {

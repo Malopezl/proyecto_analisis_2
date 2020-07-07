@@ -9,20 +9,28 @@ package org.marcos.dto;
  *
  * @author marcos
  */
-public class DetalleComplementos {
+public class DetalleOrden {
     private int idOrden;
-    private int idInventario;
-    private int cantidad;
     private int idMenu;
+    private int cantidad;
     private double precioVenta;
     private double subTotal;
-    private Inventario inventario;
     private Menu menu;
     private Orden orden;
-
-    public DetalleComplementos() {
+    
+    public DetalleOrden() {
     }
 
+    public DetalleOrden(int idOrden, int idMenu, int cantidad, double precioVenta, double subTotal) {
+        this.idOrden = idOrden;
+        this.idMenu = idMenu;
+        this.cantidad = cantidad;
+        this.precioVenta = precioVenta;
+        this.subTotal = subTotal;
+    }
+
+    
+    
     public int getIdOrden() {
         return idOrden;
     }
@@ -31,12 +39,12 @@ public class DetalleComplementos {
         this.idOrden = idOrden;
     }
 
-    public int getIdInventario() {
-        return idInventario;
+    public int getIdMenu() {
+        return idMenu;
     }
 
-    public void setIdInventario(int idInventario) {
-        this.idInventario = idInventario;
+    public void setIdMenu(int idMenu) {
+        this.idMenu = idMenu;
     }
 
     public int getCantidad() {
@@ -45,14 +53,6 @@ public class DetalleComplementos {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
-    }
-
-    public int getIdMenu() {
-        return idMenu;
-    }
-
-    public void setIdMenu(int idMenu) {
-        this.idMenu = idMenu;
     }
 
     public double getPrecioVenta() {
@@ -67,24 +67,8 @@ public class DetalleComplementos {
         return subTotal;
     }
 
-    public void setSubTotal(double subTotal) {
+    public void setSubTotal(double SubTotal) {
         this.subTotal = subTotal;
-    }
-
-    public Inventario getInventario() {
-        return inventario;
-    }
-
-    public void setInventario(Inventario inventario) {
-        this.inventario = inventario;
-    }
-
-    public Orden getOrden() {
-        return orden;
-    }
-
-    public void setOrden(Orden orden) {
-        this.orden = orden;
     }
 
     public Menu getMenu() {
@@ -94,7 +78,14 @@ public class DetalleComplementos {
     public void setMenu(Menu menu) {
         this.menu = menu;
     }
-    
+
+    public Orden getOrden() {
+        return orden;
+    }
+
+    public void setOrden(Orden orden) {
+        this.orden = orden;
+    }
     
     
     
