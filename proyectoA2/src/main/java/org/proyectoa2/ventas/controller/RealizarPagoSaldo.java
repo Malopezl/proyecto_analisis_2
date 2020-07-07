@@ -17,6 +17,13 @@ public class RealizarPagoSaldo extends RealizarPago {
 
     @Override
     public void realizarPago(Orden cobrar) {
+            Cliente cliente = cobrar.getCliente();
+            double nuevoSaldo = cobrar.getTotal() + cliente.getSaldo();
+            cliente.setSaldo(nuevoSaldo);
+            ClienteSql clienteSql = new ClienteSql();
+            clienteSql.actualizarSaldo(cliente);
+            ManejoListaClientes manejo = ManejoListaClientes.obtenerManejador();
+            manejo.actualizarClientes();
             super.generarFactura();
     }
     

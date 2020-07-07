@@ -167,8 +167,13 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
 
     private void botonCobrarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCobrarOrdenActionPerformed
         // TODO add your handling code here:
-        this.cobrarOrden = new CobrarOrdenForm();
-        this.cobrarOrden.setVisible(true);
+        if(this.displayColaOrdenes.getSelectedIndex() < 0 ){
+            JOptionPane.showMessageDialog(null, "Seleccione una orden valida", "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
+        }else{
+        
+            this.cobrarOrden = new CobrarOrdenForm(this.manejador.obtenerOrden(this.displayColaOrdenes.getSelectedIndex()));
+            this.cobrarOrden.setVisible(true);
+        }
     }//GEN-LAST:event_botonCobrarOrdenActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

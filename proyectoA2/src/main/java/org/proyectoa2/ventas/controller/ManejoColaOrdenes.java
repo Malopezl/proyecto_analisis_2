@@ -51,14 +51,14 @@ public class ManejoColaOrdenes {
             pago = new RealizarPagoEfectivo();
             pago.realizarPago(cobrar);
             double cambio = cantidadPagada - cobrar.getTotal();
-            this.colaOrdenesPendientes.remove(indexCola);
             this.indiceAtender -= 1;
+            this.notificar();
             return cambio;
         }else{
             pago = new RealizarPagoSaldo();
             pago.realizarPago(cobrar);
-            this.colaOrdenesPendientes.remove(indexCola);
             this.indiceAtender -= 1;
+            this.notificar();
             return 0;
         }
         

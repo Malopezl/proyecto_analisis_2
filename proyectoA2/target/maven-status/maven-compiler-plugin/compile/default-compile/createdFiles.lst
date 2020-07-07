@@ -76,7 +76,6 @@ org/proyectoa2/ventas/vista/MainVentas.class
 org/proyectoa2/ventas/vista/NuevaOrdenForm$2.class
 org/proyectoa2/ventas/vista/AgregarPlatilloForm$8.class
 org/proyectoa2/ventas/vista/pruebas.class
-org/proyectoa2/ventas/vista/CobrarOrdenForm$4.class
 org/marcos/dto/DetalleOrden.class
 org/marcos/dto/DetalleComplementos.class
 org/proyectoa2/ventas/controller/ManejoOrden.class

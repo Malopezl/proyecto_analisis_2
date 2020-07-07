@@ -17,14 +17,7 @@ public class RealizarPagoEfectivo extends RealizarPago{
 
     @Override
     public void realizarPago(Orden cobrar) {
-        Cliente cliente = cobrar.getCliente();
-            double nuevoSaldo = cobrar.getTotal() + cliente.getSaldo();
-            cliente.setSaldo(nuevoSaldo);
-            ClienteSql clienteSql = new ClienteSql();
-            clienteSql.actualizarSaldo(cliente);
-            /*
-                agregar actualizar lista clientes
-            */ 
+        
             super.generarFactura();
     }
     
