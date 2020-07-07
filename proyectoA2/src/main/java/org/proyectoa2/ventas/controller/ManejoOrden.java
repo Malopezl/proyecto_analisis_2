@@ -6,6 +6,7 @@
 package org.proyectoa2.ventas.controller;
 
 import java.util.ArrayList;
+import org.marcos.dto.DetalleComplementos;
 import org.marcos.dto.DetalleOrden;
 import org.marcos.dto.Orden;
 
@@ -16,12 +17,14 @@ import org.marcos.dto.Orden;
 public class ManejoOrden {
     private Orden orden;
     private ManejoColaOrdenes manejadorColaOrdenes;
+
     
     
-    public void ManejoOrdenes(){
+    public ManejoOrden(){
         manejadorColaOrdenes = ManejoColaOrdenes.obtenerControlador();
+        this.orden = new Orden();
     }
-    public void ManejoOrdenes(Orden orden){
+    public ManejoOrden(Orden orden){
         manejadorColaOrdenes = ManejoColaOrdenes.obtenerControlador();
         this.orden = orden;
     }
@@ -33,5 +36,17 @@ public class ManejoOrden {
     }
     public void confirmarModificacionOrden(){
         manejadorColaOrdenes.editarOrden(orden);
+    }
+    public Orden getOrden(){
+        return orden;
+    }
+    public double getTotalDetalle(DetalleOrden detalle){
+        double total;
+        total = detalle.getSubTotal();
+        System.out.println("total = " + total);
+        for(DetalleComplementos item : detalle.getListaComplementos()){
+            total += item.getSubTotal();
+        }
+        return total;
     }
 }

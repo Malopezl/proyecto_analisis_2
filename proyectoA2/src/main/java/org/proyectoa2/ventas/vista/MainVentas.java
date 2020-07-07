@@ -28,7 +28,6 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
     public MainVentas() {
         initComponents();
         manejador = ManejoColaOrdenes.obtenerControlador();
-        System.out.println("Holiiiiiiiiiiiiii" + manejador);
         this.actualizar();
         
     }

@@ -7,6 +7,7 @@ package org.proyectoa2.ventas.vista;
 
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import org.marcos.dto.DetalleComplementos;
 import org.marcos.dto.DetalleOrden;
 import org.marcos.dto.Menu;
@@ -37,7 +38,6 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
         manejadorPlatillos = ManejoListaPlatillos.getManejador();
         DefaultListModel modelo = new DefaultListModel();
         ArrayList<Menu> platillos = manejadorPlatillos.getListaPlatillos();
-        System.out.println(platillos.size());
         String tmp;
         for(Menu item : platillos){
             tmp = item.getNombreMenu();
@@ -73,6 +73,7 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         botonAgregarComplemento = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        botonEliminarComplemento = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(657, 630));
         setPreferredSize(new java.awt.Dimension(657, 630));
@@ -99,7 +100,7 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
                 botonConsultarDetallesActionPerformed(evt);
             }
         });
-        getContentPane().add(botonConsultarDetalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 330, 40));
+        getContentPane().add(botonConsultarDetalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 330, 40));
 
         botonAgregarPlatillo.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
         botonAgregarPlatillo.setText("Confirmar");
@@ -167,11 +168,20 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
                 botonAgregarComplementoActionPerformed(evt);
             }
         });
-        getContentPane().add(botonAgregarComplemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 330, 40));
+        getContentPane().add(botonAgregarComplemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 330, 40));
 
         jLabel3.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabel3.setText("Agregar Platillo a la Orden");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+
+        botonEliminarComplemento.setFont(new java.awt.Font("sansserif", 0, 16)); // NOI18N
+        botonEliminarComplemento.setText("Eliminar Complemento");
+        botonEliminarComplemento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarComplementoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonEliminarComplemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 320, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -187,15 +197,46 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
         
             this.visualizarPlatillos = new VisualizarDetallesPlatilloForm(manejadorPlatillos.getPlatillo(listaPlatillosIncluidos.getSelectedIndex()));
             this.visualizarPlatillos.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(null, "Error, no se la seleccionado un platillo de la lista", "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botonConsultarDetallesActionPerformed
 
     private void botonAgregarPlatilloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarPlatilloActionPerformed
         // TODO add your handling code here:
+        if(listaPlatillosIncluidos.getSelectedIndex() < 0 || this.ingresoPrecioVenta.getText().length() <= 0){
+            String tmp = "Error, revise si ha llenado bien los siguientes campos:";
+            if(listaPlatillosIncluidos.getSelectedIndex() < 0){
+                tmp = tmp + "\n   *No se ha seleccionado un platillo";
+            }
+            if(this.ingresoPrecioVenta.getText().length() <= 0){
+                tmp = tmp + "\n   *No se ha indicado precio de venta";
+            }
+        }else{
+            this.nuevoPlatillo.setPrecioVenta(Double.valueOf(this.ingresoPrecioVenta.getText()));
+            this.nuevoPlatillo.setMenu(manejadorPlatillos.getPlatillo(listaPlatillosIncluidos.getSelectedIndex()));
+            this.nuevoPlatillo.setIdMenu(this.nuevoPlatillo.getMenu().getIdMenu());
+            this.nuevoPlatillo.setCantidad((int) this.jSpinner1.getValue());
+            double total = this.nuevoPlatillo.getPrecioVenta() * this.nuevoPlatillo.getCantidad();
+            System.out.println(total);
+            this.nuevoPlatillo.setSubTotal(total);
+            System.out.println(this.nuevoPlatillo.getSubTotal());
+            for(DetalleComplementos detallet : this.nuevoPlatillo.getListaComplementos()){
+                detallet.setMenu(this.nuevoPlatillo.getMenu());
+                detallet.setIdMenu(detallet.getMenu().getIdMenu());
+                
+            }
+            this.manejoOrden.agregarDetalleOrden(this.nuevoPlatillo);
+            this.nuevaOrden.ActualizarListaPlatillos();
+            this.setVisible(false);
+        }
+        
+        
     }//GEN-LAST:event_botonAgregarPlatilloActionPerformed
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void listaPlatillosIncluidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaPlatillosIncluidosMouseClicked
@@ -213,6 +254,16 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
         this.agregarComplementoForm.setVisible(true);
         
     }//GEN-LAST:event_botonAgregarComplementoActionPerformed
+
+    private void botonEliminarComplementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarComplementoActionPerformed
+        // TODO add your handling code here:
+        if(this.listacomplementos.getSelectedIndex() < 0){
+            JOptionPane.showMessageDialog(null, "Error, no se la seleccionado un complemento de la lista", "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
+        }else{
+                this.nuevoPlatillo.getListaComplementos().remove(listacomplementos.getSelectedIndex());
+                this.actualizarComplementos();
+        }
+    }//GEN-LAST:event_botonEliminarComplementoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,6 +305,7 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
     private javax.swing.JButton botonAgregarPlatillo;
     private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonConsultarDetalles;
+    private javax.swing.JButton botonEliminarComplemento;
     private javax.swing.JLabel etiquetaCantidad;
     private javax.swing.JLabel etiquetaMostrarPrecio;
     private javax.swing.JLabel etiquetaPrecioUnitario;

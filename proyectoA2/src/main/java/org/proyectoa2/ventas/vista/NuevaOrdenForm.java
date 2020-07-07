@@ -7,8 +7,11 @@ package org.proyectoa2.ventas.vista;
 
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import org.marcos.dto.Cliente;
+import org.marcos.dto.DetalleComplementos;
+import org.marcos.dto.DetalleOrden;
 import org.proyectoa2.ventas.controller.ManejoListaClientes;
 import org.proyectoa2.ventas.controller.ManejoOrden;
 
@@ -46,7 +49,7 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listaPlatillos = new javax.swing.JList<>();
         etiquetaSeleccionarCliente = new javax.swing.JLabel();
         botonAgregarPlatillo = new javax.swing.JButton();
         botonConfirmarOrden = new javax.swing.JButton();
@@ -65,12 +68,12 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(1080, 720));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        listaPlatillos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(listaPlatillos);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 70, 340, 570));
 
@@ -183,10 +186,10 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
     private javax.swing.JLabel etiquetaTotal;
     private javax.swing.JLabel etiquetaTotalOrden;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JList<String> listaPlatillos;
     private javax.swing.JComboBox<String> listaSeleccionCliente;
     // End of variables declaration//GEN-END:variables
 
@@ -198,8 +201,17 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         String tmp;
         for(Cliente item : lista){
             tmp = item.getNombreCliente() + " | Saldo: " + item.getSaldo();
-            System.out.println("item = " + item);
             listaSeleccionCliente.addItem(tmp);
         }
+    }
+    public void ActualizarListaPlatillos(){
+        String tmp;
+        double total;
+        DefaultListModel modelo = new DefaultListModel();
+        for(DetalleOrden item : manejadorOrden.getOrden().getDetalles()){
+            tmp = item.getMenu().getNombreMenu()+  " || Cantidad: " + item.getCantidad() + " || subtotal: " +manejadorOrden.getTotalDetalle(item);
+            modelo.addElement(tmp);
+        }
+        this.listaPlatillos.setModel(modelo);
     }
 }
