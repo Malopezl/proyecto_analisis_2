@@ -17,6 +17,7 @@ public class DetalleComplementos {
     private double precioVenta;
     private double subTotal;
     private Inventario inventario;
+    private Menu menu;
     private Orden orden;
 
     public DetalleComplementos() {
@@ -42,7 +43,7 @@ public class DetalleComplementos {
         return cantidad;
     }
 
-    public void setIdCantidad(int cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 
@@ -84,6 +85,14 @@ public class DetalleComplementos {
 
     public void setOrden(Orden orden) {
         this.orden = orden;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
     
     

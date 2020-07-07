@@ -5,11 +5,13 @@
  */
 package org.marcos.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
  *
  * @author marcos
+ * @author marvin
  */
 public class Compra {
 
@@ -17,9 +19,11 @@ public class Compra {
     private Date fecha;
     private String noFactura;
     private double total;
+    private String estado;
     private int idProveedor;
     private Proveedor proveedor;
-    
+    private ArrayList<DetalleCompra> detalle;
+
     public Compra() {
     }
 
@@ -29,6 +33,7 @@ public class Compra {
         this.noFactura = noFactura;
         this.total = total;
         this.idProveedor = idProveedor;
+        detalle = new ArrayList<>();
     }
     
     
@@ -65,6 +70,14 @@ public class Compra {
         this.total = total;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public int getIdProveedor() {
         return idProveedor;
     }
@@ -80,7 +93,13 @@ public class Compra {
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
     }
-    
-    
+
+    public ArrayList<DetalleCompra> getDetalle() {
+        return detalle;
+    }
+
+    public void setDetalle(ArrayList<DetalleCompra> detalle) {
+        this.detalle = detalle;
+    }
     
 }

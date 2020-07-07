@@ -21,6 +21,7 @@ public class DetalleOrden {
     private Orden orden;
     private ArrayList<DetalleComplementos> listaComplementos;
     public DetalleOrden() {
+        this.listaComplementos = new ArrayList<>();
     }
 
     public DetalleOrden(int idOrden, int idMenu, int cantidad, double precioVenta, double subTotal) {
@@ -29,6 +30,7 @@ public class DetalleOrden {
         this.cantidad = cantidad;
         this.precioVenta = precioVenta;
         this.subTotal = subTotal;
+        this.listaComplementos = new ArrayList<>();
     }
 
     
@@ -70,7 +72,7 @@ public class DetalleOrden {
     }
 
     public void setSubTotal(double SubTotal) {
-        this.subTotal = subTotal;
+        this.subTotal = SubTotal;
     }
 
     public Menu getMenu() {
