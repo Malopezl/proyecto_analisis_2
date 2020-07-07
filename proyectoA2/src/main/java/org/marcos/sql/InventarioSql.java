@@ -59,7 +59,7 @@ public class InventarioSql {
         PreparedStatement stmt = null;
         try {
             conn = ConexionSql.getConnection();
-            String SQL_DELETE = "DELETE FROM INVENTARIO WHERE idInventario = " + id;
+            String SQL_DELETE = "DELETE FROM Inventario WHERE idInventario = " + id;
             stmt = conn.prepareStatement(SQL_DELETE);
             int rows = stmt.executeUpdate();
 
@@ -78,7 +78,7 @@ public class InventarioSql {
         ResultSet rs = null;
         try {
             conn = ConexionSql.getConnection();
-            String selectSQL = "select * from inventario";
+            String selectSQL = "select * from Inventario";
             stmt = conn.prepareStatement(selectSQL);
             rs = stmt.executeQuery(selectSQL);
 
@@ -97,7 +97,7 @@ public class InventarioSql {
         ResultSet rs = null;
         try {
             conn = ConexionSql.getConnection();
-            String selectSQL = "select * from inventario where nombre LIKE '%" + nombre + "%'";
+            String selectSQL = "select * from Inventario where nombre LIKE '%" + nombre + "%'";
             stmt = conn.prepareStatement(selectSQL);
             rs = stmt.executeQuery(selectSQL);
 
@@ -116,7 +116,7 @@ public class InventarioSql {
         ResultSet rs = null;
         try {
             conn = ConexionSql.getConnection();
-            String selectSQL = "select * from inventario where fechaCaducidad LIKE '%" + fecha + "%'";
+            String selectSQL = "select * from Inventario where fechaCaducidad LIKE '%" + fecha + "%'";
             stmt = conn.prepareStatement(selectSQL);
             rs = stmt.executeQuery(selectSQL);
 
@@ -135,7 +135,7 @@ public class InventarioSql {
         ResultSet rs = null;
         try {
             conn = ConexionSql.getConnection();
-            String selectSQL = "select * from inventario where existencia LIKE '%" + existencia + "%'";
+            String selectSQL = "select * from Inventario where existencia LIKE '%" + existencia + "%'";
             stmt = conn.prepareStatement(selectSQL);
             rs = stmt.executeQuery(selectSQL);
 
