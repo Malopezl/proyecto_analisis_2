@@ -5,17 +5,29 @@
  */
 package org.proyectoa2.ventas.vista;
 
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import org.marcos.dto.Cliente;
+import org.proyectoa2.ventas.controller.ManejoCobroSaldo;
+import org.proyectoa2.ventas.controller.ManejoListaClientes;
+
 /**
  *
  * @author marcos
  */
 public class CobrarSaldoForm extends javax.swing.JFrame {
-
+    private ManejoListaClientes manejador;
+    private ManejoCobroSaldo manejadorCobro;
     /**
      * Creates new form CobrarSaldoForm
      */
     public CobrarSaldoForm() {
         initComponents();
+        manejador = ManejoListaClientes.obtenerManejador();
+        this.ActualizarListaClientes();
+        manejadorCobro = new ManejoCobroSaldo();
+        
     }
 
     /**
@@ -28,15 +40,16 @@ public class CobrarSaldoForm extends javax.swing.JFrame {
     private void initComponents() {
 
         labelNombre = new javax.swing.JLabel();
-        labelNIT = new javax.swing.JLabel();
-        labelDesplegarNit = new javax.swing.JLabel();
         labelSaldo = new javax.swing.JLabel();
         labelDeplegarSaldo = new javax.swing.JLabel();
         labelCantidadPagar = new javax.swing.JLabel();
         textoCantidadPagar = new javax.swing.JTextField();
         botonConfirmarPago = new javax.swing.JButton();
         botonCancelar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        listaSeleccionClientes = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        textoMontoPagado = new javax.swing.JTextField();
 
         setMinimumSize(new java.awt.Dimension(657, 488));
         setPreferredSize(new java.awt.Dimension(657, 488));
@@ -44,27 +57,19 @@ public class CobrarSaldoForm extends javax.swing.JFrame {
 
         labelNombre.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         labelNombre.setText("Nombre");
-        getContentPane().add(labelNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, -1, -1));
-
-        labelNIT.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        labelNIT.setText("NIT");
-        getContentPane().add(labelNIT, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
-
-        labelDesplegarNit.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        labelDesplegarNit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(labelDesplegarNit, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 600, 30));
+        getContentPane().add(labelNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
         labelSaldo.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         labelSaldo.setText("Saldo");
-        getContentPane().add(labelSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+        getContentPane().add(labelSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
 
         labelDeplegarSaldo.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         labelDeplegarSaldo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(labelDeplegarSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 600, 30));
+        getContentPane().add(labelDeplegarSaldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 600, 30));
 
         labelCantidadPagar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         labelCantidadPagar.setText("Cantidad a Pagar");
-        getContentPane().add(labelCantidadPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
+        getContentPane().add(labelCantidadPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
         textoCantidadPagar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         textoCantidadPagar.addActionListener(new java.awt.event.ActionListener() {
@@ -72,7 +77,7 @@ public class CobrarSaldoForm extends javax.swing.JFrame {
                 textoCantidadPagarActionPerformed(evt);
             }
         });
-        getContentPane().add(textoCantidadPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 600, -1));
+        getContentPane().add(textoCantidadPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 600, -1));
 
         botonConfirmarPago.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         botonConfirmarPago.setText("Confirmar Pago");
@@ -81,7 +86,7 @@ public class CobrarSaldoForm extends javax.swing.JFrame {
                 botonConfirmarPagoActionPerformed(evt);
             }
         });
-        getContentPane().add(botonConfirmarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 310, -1));
+        getContentPane().add(botonConfirmarPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 310, -1));
 
         botonCancelar.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         botonCancelar.setText("Cancelar");
@@ -90,10 +95,25 @@ public class CobrarSaldoForm extends javax.swing.JFrame {
                 botonCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(336, 410, 280, -1));
+        getContentPane().add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 420, 280, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " -- Seleccione el cliente --"}));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 600, -1));
+        listaSeleccionClientes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " -- Seleccione el cliente --"}));
+        getContentPane().add(listaSeleccionClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 600, -1));
+
+        jLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel1.setText("Pago de Saldo");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jLabel2.setText("Monto Pagado");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
+
+        textoMontoPagado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textoMontoPagadoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(textoMontoPagado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 600, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -104,11 +124,49 @@ public class CobrarSaldoForm extends javax.swing.JFrame {
 
     private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
     }//GEN-LAST:event_botonCancelarActionPerformed
 
     private void botonConfirmarPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConfirmarPagoActionPerformed
-        // TODO add your handling code here:
+        if(this.listaSeleccionClientes.getSelectedIndex() == 0
+                || this.textoCantidadPagar.getText().length() == 0
+                || this.textoMontoPagado.getText().length() == 0){
+            String tmpError = "Error, no se puede procesar la transaccion.";
+            if(this.listaSeleccionClientes.getSelectedIndex() == 0){
+                tmpError = tmpError + "   * Seleccione un cliente valido";
+            }
+            if(this.textoCantidadPagar.getText().length() == 0){
+                tmpError = tmpError + "   * el campo 'cantidad a pagar' esta vacio";
+            }
+            if(this.textoMontoPagado.getText().length() == 0){
+                tmpError = tmpError + "   * el campo 'Monto pagado' esta vacio";
+            }
+            
+            JOptionPane.showMessageDialog(null, tmpError, "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
+        }else{
+        
+            Cliente tmp = manejadorCobro.obtenerCliente(this.listaSeleccionClientes.getSelectedIndex());
+            if(tmp.getSaldo() < Double.valueOf(this.textoCantidadPagar.getText())||
+                    Double.valueOf(this.textoCantidadPagar.getText()) > Double.valueOf(this.textoMontoPagado.getText())){
+                String tmpError = "No se puede procesar la transaccion";
+                if(Double.valueOf(this.textoCantidadPagar.getText()) > Double.valueOf(this.textoMontoPagado.getText())){
+                    tmpError = tmpError + "   * la cantidad a pagar es mayor que el monto pagado";
+                }
+                if(tmp.getSaldo() < Double.valueOf(this.textoCantidadPagar.getText())){
+                    tmpError = tmpError + "   * El saldo es menor que la cantidad a pagar";
+                }
+                JOptionPane.showMessageDialog(null, tmp, "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
+            }else{
+                double cambio  = manejadorCobro.realiarPago(tmp, Double.valueOf(this.textoMontoPagado.getText()), Double.valueOf(this.textoCantidadPagar.getText()));
+                JOptionPane.showMessageDialog(null, "Transaccion realizada con exito.\n   el cambio es Q." + cambio, "Error, no se puede procesar!!!", JOptionPane.INFORMATION_MESSAGE);
+                this.setVisible(false);
+            }
+        }
     }//GEN-LAST:event_botonConfirmarPagoActionPerformed
+
+    private void textoMontoPagadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoMontoPagadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textoMontoPagadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,13 +206,25 @@ public class CobrarSaldoForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonConfirmarPago;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel labelCantidadPagar;
     private javax.swing.JLabel labelDeplegarSaldo;
-    private javax.swing.JLabel labelDesplegarNit;
-    private javax.swing.JLabel labelNIT;
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelSaldo;
+    private javax.swing.JComboBox<String> listaSeleccionClientes;
     private javax.swing.JTextField textoCantidadPagar;
+    private javax.swing.JTextField textoMontoPagado;
     // End of variables declaration//GEN-END:variables
+    public void ActualizarListaClientes(){
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel<>(new String[] {"---- Seleccione al Cliente ----"});
+        manejador.actualizarClientes();
+        listaSeleccionClientes.setModel(modelo);
+        ArrayList<Cliente> lista = manejador.geListaClientes();
+        String tmp;
+        for(Cliente item : lista){
+            tmp = item.getNombreCliente() + " | Saldo: " + item.getSaldo();
+            listaSeleccionClientes.addItem(tmp);
+        }
+    }
 }

@@ -19,6 +19,7 @@ public class RealizarPagoEfectivo extends RealizarPago{
     public void realizarPago(Orden cobrar) {
         
             super.generarFactura();
+            
     }
     
 }
