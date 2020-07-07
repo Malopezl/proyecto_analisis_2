@@ -72,7 +72,7 @@ public class DetalleOrden {
     }
 
     public void setSubTotal(double SubTotal) {
-        this.subTotal = subTotal;
+        this.subTotal = SubTotal;
     }
 
     public Menu getMenu() {
