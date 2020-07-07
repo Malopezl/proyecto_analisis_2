@@ -15,6 +15,7 @@ org/proyectoa2/ventas/vista/AtenderOrdenForm.class
 org/marcos/dto/Proveedor.class
 org/proyectoa2/ventas/vista/AtenderOrdenForm$4.class
 org/proyectoa2/ventas/vista/AgregarClienteForm$2.class
+org/proyectoa2/ventas/vista/AgregarClienteForm$3.class
 org/proyectoa2/ventas/vista/AgregarPlatilloForm$3.class
 org/proyectoa2/ventas/vista/CobrarSaldoForm$2.class
 org/proyectoa2/ventas/vista/AtenderOrdenForm$1.class
@@ -37,6 +38,7 @@ org/proyectoa2/ventas/controller/ManejoColaOrdenes.class
 org/proyectoa2/ventas/vista/CobrarSaldoForm$1.class
 org/marcos/dto/Orden.class
 org/proyectoa2/ventas/vista/VisualizarDetallesPlatilloForm$1.class
+org/proyectoa2/ventas/controller/ManejoListaPlatillos.class
 org/proyectoa2/ventas/vista/CobrarOrdenForm$3.class
 org/proyectoa2/ventas/vista/NuevaOrdenForm$1.class
 org/proyectoa2/ventas/controller/RealizarPagoEfectivo.class

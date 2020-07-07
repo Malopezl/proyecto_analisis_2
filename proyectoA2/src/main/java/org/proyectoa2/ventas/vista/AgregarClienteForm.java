@@ -46,6 +46,8 @@ public class AgregarClienteForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        textCorreo = new javax.swing.JTextField();
 
         setMaximumSize(new java.awt.Dimension(652, 541));
         setMinimumSize(new java.awt.Dimension(652, 541));
@@ -64,7 +66,7 @@ public class AgregarClienteForm extends javax.swing.JFrame {
                 ConfirmarActionPerformed(evt);
             }
         });
-        getContentPane().add(Confirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 470, 250, -1));
+        getContentPane().add(Confirmar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 530, 250, -1));
 
         Cancelar.setText("cancelar");
         Cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -72,7 +74,7 @@ public class AgregarClienteForm extends javax.swing.JFrame {
                 CancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 470, 250, -1));
+        getContentPane().add(Cancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 530, 250, -1));
 
         jLabel1.setText("Nombre");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
@@ -90,6 +92,10 @@ public class AgregarClienteForm extends javax.swing.JFrame {
         jLabel5.setText("Registrar Nuevo Cliente");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
 
+        jLabel6.setText("Correo Electronico");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 440, -1, -1));
+        getContentPane().add(textCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 470, 540, 30));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -105,6 +111,7 @@ public class AgregarClienteForm extends javax.swing.JFrame {
             cliente.setDireccion(textDireccion.getText());
             cliente.setSaldo(Double.valueOf(textSaldo.getText()));
             cliente.setTelefono(textTelefono.getText());
+            cliente.setCorreo(textCorreo.getText());
             ClienteSql clienteSql = new ClienteSql();
             clienteSql.insertarClienteVentas(cliente);
             nuevaOrden.ActualizarListaClientes();
@@ -163,6 +170,8 @@ public class AgregarClienteForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JTextField textCorreo;
     private javax.swing.JTextField textDireccion;
     private javax.swing.JTextField textNombre;
     private javax.swing.JTextField textSaldo;

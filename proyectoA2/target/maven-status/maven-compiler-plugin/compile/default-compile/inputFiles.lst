@@ -11,6 +11,7 @@
 /home/marcos/Documentos/proyecto_analisis_2/proyectoA2/src/main/java/org/marcos/dto/Cliente.java
 /home/marcos/Documentos/proyecto_analisis_2/proyectoA2/src/main/java/org/proyectoa2/ventas/vista/AtenderOrdenForm.java
 /home/marcos/Documentos/proyecto_analisis_2/proyectoA2/src/main/java/org/marcos/sql/ConexionSql.java
+/home/marcos/Documentos/proyecto_analisis_2/proyectoA2/src/main/java/org/proyectoa2/ventas/controller/ManejoListaPlatillos.java
 /home/marcos/Documentos/proyecto_analisis_2/proyectoA2/src/main/java/org/marcos/dto/DetalleOrden.java
 /home/marcos/Documentos/proyecto_analisis_2/proyectoA2/src/main/java/org/marcos/sql/IngredienteMenuSql.java
 /home/marcos/Documentos/proyecto_analisis_2/proyectoA2/src/main/java/org/marcos/sql/DetalleOrdenSql.java
