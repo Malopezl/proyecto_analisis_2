@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package org.marcos.sql;
+
 import java.sql.*;
 /**
  *
