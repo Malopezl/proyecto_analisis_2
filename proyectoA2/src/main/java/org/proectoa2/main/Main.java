@@ -5,12 +5,14 @@
  */
 package org.proectoa2.main;
 
+import org.proyectoa2.ventas.vista.DesplegarVentasMain;
+
 /**
  *
  * @author marcos
  */
 public class Main extends javax.swing.JFrame {
-    
+    private DesplegarVentasMain ventasMain;
     /**
      * Creates new form Main
      */
@@ -34,6 +36,8 @@ public class Main extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(319, 381));
+        setPreferredSize(new java.awt.Dimension(319, 381));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
@@ -62,6 +66,8 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        ventasMain = new DesplegarVentasMain();
+        ventasMain.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
