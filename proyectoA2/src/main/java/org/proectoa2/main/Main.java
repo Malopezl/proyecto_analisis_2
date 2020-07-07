@@ -5,6 +5,7 @@
  */
 package org.proectoa2.main;
 
+import org.proyectoa2.inventario.vista.MainInventario;
 import org.proyectoa2.ventas.vista.DesplegarVentasMain;
 
 /**
@@ -53,6 +54,11 @@ public class Main extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 260, 50));
 
         jButton2.setText("Inventario");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 260, 50));
 
         jButton3.setText("Administracion");
@@ -69,6 +75,11 @@ public class Main extends javax.swing.JFrame {
         ventasMain = new DesplegarVentasMain();
         ventasMain.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        MainInventario inventario = new MainInventario();
+        inventario.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
