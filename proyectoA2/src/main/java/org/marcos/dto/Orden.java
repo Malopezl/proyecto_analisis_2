@@ -116,6 +116,14 @@ public class Orden {
         detalles.add(detalle);
     }
 
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
 
     @Override
     public String toString() {
