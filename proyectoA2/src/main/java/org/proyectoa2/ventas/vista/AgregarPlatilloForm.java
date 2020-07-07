@@ -23,6 +23,7 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
     private ManejoListaPlatillos manejadorPlatillos;
     private NuevaOrdenForm nuevaOrden;
     private DetalleOrden nuevoPlatillo;
+    private AgregarComplementoForm agregarComplementoForm;
     /**
      * Creates new form AgregarPlatilloForm
      */
@@ -208,6 +209,9 @@ public class AgregarPlatilloForm extends javax.swing.JFrame {
 
     private void botonAgregarComplementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarComplementoActionPerformed
         // TODO add your handling code here:
+        this.agregarComplementoForm = new AgregarComplementoForm(this, this.nuevoPlatillo);
+        this.agregarComplementoForm.setVisible(true);
+        
     }//GEN-LAST:event_botonAgregarComplementoActionPerformed
 
     /**

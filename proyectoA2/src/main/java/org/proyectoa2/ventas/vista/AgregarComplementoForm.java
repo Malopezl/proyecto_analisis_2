@@ -10,6 +10,7 @@ import org.marcos.dto.DetalleComplementos;
 import org.marcos.dto.DetalleOrden;
 import org.marcos.dto.Inventario;
 import org.proyectoa2.ventas.controller.ManejoListaComplementos;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -61,7 +62,7 @@ public class AgregarComplementoForm extends javax.swing.JFrame {
         textPrecioVenta = new javax.swing.JTextField();
         inputCantidad = new javax.swing.JSpinner();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Agregar Complemento");
         setMinimumSize(new java.awt.Dimension(647, 383));
         setPreferredSize(new java.awt.Dimension(647, 383));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -124,11 +125,23 @@ public class AgregarComplementoForm extends javax.swing.JFrame {
     private void botonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarActionPerformed
         // TODO add your handling code here:
         if(this.textPrecioVenta.getText().length() < 1 || listaComplementos.getSelectedIndex() < 0){
+            String tmp = "Revise si ha llenado los campos correctamente";
+            if(this.textPrecioVenta.getText().length() < 1)
+                tmp = tmp + "\n   * No se ha llenado el precio de venta";
+            if(listaComplementos.getSelectedIndex() < 0)
+                tmp = tmp + "\n   * No se ha seleccionado un complemento";
             
+            JOptionPane.showMessageDialog(null, tmp, "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
         }else{
             detalleComplemento.setInventario(manejador.getComplemento(listaComplementos.getSelectedIndex()));
             detalleComplemento.setIdInventario(detalleComplemento.getInventario().getIdInventario());
-
+            detalleComplemento.setCantidad((int) this.inputCantidad.getValue());
+            detalleComplemento.setPrecioVenta(Double.valueOf(textPrecioVenta.getText()));
+            double subtotal = detalleComplemento.getCantidad() * detalleComplemento.getPrecioVenta();
+            detalleComplemento.setSubTotal(subtotal);
+            detalle.addDetalleComplementos(detalleComplemento);
+            agregarPlatillo.actualizarComplementos();
+            this.setVisible(false);
         }
         
     }//GEN-LAST:event_botonAgregarActionPerformed
