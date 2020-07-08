@@ -44,15 +44,16 @@ public class DetalleCompraSql {
         return rows;
     }
     
-    public static ResultSet mostrar() {
+    public ResultSet mostrarDetalle(String factura) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
         try{
             conn = ConexionSql.getConnection();
-            String sentenciaBuscar = "SELECT c.no_factura, p.nombre, c.fecha, c.total, c.estado, dc.precio, dc.cantidad, dc.subtotal, i.nombre FROM Proveedores p INNER JOIN Compra c "
-                      + "ON p.idProveedor = c.idProveedor INNER JOIN detalleCompra dc ON c.idCompra = dc.idCompra INNER JOIN Inventario i on dc.idInventario = i.idInventario";
+            String sentenciaBuscar = "SELECT c.no_factura, p.nombreProveedor, c.fecha, c.total, c.estado, i.nombre, dc.precio, dc.cantidad, dc.subtotal FROM Proveedor p INNER JOIN Compra c "
+                      + "ON p.idProveedor = c.idProveedor INNER JOIN detalleCompra dc ON c.idCompra = dc.idCompra INNER JOIN Inventario i on dc.idInventario = i.idInventario"
+                      + "WHERE e.no_factura LIKE '%" + factura + "%'";
             stmt = conn.prepareStatement(sentenciaBuscar);
             rs = stmt.executeQuery(sentenciaBuscar);
         } catch (SQLException ex) {
@@ -60,7 +61,6 @@ public class DetalleCompraSql {
         }finally{
             if(conn != null){
                 ConexionSql.close(stmt);
-                ConexionSql.close(rs);
                 ConexionSql.close(conn);
             }
         }
