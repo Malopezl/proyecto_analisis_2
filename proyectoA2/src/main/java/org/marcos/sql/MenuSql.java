@@ -14,6 +14,7 @@ import org.marcos.dto.Menu;
 /**
  *
  * @author marcos
+ * @author sharon
  */
 public class MenuSql {
     
@@ -51,4 +52,34 @@ public class MenuSql {
         }
         return lista;
     }
+     public static int Insertar(Menu menu) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        int id=0;
+        try {
+            conn = ConexionSql.getConnection();
+            String SQL_INSERT = "INSERT INTO Menu(nombreMenu, descripcionMenu, precio, receta, estado) VALUES(?,?,?,?,?) ";
+            stmt = conn.prepareStatement(SQL_INSERT);
+            stmt.setString(1, menu.getNombreMenu());
+            stmt.setString(2, menu.getDescripcionMenu());
+            stmt.setDouble(3, menu.getPrecio());
+            stmt.setString(4, menu.getReceta());
+            stmt.setString(5, menu.getEstado());
+            int rows = stmt.executeUpdate();
+            
+            String SQL_LAST_ID = "SELECT LAST_INSERT_ID() ";
+            stmt = conn.prepareStatement(SQL_LAST_ID);
+            rs = stmt.executeQuery(SQL_LAST_ID);
+            id = rs.getInt(1);
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(InventarioSql.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConexionSql.close(stmt);
+            ConexionSql.close(conn);
+        }
+        return id;
+     }
+
 }
