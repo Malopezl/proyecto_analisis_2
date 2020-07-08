@@ -51,7 +51,7 @@ public class DetalleCompraSql {
         
         try{
             conn = ConexionSql.getConnection();
-            String sentenciaBuscar = "SELECT c.no_factura, p.nombre, c.fecha, c.total, c.estado, i.nombre, dc.precio, dc.cantidad, dc.subtotal FROM Proveedores p INNER JOIN Compra c "
+            String sentenciaBuscar = "SELECT c.no_factura, p.nombreProveedor, c.fecha, c.total, c.estado, i.nombre, dc.precio, dc.cantidad, dc.subtotal FROM Proveedor p INNER JOIN Compra c "
                       + "ON p.idProveedor = c.idProveedor INNER JOIN detalleCompra dc ON c.idCompra = dc.idCompra INNER JOIN Inventario i on dc.idInventario = i.idInventario"
                       + "WHERE e.no_factura LIKE '%" + factura + "%'";
             stmt = conn.prepareStatement(sentenciaBuscar);

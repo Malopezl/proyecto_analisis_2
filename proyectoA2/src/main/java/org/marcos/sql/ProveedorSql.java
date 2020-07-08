@@ -62,7 +62,7 @@ public class ProveedorSql {
         
         try{
             conn = ConexionSql.getConnection();
-            String sentenciaSeleccionar = "SELECT idProveedor, NIT, direccionProveedor, nombreProveedor, telefono FROM Proveedores";
+            String sentenciaSeleccionar = "SELECT idProveedor, NIT, direccionProveedor, nombreProveedor, telefono FROM Proveedor";
             stmt = conn.prepareStatement(sentenciaSeleccionar);
             rs = stmt.executeQuery();
             Proveedor tmp;
