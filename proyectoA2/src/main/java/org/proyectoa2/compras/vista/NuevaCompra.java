@@ -5,17 +5,36 @@
  */
 package org.proyectoa2.compras.vista;
 
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.marcos.dto.Compra;
+import org.marcos.dto.Inventario;
+import org.marcos.dto.Proveedor;
+import org.proyectoa2.compras.controlador.ManejoListaInsumos;
+import org.proyectoa2.compras.controlador.ManejoListaProveedores;
+import org.proyectoa2.inventario.vista.AgregarInventario;
+
 /**
  *
  * @author malopez
  */
-public class NuevaCompra extends javax.swing.JFrame {
-
+public final class NuevaCompra extends javax.swing.JFrame {
+    private AgregarInventario inventario;
+    private final ManejoListaProveedores manejadorProveedor;
+    private final ManejoListaInsumos manejadorInsumos;
+    private final Compra compra;
+    
     /**
      * Creates new form NuevaCompra
      */
     public NuevaCompra() {
         initComponents();
+        manejadorProveedor = ManejoListaProveedores.obtenerProveedores();
+        manejadorInsumos = ManejoListaInsumos.obtenerInsumos();
+        compra = new Compra();
+        this.ActualizarListaProveedores();
     }
 
     /**
@@ -39,11 +58,13 @@ public class NuevaCompra extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         botonAgregarInsumo = new javax.swing.JButton();
         botonEnviarPedido = new javax.swing.JButton();
-        campoInsumo = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        botonBorrarInsumo = new javax.swing.JButton();
+        listaInsumos = new javax.swing.JComboBox<>();
+        botonCrearInsumo = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(546, 478));
+        setPreferredSize(new java.awt.Dimension(546, 525));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
@@ -57,21 +78,21 @@ public class NuevaCompra extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
 
         seleccionadorFecha.setDateFormatString("dd MMM, yyyy");
-        getContentPane().add(seleccionadorFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, 200, -1));
+        getContentPane().add(seleccionadorFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 130, 200, -1));
 
         jLabel3.setText("Fecha");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, -1, -1));
 
         tablaInsumosCompra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Insumo", "Cantidad", "Precio"
+                "Insumo", "Cantidad", "Precio", "Subtotal"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -84,28 +105,73 @@ public class NuevaCompra extends javax.swing.JFrame {
 
         jLabel4.setText("Insumo");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, -1));
-        getContentPane().add(campoCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 220, 80, 30));
+        getContentPane().add(campoCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, 80, 30));
 
         jLabel5.setText("Cantidad");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, -1, -1));
 
-        botonAgregarInsumo.setText("Agregar");
-        getContentPane().add(botonAgregarInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 220, 90, 30));
+        botonAgregarInsumo.setText("Agregar Insumo");
+        botonAgregarInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAgregarInsumoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonAgregarInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 390, 140, 30));
 
         botonEnviarPedido.setText("Enviar Pedido");
-        getContentPane().add(botonEnviarPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 400, -1, -1));
-        getContentPane().add(campoInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 210, 30));
+        getContentPane().add(botonEnviarPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 450, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setText("Total:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 410, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 460, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, 180, 30));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 450, 180, 30));
+
+        botonBorrarInsumo.setText("Borrar Insumo");
+        botonBorrarInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBorrarInsumoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonBorrarInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 390, -1, -1));
+
+        listaInsumos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(listaInsumos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 210, -1));
+
+        botonCrearInsumo.setText("Nuevo Insumo");
+        botonCrearInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCrearInsumoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonCrearInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonCrearInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCrearInsumoActionPerformed
+        inventario = new AgregarInventario();
+        inventario.setVisible(true);
+    }//GEN-LAST:event_botonCrearInsumoActionPerformed
+
+    private void botonAgregarInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarInsumoActionPerformed
+        if(this.listaInsumos.getSelectedIndex() <= 0){
+            String tmp = "Error, no se la seleccionado un Insumo de la lista";
+            JOptionPane.showMessageDialog(null, tmp, "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
+        }else{
+            DefaultTableModel modelo = (DefaultTableModel) this.tablaInsumosCompra.getModel();
+            modelo.addRow(new Object[]{this.listaInsumos.getSelectedItem().toString(), campoCantidad.getText()});
+        }
+    }//GEN-LAST:event_botonAgregarInsumoActionPerformed
+
+    private void botonBorrarInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBorrarInsumoActionPerformed
+        DefaultTableModel modelo = (DefaultTableModel) this.tablaInsumosCompra.getModel();
+        int[] rows = tablaInsumosCompra.getSelectedRows();
+        for (int i = 0; i < rows.length; i++)
+            modelo.removeRow(i);
+    }//GEN-LAST:event_botonBorrarInsumoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -136,17 +202,43 @@ public class NuevaCompra extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new NuevaCompra().setVisible(true);
             }
         });
     }
+    
+    public void ActualizarListaProveedores(){
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel<>(new String[] {"---- Seleccione al Proveedor ----"});
+        manejadorProveedor.actualizarProveedores();
+        listaProveedores.setModel(modelo);
+        ArrayList<Proveedor> lista = manejadorProveedor.getListaProveedores();
+        String tmp;
+        for(Proveedor item : lista){
+            tmp = item.getNombreProveedor();
+            listaProveedores.addItem(tmp);
+        }
+    }
+    
+    public void ActualizarListaInsumos(){
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel<>(new String[] {"---- Seleccione el Insumo ----"});
+        manejadorInsumos.actualizarInsumos();
+        listaInsumos.setModel(modelo);
+        ArrayList<Inventario> lista = manejadorInsumos.getListaInsumos();
+        String tmp;
+        for(Inventario item : lista){
+            tmp = item.getNombre();
+            listaProveedores.addItem(tmp);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAgregarInsumo;
+    private javax.swing.JButton botonBorrarInsumo;
+    private javax.swing.JButton botonCrearInsumo;
     private javax.swing.JButton botonEnviarPedido;
     private javax.swing.JTextField campoCantidad;
-    private javax.swing.JTextField campoInsumo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -155,6 +247,7 @@ public class NuevaCompra extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> listaInsumos;
     private javax.swing.JComboBox<String> listaProveedores;
     private com.toedter.calendar.JDateChooser seleccionadorFecha;
     private javax.swing.JTable tablaInsumosCompra;

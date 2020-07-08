@@ -5,6 +5,10 @@
  */
 package org.proyectoa2.compras.vista;
 
+import javax.swing.table.DefaultTableModel;
+import org.proyectoa2.compras.controlador.ManejoCompra;
+
+
 /**
  *
  * @author malopez
@@ -14,12 +18,14 @@ public class MainCompras extends javax.swing.JPanel {
     private DetalleCompra detalleCompra;
     private ConsultarInventario consultarInventario;
     private Proveedores gestionarProveedores;
+    private ManejoCompra manejo;
     
     /**
      * Creates new form MainCompras
      */
     public MainCompras() {
         initComponents();
+        mostrar();
     }
 
     /**
@@ -38,6 +44,8 @@ public class MainCompras extends javax.swing.JPanel {
         botonConsultarInventario = new javax.swing.JButton();
         botonGestionarProveedores = new javax.swing.JButton();
         botonDetalleCompra = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        campoFactura = new javax.swing.JTextField();
 
         setPreferredSize(new java.awt.Dimension(702, 295));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -80,7 +88,7 @@ public class MainCompras extends javax.swing.JPanel {
                 botonConsultarInventarioActionPerformed(evt);
             }
         });
-        add(botonConsultarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, -1, -1));
+        add(botonConsultarInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, -1, -1));
 
         botonGestionarProveedores.setText("Gestionar Proveedores");
         botonGestionarProveedores.addActionListener(new java.awt.event.ActionListener() {
@@ -88,7 +96,7 @@ public class MainCompras extends javax.swing.JPanel {
                 botonGestionarProveedoresActionPerformed(evt);
             }
         });
-        add(botonGestionarProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 290, -1, 30));
+        add(botonGestionarProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 240, -1, 30));
 
         botonDetalleCompra.setText("Ver Detalle Compra");
         botonDetalleCompra.addActionListener(new java.awt.event.ActionListener() {
@@ -96,7 +104,14 @@ public class MainCompras extends javax.swing.JPanel {
                 botonDetalleCompraActionPerformed(evt);
             }
         });
-        add(botonDetalleCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 290, -1, 30));
+        add(botonDetalleCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 290, -1, 30));
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel2.setText("No. Factura");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, -1, -1));
+
+        campoFactura.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        add(campoFactura, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 140, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonRegistrarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarCompraActionPerformed
@@ -119,13 +134,19 @@ public class MainCompras extends javax.swing.JPanel {
         consultarInventario.setVisible(true);
     }//GEN-LAST:event_botonConsultarInventarioActionPerformed
 
+    private void mostrar() {
+        manejo = new ManejoCompra();
+        manejo.listarCompras((DefaultTableModel) tablaListadoCompras.getModel());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonConsultarInventario;
     private javax.swing.JButton botonDetalleCompra;
     private javax.swing.JButton botonGestionarProveedores;
     private javax.swing.JButton botonRegistrarCompra;
+    private javax.swing.JTextField campoFactura;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaListadoCompras;
     // End of variables declaration//GEN-END:variables
