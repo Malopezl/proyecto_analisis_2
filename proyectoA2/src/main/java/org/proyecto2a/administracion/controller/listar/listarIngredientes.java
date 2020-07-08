@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import static org.marcos.sql.InventarioSql.LNOMBRE2;
+import static org.marcos.sql.InventarioSql.LGENERAL;
 
 /**
  *
@@ -20,17 +20,18 @@ public class listarIngredientes {
 
     public static DefaultListModel listarInventario() {
     DefaultListModel modelo = new DefaultListModel();
-    ResultSet rs = LNOMBRE2();
+    ResultSet rs = LGENERAL();
     //rs obtiene el listado de nombres desde la bd
-    /*    try {
+        try {
             while (rs.next()) {
-            //modelo.addElement(rs.getNString("nombre"));
+            modelo.addElement(rs.getNString("nombre"));
             // agrega a una defaultListModel todos los nombres de inventario.
         }
     }
     catch (SQLException ex) {
-                Logger.getLogger(listarIngredientes.class.getName()).log(Level.SEVERE, null, ex);
-    }*/
+        Logger.getLogger(listarIngredientes.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
     return modelo;
     
     }

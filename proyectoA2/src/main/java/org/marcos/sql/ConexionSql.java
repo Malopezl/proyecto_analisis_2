@@ -11,8 +11,8 @@ import java.sql.*;
  */
 public class ConexionSql {
     private static final String JDBC_URL = "jdbc:mariadb://localhost:3306/manejoCafe";
-    private static final String JDBC_USER = "marcos";
-    private static final String JDBC_PASS = "ms0664";
+    private static final String JDBC_USER = "sharon98";
+    private static final String JDBC_PASS = "sharon98";
     
     public static synchronized Connection getConnection() throws SQLException{
          return DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS);
