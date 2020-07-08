@@ -6,6 +6,7 @@
 package org.marcos.sql;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.marcos.dto.Proveedor;
@@ -53,29 +54,36 @@ public class ProveedorSql {
         return rows;
     }
     
-    /**
-     *
-     * @return
-     */
-    public static ResultSet mostrarProveedores() {
+    public ArrayList<Proveedor> seleccionarProveedores(){
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
+        ArrayList<Proveedor> lista = new ArrayList<>();
         
         try{
             conn = ConexionSql.getConnection();
-            String sentenciaBuscar = "SELECT NIT, nombre, direccion, telefono FROM Proveedores";
-            stmt = conn.prepareStatement(sentenciaBuscar);
-            rs = stmt.executeQuery(sentenciaBuscar);
+            String sentenciaSeleccionar = "SELECT idProveedor, NIT, direccionProveedor, nombreProveedor, telefono FROM Proveedores";
+            stmt = conn.prepareStatement(sentenciaSeleccionar);
+            rs = stmt.executeQuery();
+            Proveedor tmp;
+            while(rs.next()){
+                tmp = new Proveedor();
+                tmp.setIdProveedor(rs.getInt(1));
+                tmp.setNit(rs.getString(2));
+                tmp.setDireccionProveedor(rs.getString(3));
+                tmp.setNombreProveedor(rs.getString(4));
+                tmp.setTelefono(rs.getString(5));
+                lista.add(tmp);
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(OrdenSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteSql.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             if(conn != null){
-                ConexionSql.close(stmt);
                 ConexionSql.close(rs);
+                ConexionSql.close(stmt);
                 ConexionSql.close(conn);
             }
         }
-        return rs;
+        return lista;
     }
 }
