@@ -22,15 +22,16 @@ public class Menu {
     
 
     public Menu() {
+        this.ingredientes= new ArrayList<>();
     }
 
-    public Menu(int idMenu, String nombreMenu, String descripcionMenu, double precio, String receta, String estado) {
-        this.idMenu = idMenu;
+    public Menu(String nombreMenu, String descripcionMenu, double precio, String receta, String estado) {
         this.nombreMenu = nombreMenu;
         this.descripcionMenu = descripcionMenu;
         this.precio = precio;
         this.receta = receta;
         this.estado = estado;
+        this.ingredientes= new ArrayList<>();
     }
 
     public int getIdMenu() {

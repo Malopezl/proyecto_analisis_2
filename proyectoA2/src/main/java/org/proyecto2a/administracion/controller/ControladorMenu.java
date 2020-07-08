@@ -5,6 +5,10 @@
  */
 package org.proyecto2a.administracion.controller;
 
+import java.util.ArrayList;
+import org.marcos.dto.IngredienteMenu;
+import org.marcos.dto.Menu;
+
 /**
  *
  * @author sharon
@@ -13,8 +17,10 @@ public class ControladorMenu {
     
     
     
-    public void AgregarMenu(){
-        
+    public void AgregarMenu(String nombre, String descripcion, double precio, String receta){
+      Menu menuNuevo = new Menu(nombre, descripcion, precio, receta, "CREADO");
+      
+     
     }
     public void EditarMenu(){
         
