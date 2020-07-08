@@ -179,7 +179,7 @@ public class InventarioSql {
         }
         return lista;
     }
-    public ArrayList<String> selectNombre(){
+    public static ArrayList<String> selectNombre(){
         Connection conn = null;
         String sentencia = "SELECT nombre FROM Inventario";
         PreparedStatement stmt = null;
