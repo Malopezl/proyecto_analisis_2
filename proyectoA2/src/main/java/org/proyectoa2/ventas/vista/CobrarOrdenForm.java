@@ -136,9 +136,6 @@ public class CobrarOrdenForm extends javax.swing.JFrame {
             if(this.textoCantidadCancelar.getText().length() == 0 ){
                 tmp = tmp + "\n   * El campo cantidad a cancelar esta vacio";
             }
-            if(Double.valueOf(this.textoCantidadCancelar.getText()) < orden.getTotal()){
-                tmp = tmp + "\n   * La cantidad a cancelar es insuficiente";
-            }
             if(this.noFactura.getText().length() == 0){
                 tmp = tmp + "\n   * El campo de factura esta vacio";
             }
