@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import org.marcos.dto.Compra;
+import org.marcos.dto.DetalleCompra;
 import org.marcos.sql.CompraSql;
 import org.marcos.sql.DetalleCompraSql;
 
@@ -20,15 +21,21 @@ import org.marcos.sql.DetalleCompraSql;
  * @author marvin <lopez.marvin9 at gmail.com>
  */
 public class ManejoCompra {
+    private final Compra compra;
     private final CompraSql comprasql;
     private DetalleCompraSql detallesql;
 
     public ManejoCompra() {
         comprasql = new CompraSql();
+        this.compra = new Compra();
     }
     
     public void registrarCompra(Compra compra) {
         comprasql.Insertar(compra);
+    }
+    
+    public void agregarDetalle(DetalleCompra detalle) {
+        compra.addDetalle(detalle);
     }
     
     public DefaultTableModel listarCompras(DefaultTableModel modeloTabla) {

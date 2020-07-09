@@ -15,7 +15,7 @@ import org.proyectoa2.compras.controlador.ManejoCompra;
  */
 public class MainCompras extends javax.swing.JPanel {
     private NuevaCompra nuevaCompra;
-    private DetalleCompra detalleCompra;
+    private DetallesCompra detalleCompra;
     private ConsultarInventario consultarInventario;
     private Proveedores gestionarProveedores;
     private ManejoCompra manejo;
@@ -125,7 +125,7 @@ public class MainCompras extends javax.swing.JPanel {
     }//GEN-LAST:event_botonGestionarProveedoresActionPerformed
 
     private void botonDetalleCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDetalleCompraActionPerformed
-        detalleCompra = new DetalleCompra();
+        detalleCompra = new DetallesCompra();
         detalleCompra.setVisible(true);
     }//GEN-LAST:event_botonDetalleCompraActionPerformed
 
