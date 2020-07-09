@@ -22,7 +22,7 @@ public class ManejoCobroSaldo {
     public double realiarPago(Cliente cliente, double pago, double cantidadPagar){
         double nuevoSaldo =  cliente.getSaldo() - cantidadPagar;
         double cambio;
-        cambio = pago - pago;
+        cambio = pago - cantidadPagar;
         cliente.setSaldo(nuevoSaldo);
         ClienteSql clienteSql = new ClienteSql();
         clienteSql.actualizarSaldo(cliente);
