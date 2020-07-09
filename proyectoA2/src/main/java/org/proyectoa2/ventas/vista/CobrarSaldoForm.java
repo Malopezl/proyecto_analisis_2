@@ -98,6 +98,16 @@ public class CobrarSaldoForm extends javax.swing.JFrame {
         getContentPane().add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 420, 280, -1));
 
         listaSeleccionClientes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " -- Seleccione el cliente --"}));
+        listaSeleccionClientes.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                listaSeleccionClientesItemStateChanged(evt);
+            }
+        });
+        listaSeleccionClientes.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                listaSeleccionClientesPropertyChange(evt);
+            }
+        });
         getContentPane().add(listaSeleccionClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 600, -1));
 
         jLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
@@ -155,7 +165,7 @@ public class CobrarSaldoForm extends javax.swing.JFrame {
                 if(tmp.getSaldo() < Double.valueOf(this.textoCantidadPagar.getText())){
                     tmpError = tmpError + "   * El saldo es menor que la cantidad a pagar";
                 }
-                JOptionPane.showMessageDialog(null, tmp, "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, tmpError, "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
             }else{
                 double cambio  = manejadorCobro.realiarPago(tmp, Double.valueOf(this.textoMontoPagado.getText()), Double.valueOf(this.textoCantidadPagar.getText()));
                 JOptionPane.showMessageDialog(null, "Transaccion realizada con exito.\n   el cambio es Q." + cambio, "Error, no se puede procesar!!!", JOptionPane.INFORMATION_MESSAGE);
@@ -167,6 +177,18 @@ public class CobrarSaldoForm extends javax.swing.JFrame {
     private void textoMontoPagadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoMontoPagadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textoMontoPagadoActionPerformed
+
+    private void listaSeleccionClientesPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_listaSeleccionClientesPropertyChange
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_listaSeleccionClientesPropertyChange
+
+    private void listaSeleccionClientesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_listaSeleccionClientesItemStateChanged
+        // TODO add your handling code here:
+        if(this.listaSeleccionClientes.getSelectedIndex() > 0){
+            this.labelDeplegarSaldo.setText(Double.toString(manejador.getCliente(this.listaSeleccionClientes.getSelectedIndex() - 1).getSaldo()));
+        }
+    }//GEN-LAST:event_listaSeleccionClientesItemStateChanged
 
     /**
      * @param args the command line arguments

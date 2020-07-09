@@ -50,8 +50,8 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
         manejador = ManejoListaClientes.obtenerManejador();
         this.ActualizarListaClientes();
         int indice = manejador.geListaClientes().indexOf(orden.getCliente());
-        this.listaSeleccionCliente.setSelectedIndex(indice);
-        
+        Object tmp = listaSeleccionCliente.getItemAt(indice);
+        this.listaSeleccionCliente.setSelectedItem(tmp);
         manejadorOrden = new ManejoOrden(orden);
         this.ActualizarListaPlatillos();
             
