@@ -66,4 +66,37 @@ public class DetalleCompraSql {
         }
         return rs;
     }
+    
+    public ArrayList<DetalleCompra> seleccionarDetalle(){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        ArrayList<DetalleCompra> lista = new ArrayList<>();
+        
+        try{
+            conn = ConexionSql.getConnection();
+            String sentenciaSeleccionar = "SELECT idCompra, idInventario, cantidad, subtotal, precio FROM detalleCompra";
+            stmt = conn.prepareStatement(sentenciaSeleccionar);
+            rs = stmt.executeQuery();
+            DetalleCompra tmp;
+            while(rs.next()){
+                tmp = new DetalleCompra();
+                tmp.setIdCompra(rs.getInt(1));
+                tmp.setIdInventario(rs.getInt(2));
+                tmp.setCantidad(rs.getFloat(3));
+                tmp.setSubtotal(rs.getDouble(4));
+                tmp.setPrecio(rs.getDouble(5));
+                lista.add(tmp);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteSql.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(conn != null){
+                ConexionSql.close(rs);
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return lista;
+    }
 }
