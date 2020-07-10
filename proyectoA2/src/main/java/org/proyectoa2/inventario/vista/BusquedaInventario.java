@@ -5,6 +5,8 @@
  */
 package org.proyectoa2.inventario.vista;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author Gilda
@@ -93,18 +95,21 @@ public class BusquedaInventario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      BusquedaNombre bn = new BusquedaNombre();
-      bn.show();
+        BusquedaNombre bn = new BusquedaNombre();
+        bn.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        bn.show();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      BusquedaFecha bn = new BusquedaFecha();
-      bn.show();
+        BusquedaFecha bn = new BusquedaFecha();
+        bn.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        bn.show();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-      BusquedaExistencia bn = new BusquedaExistencia();
-      bn.show();
+        BusquedaExistencia bn = new BusquedaExistencia();
+        bn.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        bn.show();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

@@ -5,6 +5,10 @@
  */
 package org.proyectoa2.inventario.vista;
 
+import javax.swing.InputVerifier;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import org.marcos.dto.Inventario;
 import org.proyectoa2.inventario.controlador.GenerarTabla;
@@ -104,18 +108,46 @@ public class BusquedaNombre extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            String nombre = jTextField1.getText();
-            GenerarTabla generar = new GenerarTabla();
-            Inventario inventario = new Inventario();
-            inventario.setNombre(nombre);
+        verificar v = new verificar();
+        boolean bandera = v.verify(jTextField1);
+        if (bandera == false) {
+            try {
+                String nombre = jTextField1.getText();
+                GenerarTabla generar = new GenerarTabla();
+                Inventario inventario = new Inventario();
+                inventario.setNombre(nombre);
 
-            DefaultTableModel modelo = generar.GenerarTabla("Nombre", inventario);
-            jTable1.setModel(modelo);
-        } catch (Exception e) {
+                DefaultTableModel modelo = generar.GenerarTabla("Nombre", inventario);
+                if (modelo.getRowCount() == 0) {
+                    JOptionPane.showMessageDialog(null, "No existen productos con ese nombre", "ERROR", JOptionPane.WARNING_MESSAGE);
+                } else {
 
-        }
+                    jTable1.setModel(modelo);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "No se puede realizar la busqueda", "ERROR", JOptionPane.WARNING_MESSAGE);
+            }
     }//GEN-LAST:event_jButton1ActionPerformed
+        else{
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    class verificar extends InputVerifier {
+
+        @Override
+        public boolean verify(JComponent input) {
+            final JTextField source = (JTextField) input;
+            String s = source.getText();
+
+            if (s.equals("")) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    }
 
     /**
      * @param args the command line arguments

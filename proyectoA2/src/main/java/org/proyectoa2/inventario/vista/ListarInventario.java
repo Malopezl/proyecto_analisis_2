@@ -5,6 +5,7 @@
  */
 package org.proyectoa2.inventario.vista;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.proyectoa2.inventario.controlador.GenerarTabla;
 
@@ -25,7 +26,13 @@ public class ListarInventario extends javax.swing.JFrame {
     public void Generartabla() {
         GenerarTabla tabla = new GenerarTabla();
         DefaultTableModel modelo = tabla.GenerarTabla("General", null);
-        jTable1.setModel(modelo);
+        if (modelo.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "No existen productos ", "ERROR", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            jTable1.setModel(modelo);
+        }
+
     }
 
     /**

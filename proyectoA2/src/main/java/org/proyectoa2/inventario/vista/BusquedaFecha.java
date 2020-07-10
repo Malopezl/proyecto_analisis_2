@@ -6,6 +6,7 @@
 package org.proyectoa2.inventario.vista;
 
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.marcos.dto.Inventario;
 import org.proyectoa2.inventario.controlador.GenerarTabla;
@@ -124,7 +125,12 @@ public class BusquedaFecha extends javax.swing.JFrame {
             inventario.setFechaCaducidad(fecha);
 
             DefaultTableModel modelo = generar.GenerarTabla("Fecha", inventario);
-            jTable1.setModel(modelo);
+            if (modelo.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "No existen productos con esa fecha de caducidad", "ERROR", JOptionPane.WARNING_MESSAGE);
+            } else {
+
+                jTable1.setModel(modelo);
+            }
         } catch (Exception e) {
 
         }
