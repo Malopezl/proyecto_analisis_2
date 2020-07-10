@@ -5,7 +5,16 @@
  */
 package org.proyectoa2.inventario.vista;
 
+import com.toedter.calendar.JDateChooser;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.InputVerifier;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import org.proyectoa2.inventario.controlador.Ingresar_Producto;
 import org.proyectoa2.inventario.controlador.NoPerecedero;
 import org.proyectoa2.inventario.controlador.Perecedero;
@@ -56,6 +65,23 @@ public class AgregarInventario extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("NUEVO PRODUCTO");
 
+        JTextnombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JTextnombreFocusLost(evt);
+            }
+        });
+        JTextnombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JTextnombreActionPerformed(evt);
+            }
+        });
+
+        JTexistencia.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JTexistenciaFocusLost(evt);
+            }
+        });
+
         jLabel2.setText("Tipo Producto");
 
         jLabel3.setText("Nombre");
@@ -64,6 +90,11 @@ public class AgregarInventario extends javax.swing.JFrame {
 
         JTextDescripcion.setColumns(20);
         JTextDescripcion.setRows(5);
+        JTextDescripcion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JTextDescripcionFocusLost(evt);
+            }
+        });
         jScrollPane1.setViewportView(JTextDescripcion);
 
         jLabel5.setText("Descripcion");
@@ -71,8 +102,19 @@ public class AgregarInventario extends javax.swing.JFrame {
         jLabel6.setText("Fecha caducidad");
 
         JDateFecha.setFocusCycleRoot(true);
+        JDateFecha.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JDateFechaFocusLost(evt);
+            }
+        });
 
         jLabel7.setText("Lote");
+
+        JTextLote.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JTextLoteFocusLost(evt);
+            }
+        });
 
         jButton1.setText("INGRESAR");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -175,33 +217,107 @@ public class AgregarInventario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        boolean bandera = false;
+        bandera = verificarcomponentes();
+        if (bandera == false) {
 
-        try {
+            try {
 
-            String nombre = JTextnombre.getText();
-            int existencia = Integer.parseInt(JTexistencia.getText());
-            String descripcion = JTextDescripcion.getText();
-            String lote = JTextLote.getText();
-            String opcion = "";
-            opcion = (String) JProducto.getSelectedItem();
-            Date fecha = null;
-            TipoProducto tipo;
-            if (opcion.equals("Perecedero")) {
-                fecha = JDateFecha.getDate();
-                tipo = new Perecedero();
-            } else {
+                String nombre = JTextnombre.getText();
+                int existencia = Integer.parseInt(JTexistencia.getText());
+                String descripcion = JTextDescripcion.getText();
+                String lote = JTextLote.getText();
+                String opcion = "";
+                opcion = (String) JProducto.getSelectedItem();
+                Date fecha = null;
+                TipoProducto tipo;
+                if (opcion.equals("Perecedero")) {
+                    fecha = JDateFecha.getDate();
+                    tipo = new Perecedero();
+                } else {
 
-                tipo = new NoPerecedero();
+                    tipo = new NoPerecedero();
+                }
+                Ingresar_Producto ingresar = new Ingresar_Producto();
+
+                ingresar.Crear(descripcion, existencia, lote, fecha, nombre, tipo);
+                limpiar();
+                JOptionPane.showMessageDialog(null, "Ingresado correctamente", "CONFIRMACION", JOptionPane.WARNING_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "No se ha podido ingresar", "ERROR", JOptionPane.WARNING_MESSAGE);
             }
-            Ingresar_Producto ingresar = new Ingresar_Producto();
-
-            ingresar.Crear(descripcion, existencia, lote, fecha, nombre, tipo);
-            limpiar();
-        } catch (Exception e) {
-
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha podido ingresar", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+    public boolean verificarcomponentes() {
+        ArrayList<Integer> lista = new ArrayList();
+        boolean b1 = false;
+        //COMPROBAR NOMBRE
+        verificar v = new verificar();
+        b1 = v.verify(JTextnombre);
+        if (b1 == true) {
+            lista.add(2);
+            JOptionPane.showMessageDialog(null, "Ingrese el nombre del producto", "ERROR", JOptionPane.WARNING_MESSAGE);
+        } else {
+            lista.add(1);
+        }
+        //COMPROBAR EXISTENCIA
+        boolean b2 = false;
+        b2 = v.verify(JTexistencia);
+        if (b2 == true) {
+            JOptionPane.showMessageDialog(null, "Debe de ingresar la existencia", "ERROR", JOptionPane.WARNING_MESSAGE);
+            lista.add(2);
+        } else {
+            lista.add(1);
+        }
+
+        boolean b3 = false;
+        verificarexistencia v3 = new verificarexistencia();
+        b3 = v3.verify(JTexistencia);
+        if (b3 == true) {
+            JOptionPane.showMessageDialog(null, "La existencia debe de ser un numero", "ERROR", JOptionPane.WARNING_MESSAGE);
+            lista.add(2);
+        } else {
+            lista.add(1);
+        }
+        //COMPROBAR DESCRIPCION
+        boolean b4 = false;
+        verificarTArea v4 = new verificarTArea();
+
+        b4 = v4.verify(JTextDescripcion);
+        if (b4 == true) {
+            JOptionPane.showMessageDialog(null, "Ingrese la descripcion del producto", "ERROR", JOptionPane.WARNING_MESSAGE);
+            lista.add(2);
+        } else {
+            lista.add(1);
+        }
+
+        //COMPMROBAR LOTE
+        boolean b5 = false;
+        b5 = v.verify(JTextLote);
+        if (b5 == true) {
+            JOptionPane.showMessageDialog(null, "Ingrese el lote del producto", "ERROR", JOptionPane.WARNING_MESSAGE);
+            lista.add(2);
+        } else {
+            lista.add(1);
+        }
+
+        //lista para saber si hay errores
+        int cant = lista.size();
+        boolean band = false;
+        for (int x = 0; x < cant; x++) {
+            int val = lista.get(x);
+            if (val == 2) {
+                band = true;
+                x = cant;
+            }
+
+        }
+        return band;
+    }
+
     private void limpiar() {
         JTextnombre.setText("");
         JTexistencia.setText("");
@@ -218,6 +334,90 @@ public class AgregarInventario extends javax.swing.JFrame {
             JDateFecha.setEnabled(false);
         }
     }//GEN-LAST:event_JProductoActionPerformed
+
+    private void JTextnombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextnombreActionPerformed
+
+    }//GEN-LAST:event_JTextnombreActionPerformed
+
+    private void JTextnombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JTextnombreFocusLost
+
+    }//GEN-LAST:event_JTextnombreFocusLost
+
+    private void JTexistenciaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JTexistenciaFocusLost
+
+    }//GEN-LAST:event_JTexistenciaFocusLost
+
+    private void JTextDescripcionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JTextDescripcionFocusLost
+
+    }//GEN-LAST:event_JTextDescripcionFocusLost
+
+    private void JTextLoteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JTextLoteFocusLost
+
+    }//GEN-LAST:event_JTextLoteFocusLost
+
+    private void JDateFechaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JDateFechaFocusLost
+
+    }//GEN-LAST:event_JDateFechaFocusLost
+//verifica que se ingrese el valor
+
+    class verificar extends InputVerifier {
+
+        @Override
+        public boolean verify(JComponent input) {
+            final JTextField source = (JTextField) input;
+            String s = source.getText();
+
+            if (s.equals("")) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    }
+
+    class verificarTArea extends InputVerifier {
+
+        @Override
+        public boolean verify(JComponent input) {
+            final JTextArea source = (JTextArea) input;
+            String s = source.getText();
+
+            if (s.equals("")) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    }
+
+//verifica que la existencia sea numero
+    class verificarexistencia extends InputVerifier {
+
+        @Override
+        public boolean verify(JComponent input) {
+            final JTextField source = (JTextField) input;
+            String s = source.getText();
+
+            if (isNumeric(s)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+    }
+
+    //para saber si lo que se ingresa es numereo o no
+    private static boolean isNumeric(String cadena) {
+        try {
+            Integer.parseInt(cadena);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
 
     /**
      * @param args the command line arguments

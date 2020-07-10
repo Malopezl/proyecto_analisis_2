@@ -6,6 +6,7 @@
 package org.proyectoa2.inventario.vista;
 
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.marcos.dto.Inventario;
 import org.proyectoa2.inventario.controlador.Eliminar_inventario;
@@ -22,6 +23,7 @@ public class EliminarInventario extends javax.swing.JFrame {
      */
     public EliminarInventario() {
         initComponents();
+        jButton2.setEnabled(false);
     }
 
     /**
@@ -82,6 +84,11 @@ public class EliminarInventario extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTable2FocusGained(evt);
+            }
+        });
         jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable2MouseClicked(evt);
@@ -153,6 +160,9 @@ public class EliminarInventario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        jButton2.setEnabled(false);
+        DefaultTableModel m = new DefaultTableModel();
+        jTable2.setModel(m);
         try {
             Date fecha = jDateChooser1.getDate();
             GenerarTabla generar = new GenerarTabla();
@@ -160,7 +170,13 @@ public class EliminarInventario extends javax.swing.JFrame {
             inventario.setFechaCaducidad(fecha);
 
             DefaultTableModel modelo = generar.GenerarTabla("Fecha", inventario);
-            jTable2.setModel(modelo);
+            if (modelo.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "No existen productos con esa fecha de caducidad", "ERROR", JOptionPane.WARNING_MESSAGE);
+            } else {
+
+                jTable2.setModel(modelo);
+            }
+
         } catch (Exception e) {
 
         }
@@ -168,9 +184,12 @@ public class EliminarInventario extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
+
             DefaultTableModel tm = (DefaultTableModel) jTable2.getModel();
             int cuenta = jTable2.getSelectedRowCount();
+
             if (cuenta == 0) {
+                jButton2.setEnabled(false);
 
             } else {
                 String dato = String.valueOf(tm.getValueAt(jTable2.getSelectedRow(), 0));
@@ -180,6 +199,8 @@ public class EliminarInventario extends javax.swing.JFrame {
                 DefaultTableModel dm = (DefaultTableModel) jTable2.getModel();
                 dm.getDataVector().removeAllElements();
                 dm.fireTableDataChanged();
+                jButton2.setEnabled(false);
+                JOptionPane.showMessageDialog(null, "Se ha eliminado correctamente", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e) {
 
@@ -189,6 +210,10 @@ public class EliminarInventario extends javax.swing.JFrame {
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
 
     }//GEN-LAST:event_jTable2MouseClicked
+
+    private void jTable2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable2FocusGained
+        jButton2.setEnabled(true);
+    }//GEN-LAST:event_jTable2FocusGained
 
     /**
      * @param args the command line arguments
