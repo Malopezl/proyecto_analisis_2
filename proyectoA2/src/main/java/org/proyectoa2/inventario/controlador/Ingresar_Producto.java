@@ -18,10 +18,10 @@ public class Ingresar_Producto {
 
     private TipoProducto tipo;
 
-    public void Crear(String descripcion, int existencia, String lote, Date fecha, String nombre, TipoProducto tp) {
+    public void Crear(String descripcion, int existencia, String lote, Date fecha, String nombre, TipoProducto tp, String dimension) {
 
         this.tipo = tp;
-        Inventario i = new Inventario(descripcion, existencia, lote, fecha, nombre);
+        Inventario i = new Inventario(descripcion, existencia, lote, fecha, nombre,dimension);
         i = this.tipo.tipoProducto(fecha, i);
 
         String g = Insertar(i);
