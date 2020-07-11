@@ -27,7 +27,7 @@ public class InventarioSql {
         PreparedStatement stmt = null;
         try {
             conn = ConexionSql.getConnection();
-            String SQL_INSERT = "INSERT INTO Inventario(descripcionInventario, existencia, lote, fechaCaducidad, nombre) VALUES(?,?,?,?,?) ";
+            String SQL_INSERT = "INSERT INTO Inventario(descripcionInventario, existencia, lote, fechaCaducidad, nombre, dimension) VALUES(?,?,?,?,?,?) ";
             stmt = conn.prepareStatement(SQL_INSERT);
             stmt.setString(1, inventario.getDescripcionInventario());
             stmt.setInt(2, inventario.getExistencia());
@@ -43,6 +43,7 @@ public class InventarioSql {
             }
             
             stmt.setString(5, inventario.getNombre());
+            stmt.setString(6, inventario.getDimension());
             int rows = stmt.executeUpdate();
 
         } catch (SQLException ex) {
