@@ -30,6 +30,7 @@ public class Inventario {
         this.lote = lote;
         this.fechaCaducidad = fechaCaducidad;
         this.nombre = nombre;
+        this.dimension = dimension;
     }
 
     public String getDescripcionInventario() {
