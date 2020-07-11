@@ -24,8 +24,7 @@ public class Menu {
     public Menu() {
     }
 
-    public Menu(int idMenu, String nombreMenu, String descripcionMenu, double precio, String receta, String estado) {
-        this.idMenu = idMenu;
+    public Menu(String nombreMenu, String descripcionMenu, double precio, String receta, String estado) {
         this.nombreMenu = nombreMenu;
         this.descripcionMenu = descripcionMenu;
         this.precio = precio;
