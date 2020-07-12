@@ -8,7 +8,7 @@ package org.marcos.dto;
 import java.util.ArrayList;
 
 /**
- *
+ *|
  * @author marcos
  */
 public class Menu {

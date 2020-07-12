@@ -6,9 +6,12 @@
 package org.proyecto2a.administracion.vista;
 
 import java.awt.Dimension;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import org.marcos.dto.IngredienteMenu;
+import javax.swing.JOptionPane;
 import org.proyecto2a.administracion.controller.ControladorMenu;
 import org.proyecto2a.administracion.controller.listar.listarIngredientes;
 
@@ -21,8 +24,10 @@ public class CrearMenu extends javax.swing.JFrame {
     /**
      * Creates new form CrearMenu
      */
-    ArrayList<String> listaNombres;
-    ArrayList<Double> listaCantidad;
+    private ArrayList<String> listaNombres;
+    private ArrayList<Double> listaCantidad;
+    private ArrayList<String> listaDimensiones;
+    
     public CrearMenu() {
         initComponents();
         this.inicializar();
@@ -34,14 +39,87 @@ public class CrearMenu extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.listaIngredientes.setModel(listarIngredientes.listarInventario());
         this.listaIngredientesSeleccionados.setModel(new DefaultListModel());
+        this.botonEliminarIngrediente.setEnabled(false);
+        
+        
         this.listaNombres = new ArrayList<>();
         this.listaCantidad = new ArrayList<>();
+        this.listaDimensiones = new ArrayList<>();
    
     }
      private void actualizarLista(){
-         
+         DefaultListModel seleccionados = new DefaultListModel();
+         if(this.listaNombres.isEmpty())
+         {
+             this.listaIngredientesSeleccionados.setModel(seleccionados);
+         }else{
+         for(int i=0; i<this.listaNombres.size(); i++){
+             seleccionados.addElement(this.listaNombres.get(i) + "- Cantidad: "+ this.listaCantidad.get(i) + " " + this.listaDimensiones.get(i));
+         }
+         this.listaIngredientesSeleccionados.setModel(seleccionados);
+         }
      } 
-
+     private boolean validarDouble(String ContenedorDouble){
+        
+         try{
+             Double.parseDouble(ContenedorDouble);
+             return true;
+         } catch(NumberFormatException e){
+             return false;
+         }
+         
+     }
+     
+     private boolean validarForm(){
+         if (this.jTextFieldNombre.getText().isBlank()) {
+             JOptionPane.showMessageDialog(this, "Ingrese el nombre del menú", "Nombre de menú incorrecto", JOptionPane.ERROR_MESSAGE);
+             return false;
+         } else if (this.jTextAreaDescripcion.getText().isBlank()) {
+             JOptionPane.showMessageDialog(this, "Ingrese una descripción al menú", "Descripción de menú incorrecta", JOptionPane.ERROR_MESSAGE);
+             return false;
+         } else if (this.jTextFieldPrecio.getText().isBlank()) {
+             JOptionPane.showMessageDialog(this, "Ingrese el precio del menú", "Precio de menú incorrecto", JOptionPane.ERROR_MESSAGE);
+             return false;
+         }else if(!this.validarDouble(this.jTextFieldPrecio.getText())){
+              JOptionPane.showMessageDialog(this, "El precio del menú no es válido", "Precio de menú incorrecto", JOptionPane.ERROR_MESSAGE);
+             return false; 
+         }
+         else if(this.jTextAreaReceta.getText().isBlank()){
+            JOptionPane.showMessageDialog(this, "Ingrese la receta del menú", "Receta de menú incorrecta", JOptionPane.ERROR_MESSAGE);
+            return false; 
+         }
+         else if(this.listaNombres.isEmpty() || this.listaCantidad.isEmpty() ){
+            JOptionPane.showMessageDialog(this, "Ingrese ingredientes a utilizar en el menú.", "Listado de ingredientes incorrecto", JOptionPane.ERROR_MESSAGE);
+            return false;
+         }
+     else{ 
+         return true;
+          }
+     }
+     
+     private boolean validarAgregarIngredientes(){
+     if(this.listaIngredientes.isSelectionEmpty()){
+        JOptionPane.showMessageDialog(this, "Seleccione un ingrediente para agregar al menú.", "Ingrediente seleccionado incorrecto", JOptionPane.ERROR_MESSAGE);
+        return false; 
+     }
+     else if(this.jTextFieldCantidad.getText().isBlank()){
+         JOptionPane.showMessageDialog(this, "Ingrese la cantidad del ingrediente a utilizar", "Cantidad de ingrediente incorrecto", JOptionPane.ERROR_MESSAGE);
+         return false;
+     }
+     else if(!this.validarDouble(this.jTextFieldCantidad.getText())){
+         JOptionPane.showMessageDialog(this, "La cantidad de ingrediente no es válida", "Cantidad de ingrediente incorrecta8", JOptionPane.ERROR_MESSAGE);
+         return false;
+         
+     }else if(this.jComboBoxDimensiones.getSelectedIndex()==0)
+     {
+         JOptionPane.showMessageDialog(this, "La dimesión de la cantidad de ingrediente no es válida", "Dimensión de cantidad de ingrediente incorrecta8", JOptionPane.ERROR_MESSAGE);
+         return false;
+     }
+     else{
+         return true;
+     } 
+     
+     }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,36 +145,32 @@ public class CrearMenu extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         listaIngredientes = new javax.swing.JList<>();
-        jTextField4 = new javax.swing.JTextField();
+        jTextFieldCantidad = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         botonAgregarIngrediente = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         listaIngredientesSeleccionados = new javax.swing.JList<>();
         botonEliminarIngrediente = new javax.swing.JButton();
+        jComboBoxDimensiones = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("FreeSerif", 1, 24)); // NOI18N
         jLabel1.setText("NUEVO MENÚ");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 6, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         jLabel2.setText("Ingrese el nombre del menú:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 83, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         jLabel3.setText("Ingrese la descripción del menú:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 190, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         jLabel4.setText("Ingrese el precio de venta del menú:");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 333, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         jLabel5.setText("Ingrese la receta de preparación del menú:");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 429, -1, -1));
 
         botonCancelar.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         botonCancelar.setText("Cancelar");
@@ -105,7 +179,6 @@ public class CrearMenu extends javax.swing.JFrame {
                 botonCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 603, -1, -1));
 
         botonGuardar.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         botonGuardar.setText("Guardar");
@@ -114,7 +187,6 @@ public class CrearMenu extends javax.swing.JFrame {
                 botonGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(266, 603, -1, -1));
 
         jTextFieldNombre.setFont(new java.awt.Font("FreeSerif", 0, 18)); // NOI18N
         jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -122,26 +194,19 @@ public class CrearMenu extends javax.swing.JFrame {
                 jTextFieldNombreActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 112, 414, -1));
 
         jTextFieldPrecio.setFont(new java.awt.Font("FreeSerif", 0, 18)); // NOI18N
-        getContentPane().add(jTextFieldPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 365, 414, -1));
 
         jTextAreaDescripcion.setColumns(20);
         jTextAreaDescripcion.setRows(5);
         jScrollPane1.setViewportView(jTextAreaDescripcion);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 219, 414, 64));
-
         jTextAreaReceta.setColumns(20);
         jTextAreaReceta.setRows(5);
         jScrollPane2.setViewportView(jTextAreaReceta);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 464, 410, 120));
-
         jLabel6.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         jLabel6.setText("Seleccione los ingredientes:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(541, 18, -1, 30));
 
         listaIngredientes.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -150,14 +215,10 @@ public class CrearMenu extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(listaIngredientes);
 
-        getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(541, 66, 421, -1));
-
-        jTextField4.setFont(new java.awt.Font("FreeSerif", 0, 18)); // NOI18N
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(882, 219, 80, 32));
+        jTextFieldCantidad.setFont(new java.awt.Font("FreeSerif", 0, 18)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jLabel7.setText("Ingrese la cantidad del ingrediente utilizar:");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(541, 223, -1, -1));
+        jLabel7.setText("Cantidad a utilizar:");
 
         botonAgregarIngrediente.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         botonAgregarIngrediente.setText("Agregar ingrediente al menú");
@@ -166,11 +227,9 @@ public class CrearMenu extends javax.swing.JFrame {
                 botonAgregarIngredienteActionPerformed(evt);
             }
         });
-        getContentPane().add(botonAgregarIngrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(715, 289, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         jLabel8.setText("Lista de ingrediente añadidos:");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(541, 365, -1, -1));
 
         listaIngredientesSeleccionados.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -179,11 +238,137 @@ public class CrearMenu extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(listaIngredientesSeleccionados);
 
-        getContentPane().add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(541, 393, 420, -1));
-
         botonEliminarIngrediente.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         botonEliminarIngrediente.setText("Eliminar ingrediente del menú");
-        getContentPane().add(botonEliminarIngrediente, new org.netbeans.lib.awtextra.AbsoluteConstraints(693, 550, -1, -1));
+        botonEliminarIngrediente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarIngredienteActionPerformed(evt);
+            }
+        });
+
+        jComboBoxDimensiones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccione", "gramos", "mililitros", "unidades" }));
+        jComboBoxDimensiones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxDimensionesActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        jLabel10.setText("Dimensión a utilizar:");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(205, 205, 205)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel7)
+                                                    .addComponent(jTextFieldCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel10)
+                                                    .addComponent(jComboBoxDimensiones, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(botonGuardar)
+                                                    .addComponent(botonAgregarIngrediente)
+                                                    .addComponent(botonEliminarIngrediente)
+                                                    .addComponent(botonCancelar))))
+                                        .addGap(29, 29, 29))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(211, 211, 211)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8))
+                                .addContainerGap(37, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(120, 120, 120)
+                                .addComponent(jLabel1))
+                            .addComponent(jLabel5)
+                            .addComponent(jTextFieldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel1)
+                        .addGap(12, 12, 12))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel3)
+                        .addGap(14, 14, 14)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel7)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxDimensiones))
+                        .addGap(18, 18, 18)
+                        .addComponent(botonAgregarIngrediente)
+                        .addGap(21, 21, 21)))
+                .addComponent(jLabel8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(botonEliminarIngrediente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonCancelar)
+                        .addGap(14, 14, 14))))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -199,21 +384,60 @@ public class CrearMenu extends javax.swing.JFrame {
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
         // TODO add your handling code here:
-        ControladorMenu cm = new ControladorMenu();
-        cm.AgregarMenu(
-                this.jTextFieldNombre.getText(),
-                this.jTextAreaDescripcion.getText(),
-                Double.parseDouble(this.jTextFieldPrecio.getText()),
-                this.jTextAreaReceta.getText()
+        if(this.validarForm()){
+            try {
+                ControladorMenu.AgregarMenu(
+                        this.jTextFieldNombre.getText().trim(),
+                        this.jTextAreaDescripcion.getText().trim(),
+                        Double.parseDouble(this.jTextFieldPrecio.getText().trim()),
+                        this.jTextAreaReceta.getText().trim(),
+                        this.listaNombres,
+                        this.listaCantidad
                 );
+            } catch (SQLException ex) {
+                Logger.getLogger(CrearMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
         
         this.dispose();
+        }
     }//GEN-LAST:event_botonGuardarActionPerformed
 
     private void botonAgregarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAgregarIngredienteActionPerformed
         // TODO add your handling code here:
-        this.listaIngredientes.getSelectedValue();
+        if (this.validarAgregarIngredientes()) {
+            this.listaNombres.add(this.listaIngredientes.getSelectedValue());
+            this.listaCantidad.add(Double.parseDouble(this.jTextFieldCantidad.getText()));
+            this.listaDimensiones.add(this.jComboBoxDimensiones.getSelectedItem().toString());
+            this.actualizarLista();
+
+            if (!this.listaNombres.isEmpty()) {
+                this.botonEliminarIngrediente.setEnabled(true);
+            }
+        }
+        
     }//GEN-LAST:event_botonAgregarIngredienteActionPerformed
+
+    private void jComboBoxDimensionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDimensionesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxDimensionesActionPerformed
+
+    private void botonEliminarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarIngredienteActionPerformed
+        // TODO add your handling code here:
+        if(this.listaIngredientesSeleccionados.isSelectionEmpty()){
+        JOptionPane.showMessageDialog(this, "Seleccione un ingrediente para agregar al menú.", "Ingrediente seleccionado incorrecto", JOptionPane.ERROR_MESSAGE);
+        }else{
+        int indice = this.listaIngredientesSeleccionados.getSelectedIndex();
+        this.listaNombres.remove(indice);
+        this.listaCantidad.remove(indice);
+        this.listaDimensiones.remove(indice);
+        this.actualizarLista();
+        
+        if(this.listaNombres.isEmpty()){
+            this.botonEliminarIngrediente.setEnabled(false);
+        }
+        }
+        
+    }//GEN-LAST:event_botonEliminarIngredienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,7 +479,9 @@ public class CrearMenu extends javax.swing.JFrame {
     private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonEliminarIngrediente;
     private javax.swing.JButton botonGuardar;
+    private javax.swing.JComboBox<String> jComboBoxDimensiones;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -269,7 +495,7 @@ public class CrearMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTextArea jTextAreaDescripcion;
     private javax.swing.JTextArea jTextAreaReceta;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextFieldCantidad;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldPrecio;
     private javax.swing.JList<String> listaIngredientes;

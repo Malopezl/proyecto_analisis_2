@@ -5,6 +5,7 @@
  */
 package org.proyecto2a.administracion.controller.listar;
 
+
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import org.marcos.sql.InventarioSql;
@@ -14,7 +15,6 @@ import org.marcos.sql.InventarioSql;
  * @author sharon
  */
 public class listarIngredientes {
-
     public static DefaultListModel listarInventario() {
     DefaultListModel modelo = new DefaultListModel();
     ArrayList<String> listaNombre = InventarioSql.selectNombre();
