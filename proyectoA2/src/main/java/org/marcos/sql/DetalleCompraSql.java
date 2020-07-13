@@ -44,15 +44,16 @@ public class DetalleCompraSql {
         return rows;
     }
     
-    public static ResultSet mostrar() {
+    public ResultSet mostrarDetalle(String factura) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
         try{
             conn = ConexionSql.getConnection();
-            String sentenciaBuscar = "SELECT c.no_factura, p.nombre, c.fecha, c.total, c.estado, dc.precio, dc.cantidad, dc.subtotal, i.nombre FROM Proveedores p INNER JOIN Compra c "
-                      + "ON p.idProveedor = c.idProveedor INNER JOIN detalleCompra dc ON c.idCompra = dc.idCompra INNER JOIN Inventario i on dc.idInventario = i.idInventario";
+            String sentenciaBuscar = "SELECT c.no_factura, p.nombreProveedor, c.fecha, c.total, c.estado, i.nombre, dc.precio, dc.cantidad, dc.subtotal FROM Proveedor p INNER JOIN Compra c "
+                      + "ON p.idProveedor = c.idProveedor INNER JOIN detalleCompra dc ON c.idCompra = dc.idCompra INNER JOIN Inventario i on dc.idInventario = i.idInventario"
+                      + "WHERE e.no_factura LIKE '%" + factura + "%'";
             stmt = conn.prepareStatement(sentenciaBuscar);
             rs = stmt.executeQuery(sentenciaBuscar);
         } catch (SQLException ex) {
@@ -60,10 +61,42 @@ public class DetalleCompraSql {
         }finally{
             if(conn != null){
                 ConexionSql.close(stmt);
-                ConexionSql.close(rs);
                 ConexionSql.close(conn);
             }
         }
         return rs;
+    }
+    
+    public ArrayList<DetalleCompra> seleccionarDetalle(){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        ArrayList<DetalleCompra> lista = new ArrayList<>();
+        
+        try{
+            conn = ConexionSql.getConnection();
+            String sentenciaSeleccionar = "SELECT idCompra, idInventario, cantidad, subtotal, precio FROM detalleCompra";
+            stmt = conn.prepareStatement(sentenciaSeleccionar);
+            rs = stmt.executeQuery();
+            DetalleCompra tmp;
+            while(rs.next()){
+                tmp = new DetalleCompra();
+                tmp.setIdCompra(rs.getInt(1));
+                tmp.setIdInventario(rs.getInt(2));
+                tmp.setCantidad(rs.getFloat(3));
+                tmp.setSubtotal(rs.getDouble(4));
+                tmp.setPrecio(rs.getDouble(5));
+                lista.add(tmp);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteSql.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(conn != null){
+                ConexionSql.close(rs);
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return lista;
     }
 }

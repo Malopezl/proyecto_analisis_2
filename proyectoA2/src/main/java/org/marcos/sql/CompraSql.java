@@ -22,8 +22,8 @@ public class CompraSql {
      * @param nuevaCompra
      * @return
      */
-    public static int Insertar(Compra nuevaCompra) {
-        String sentenciaInsertar = "INSERT INTO Compra(fecha, no_factura, total, estado, Proveedor_idProveedor) VALUES (?, ?, ?, ?, ?)";
+    public int Insertar(Compra nuevaCompra) {
+        String sentenciaInsertarCompra = "INSERT INTO Compra(fecha, no_factura, total, estado, Proveedor_idProveedor) VALUES (?, ?, ?, ?, ?)";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -31,7 +31,7 @@ public class CompraSql {
         
         try {
             conn = ConexionSql.getConnection();
-            stmt = conn.prepareStatement(sentenciaInsertar);
+            stmt = conn.prepareStatement(sentenciaInsertarCompra);
             int index = 1;
             stmt.setDate(index++, (Date) nuevaCompra.getFecha());
             stmt.setString(index++, nuevaCompra.getNoFactura());
@@ -61,6 +61,10 @@ public class CompraSql {
         return rows;
     }
     
+    /**
+     *
+     * @return
+     */
     public static ResultSet mostrarMain() {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -68,7 +72,7 @@ public class CompraSql {
         
         try{
             conn = ConexionSql.getConnection();
-            String sentenciaBuscar = "SELECT c.no_factura, p.nombre, c.fecha, c.total FROM Proveedores p INNER JOIN Compra c on p.idProveedor = c.idProveedor";
+            String sentenciaBuscar = "SELECT c.no_factura, p.nombreProveedor, c.fecha, c.total FROM Proveedor p INNER JOIN Compra c on p.idProveedor = c.idProveedor";
             stmt = conn.prepareStatement(sentenciaBuscar);
             rs = stmt.executeQuery(sentenciaBuscar);
         } catch (SQLException ex) {
@@ -76,29 +80,6 @@ public class CompraSql {
         }finally{
             if(conn != null){
                 ConexionSql.close(stmt);
-                ConexionSql.close(rs);
-                ConexionSql.close(conn);
-            }
-        }
-        return rs;
-    }
-    
-    public static ResultSet mostrarInsumos() {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        
-        try{
-            conn = ConexionSql.getConnection();
-            String sentenciaBuscar = "SELECT i.nombre FROM Inventario";
-            stmt = conn.prepareStatement(sentenciaBuscar);
-            rs = stmt.executeQuery(sentenciaBuscar);
-        } catch (SQLException ex) {
-            Logger.getLogger(OrdenSql.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            if(conn != null){
-                ConexionSql.close(stmt);
-                ConexionSql.close(rs);
                 ConexionSql.close(conn);
             }
         }
