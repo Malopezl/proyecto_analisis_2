@@ -150,6 +150,7 @@ public class CobrarOrdenForm extends javax.swing.JFrame {
             }
             double cambio = manejador.cobrarOrden(indice, tipoCobro, pago);
             JOptionPane.showMessageDialog(null, "El cambio del pago es: Q." + cambio, "Transaccion exitosa", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Notificacion", "Operacion realizada con exito!!!", JOptionPane.INFORMATION_MESSAGE);
             this.setVisible(false);
         }
         

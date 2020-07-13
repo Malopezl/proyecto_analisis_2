@@ -54,6 +54,7 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         displayColaOrdenes = new javax.swing.JList<>();
+        jButton2 = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(1080, 740));
         setName(""); // NOI18N
@@ -133,6 +134,15 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
         jScrollPane1.setViewportView(displayColaOrdenes);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 90, 600, 580));
+
+        jButton2.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jButton2.setText("Regresar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 590, 380, 50));
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonNuevaOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevaOrdenActionPerformed
@@ -204,11 +214,17 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
             Orden temp = manejador.obtenerCola().get(this.displayColaOrdenes.getSelectedIndex());
             if(temp.getEstado() == 1){
                 manejador.eliminarOrden(temp);
+                JOptionPane.showMessageDialog(null, "Notificacion", "Operacion realizada con exito!!!", JOptionPane.INFORMATION_MESSAGE);
             }else{
                 JOptionPane.showMessageDialog(null, "Las ordenes que ya han sido atendidas\n no pueden eliminarse", "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_cancelarOrdenBotonActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -221,6 +237,7 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
     private javax.swing.JLabel etiquetaColaOrdenes;
     private javax.swing.JLabel etiquetaOpciones;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables
