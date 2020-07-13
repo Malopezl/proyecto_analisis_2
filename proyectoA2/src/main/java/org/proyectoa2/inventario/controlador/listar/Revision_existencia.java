@@ -27,19 +27,15 @@ public class Revision_existencia implements Opcion {
         Tabla t = new Tabla();
         modelo = t.getModelo();
         try {
-            //modelo.addColumn("id");
-            //modelo.addColumn("nombre");
-            //modelo.addColumn("descripcion");
-            //  pruebas_1 p = new pruebas_1();
-            //ResultSet rs = p.GENERAL();
+
             ResultSet rs = LEXISTENCIA(inventario.getExistencia());
 
             while (rs.next()) {
                 // Se crea un array que será una de las filas de la tabla.
-                Object[] fila = new Object[6]; // Hay tres columnas en la tabla
+                Object[] fila = new Object[7]; // Hay tres columnas en la tabla
 
                 // Se rellena cada posición del array con una de las columnas de la tabla en base de datos.
-                for (int i = 0; i < 6; i++) {
+                for (int i = 0; i < 7; i++) {
                     fila[i] = rs.getObject(i + 1); // El primer indice en rs es el 1, no el cero, por eso se suma 1.
                 }
                 // Se añade al modelo la fila completa.

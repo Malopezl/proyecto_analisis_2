@@ -23,6 +23,7 @@ public class Tabla {
         this.modelo.addColumn("Lote");
         this.modelo.addColumn("Fecha Caducidad");
         this.modelo.addColumn("Nombre");
+        this.modelo.addColumn("Dimension");
 
     }
 
