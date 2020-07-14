@@ -14,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
 import org.marcos.dto.Compra;
 import org.marcos.dto.DetalleCompra;
 import org.marcos.sql.CompraSql;
-import org.marcos.sql.DetalleCompraSql;
 
 /**
  * 
@@ -23,11 +22,15 @@ import org.marcos.sql.DetalleCompraSql;
 public class ManejoCompra {
     private final Compra compra;
     private final CompraSql comprasql;
-    private DetalleCompraSql detallesql;
 
     public ManejoCompra() {
         comprasql = new CompraSql();
         this.compra = new Compra();
+    }
+    
+    public ManejoCompra(Compra compra) {
+        comprasql = new CompraSql();
+        this.compra = compra;
     }
     
     public void registrarCompra(Compra compra) {
@@ -40,25 +43,7 @@ public class ManejoCompra {
     
     public DefaultTableModel listarCompras(DefaultTableModel modeloTabla) {
         DefaultTableModel modelo = modeloTabla;
-        ResultSet rs = CompraSql.mostrarMain();
-        try {
-            while (rs.next()) {
-                Object[] fila = new Object[4];
-
-                for (int i = 0; i < 4; i++) {
-                    fila[i] = rs.getObject(i + 1);
-                }
-                modelo.addRow(fila);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManejoCompra.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return modelo;
-    }
-    
-    public DefaultTableModel listarDetalle(DefaultTableModel modeloTabla, String factura) {
-        DefaultTableModel modelo = modeloTabla;
-        ResultSet rs = detallesql.mostrarDetalle(factura);
+        ResultSet rs = CompraSql.listarCompras();
         try {
             while (rs.next()) {
                 Object[] fila = new Object[4];

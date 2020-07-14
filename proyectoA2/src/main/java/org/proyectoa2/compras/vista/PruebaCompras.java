@@ -17,6 +17,7 @@ public class PruebaCompras extends javax.swing.JFrame {
      */
     public PruebaCompras() {
         initComponents();
+        this.setLocationRelativeTo(null);
         compras = new MainCompras();
         this.setContentPane(compras);
     }
@@ -31,7 +32,7 @@ public class PruebaCompras extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(710, 370));
+        setPreferredSize(new java.awt.Dimension(760, 530));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -5,17 +5,24 @@
  */
 package org.proyectoa2.compras.vista;
 
+import javax.swing.table.DefaultTableModel;
+import org.proyectoa2.compras.controlador.ManejoListaInsumos;
+
 /**
  *
  * @author malopez
  */
 public class ConsultarInventario extends javax.swing.JFrame {
-
+    private final ManejoListaInsumos manejoListaInsumos;
+    
     /**
      * Creates new form ConsultarInventario
      */
     public ConsultarInventario() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        manejoListaInsumos = new ManejoListaInsumos();
+        mostrarInsumos();
     }
 
     /**
@@ -30,13 +37,16 @@ public class ConsultarInventario extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaConsultaInsumos = new javax.swing.JTable();
+        botonSalir = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(555, 375));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(555, 425));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel1.setText("Consulta de Inventario");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, -1));
+        jLabel1.setFocusable(false);
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, -1, -1));
 
         tablaConsultaInsumos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -54,12 +64,27 @@ public class ConsultarInventario extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaConsultaInsumos.setEnabled(false);
+        tablaConsultaInsumos.setFocusable(false);
         jScrollPane1.setViewportView(tablaConsultaInsumos);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 510, 260));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 510, 270));
+
+        botonSalir.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
+        botonSalir.setText("Cancelar");
+        botonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonSalirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 360, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_botonSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -95,8 +120,14 @@ public class ConsultarInventario extends javax.swing.JFrame {
             }
         });
     }
+    
+    public final void mostrarInsumos() {
+        DefaultTableModel modelo = manejoListaInsumos.mostrarExistencias((DefaultTableModel) this.tablaConsultaInsumos.getModel());
+        tablaConsultaInsumos.setModel(modelo);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaConsultaInsumos;

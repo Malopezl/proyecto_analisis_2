@@ -5,14 +5,18 @@
  */
 package org.proyectoa2.compras.vista;
 
+import javax.swing.table.DefaultTableModel;
 import org.marcos.dto.Compra;
+import org.proyectoa2.compras.controlador.ManejoDetalleCompra;
 
 /**
  *
  * @author malopez
  */
 public class DetallesCompra extends javax.swing.JFrame {
-
+    private ManejoDetalleCompra manejoDetalleCompra;
+    private Compra compra;
+    
     /**
      * Creates new form DetalleCompra
      */
@@ -20,12 +24,12 @@ public class DetallesCompra extends javax.swing.JFrame {
         initComponents();
     }
     
-    public DetallesCompra(Compra compra) {
+    public DetallesCompra(String factura) {
         initComponents();
-        this.jLabel3.setText(compra.getNoFactura());
-        this.jLabel5.setText(compra.getFecha().toString());
-        
-        this.jLabel7.setText(compra.getIdProveedor());
+        this.setLocationRelativeTo(null);
+        manejoDetalleCompra = new ManejoDetalleCompra();
+        compra = new Compra();
+        visualizar(factura);
     }
 
     /**
@@ -41,20 +45,22 @@ public class DetallesCompra extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaDetalleCompra = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        campoFactura = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        campoFecha = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        campoProveedor = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        campoTotal = new javax.swing.JLabel();
+        botonSalir = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(615, 525));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel1.setText("Detalle de Compra");
+        jLabel1.setFocusable(false);
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, -1, -1));
 
         tablaDetalleCompra.setModel(new javax.swing.table.DefaultTableModel(
@@ -73,52 +79,61 @@ public class DetallesCompra extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaDetalleCompra.setEnabled(false);
         jScrollPane1.setViewportView(tablaDetalleCompra);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 550, 130));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 560, 210));
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
         jLabel2.setText("No. Factura");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
+        jLabel2.setFocusable(false);
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 110, 30));
+        campoFactura.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        campoFactura.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(campoFactura, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 120, 30));
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
         jLabel4.setText("Fecha");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, -1, -1));
+        jLabel4.setFocusable(false);
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, -1, -1));
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 70, 110, 30));
+        campoFecha.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        campoFecha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(campoFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 130, 30));
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
         jLabel6.setText("Proveedor");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
+        jLabel6.setFocusable(false);
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
 
-        jLabel7.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, 200, 30));
+        campoProveedor.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        campoProveedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(campoProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 170, 30));
 
-        jLabel8.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
         jLabel8.setText("Total");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 200, -1, -1));
+        jLabel8.setFocusable(false);
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, -1, -1));
 
-        jLabel9.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, 130, 30));
+        campoTotal.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        campoTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(campoTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 440, 130, 30));
 
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel10.setText("Estado");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, -1));
-
-        jLabel11.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 150, 30));
+        botonSalir.setText("Cancelar");
+        botonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonSalirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 450, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
+        dispose();
+    }//GEN-LAST:event_botonSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,18 +172,27 @@ public class DetallesCompra extends javax.swing.JFrame {
         });
     }
 
+    private void visualizar(String factura) {
+        compra = manejoDetalleCompra.listarDatos(factura);
+        this.campoFactura.setText(factura);
+        this.campoFecha.setText(compra.getFecha().toString());
+        this.campoProveedor.setText(compra.getProveedor().getNombreProveedor());
+        DefaultTableModel modelo = manejoDetalleCompra.listarDetalle((DefaultTableModel) this.tablaDetalleCompra.getModel(), compra.getIdCompra());
+        this.tablaDetalleCompra.setModel(modelo);
+        this.campoTotal.setText(String.valueOf(compra.getTotal()));
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonSalir;
+    private javax.swing.JLabel campoFactura;
+    private javax.swing.JLabel campoFecha;
+    private javax.swing.JLabel campoProveedor;
+    private javax.swing.JLabel campoTotal;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaDetalleCompra;
     // End of variables declaration//GEN-END:variables
