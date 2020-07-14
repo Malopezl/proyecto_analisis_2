@@ -197,7 +197,7 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
                 this.manejadorOrden.confirmarModificacionOrden();
                 
             }
-            JOptionPane.showMessageDialog(null, "Notificacion", "Operacion realizada con exito!!!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Operacion realizada con exito!!!", "Operacion realizada con exito!!!", JOptionPane.INFORMATION_MESSAGE);
             this.setVisible(false);
         }
     }//GEN-LAST:event_botonConfirmarOrdenActionPerformed

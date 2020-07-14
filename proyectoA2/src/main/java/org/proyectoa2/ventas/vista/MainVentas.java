@@ -214,7 +214,7 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
             Orden temp = manejador.obtenerCola().get(this.displayColaOrdenes.getSelectedIndex());
             if(temp.getEstado() == 1){
                 manejador.eliminarOrden(temp);
-                JOptionPane.showMessageDialog(null, "Notificacion", "Operacion realizada con exito!!!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Se ha eliminado la orden de la lista", "Operacion realizada con exito!!!", JOptionPane.INFORMATION_MESSAGE);
             }else{
                 JOptionPane.showMessageDialog(null, "Las ordenes que ya han sido atendidas\n no pueden eliminarse", "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
             }
