@@ -84,6 +84,7 @@ org/proyectoa2/ventas/vista/CobrarOrdenForm$3.class
 org/proyectoa2/ventas/vista/NuevaOrdenForm$1.class
 org/proyectoa2/ventas/vista/AgregarComplementoForm.class
 org/marcos/dto/Puesto.class
+org/proyectoa2/ventas/vista/MainVentas$8.class
 org/marcos/sql/ConexionSql.class
 org/proyectoa2/ventas/vista/CobrarOrdenForm.class
 org/proyectoa2/ventas/vista/NuevaOrdenForm$2.class

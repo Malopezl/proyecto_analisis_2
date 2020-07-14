@@ -62,7 +62,6 @@ public class ManejoOrden {
         Date fecha = new Date();
         this.orden.setFechaOrden(fecha);
         this.orden.setIdCliente(cliente.getIdCliente());
-        this.orden.setIdUsuario(1);
         this.orden.setTotal(Double.valueOf(total));
     }
 }
