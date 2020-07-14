@@ -23,7 +23,7 @@ public class CompraSql {
      * @return
      */
     public int Insertar(Compra nuevaCompra) {
-        String sentenciaInsertarCompra = "INSERT INTO Compra(fecha, no_factura, total, idProveedor) VALUES (?, ?, ?, ?, ?)";
+        String sentenciaInsertarCompra = "INSERT INTO Compra(fecha, no_factura, total, idProveedor) VALUES (?, ?, ?, ?)";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -32,18 +32,23 @@ public class CompraSql {
         try {
             conn = ConexionSql.getConnection();
             stmt = conn.prepareStatement(sentenciaInsertarCompra);
-            stmt.setDate(1, (Date) nuevaCompra.getFecha());
+            java.sql.Date date = new java.sql.Date(nuevaCompra.getFecha().getTime());
+            stmt.setDate(1, date);
             stmt.setString(2, nuevaCompra.getNoFactura());
             stmt.setDouble(3, nuevaCompra.getTotal());
             stmt.setInt(4, nuevaCompra.getIdProveedor());
             rows = stmt.executeUpdate();
             
-            String sentencia = "SELECT idCompra FROM Compra WHERE Proveedor_idProveedor = ? AND no_factura = ?";
+            String sentencia = "SELECT idCompra FROM Compra WHERE idProveedor = ? AND no_factura = ?";
             stmt = conn.prepareStatement(sentencia);
             stmt.setInt(1, nuevaCompra.getIdProveedor());
             stmt.setString(2, nuevaCompra.getNoFactura());
             rs = stmt.executeQuery();
-            int id = rs.getInt(1);
+            int id = 0;
+            while (rs.next()) {
+                id = rs.getInt(1);
+                break;
+            }
             nuevaCompra.setIdCompra(id);
             DetalleCompraSql detalle = new DetalleCompraSql();
             detalle.InsertarListado(nuevaCompra.getDetalles(), id);
