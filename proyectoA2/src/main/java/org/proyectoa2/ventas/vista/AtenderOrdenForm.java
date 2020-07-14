@@ -145,7 +145,7 @@ public class AtenderOrdenForm extends javax.swing.JFrame {
     private void botonMarcarAtendidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMarcarAtendidoActionPerformed
         if(orden.getEstado() == 1){
             manejador.cambiarEstado();
-            JOptionPane.showMessageDialog(null, "Notificacion", "Operacion realizada con exito!!!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Operacion realizada con exito!!!", "Operacion realizada con exito!!!", JOptionPane.INFORMATION_MESSAGE);
             this.setVisible(false);
         }else{
             JOptionPane.showMessageDialog(null, "Las ordenes que ya han sido atendidas\n no pueden volver a atenderse", "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
