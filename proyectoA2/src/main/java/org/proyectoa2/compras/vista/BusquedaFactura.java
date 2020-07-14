@@ -121,24 +121,40 @@ public class BusquedaFactura extends javax.swing.JFrame {
                 ModeloCompras modeloCompras = new ModeloCompras();
                 Compra compra = new Compra();
                 compra.setNoFactura(factura);
-                DefaultTableModel modelo = modeloCompras.ModeloCompras("Factura", compra, (DefaultTableModel) tablaCompras.getModel());
+                DefaultTableModel modelo = (DefaultTableModel) tablaCompras.getModel();
+                modelo.setRowCount(0);
                 tablaCompras.setModel(modelo);
+                modelo = modeloCompras.ModeloCompras("Factura", compra, (DefaultTableModel) tablaCompras.getModel());
+                if (modelo.getRowCount() <= 0) {
+                    JOptionPane.showMessageDialog(null, "No se encontro la factura", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    manejoCompra.listarCompras((DefaultTableModel) tablaCompras.getModel());
+                } else {
+                    tablaCompras.setModel(modelo);
+                }
                 this.campoFactura.setText("");
             }
         }
     }//GEN-LAST:event_botonBuscarActionPerformed
 
     private void botonDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDetalleActionPerformed
+        boolean b = false;
         for (int i = 0; i < tablaCompras.getRowCount(); i++) {
             if (tablaCompras.isRowSelected(i) == true) {
-                if (JOptionPane.showConfirmDialog(null, "La factura seleccionada es correcta?", "Mostrar Detalle", JOptionPane.YES_NO_OPTION) == 0) {
-                    String factura = (String) tablaCompras.getValueAt(i, 1);
-                    detallesCompra = new DetallesCompra(factura);
-                    detallesCompra.setVisible(true);
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Seleccione una factura de la tabla para ver el detalle de esa compra", "Error", JOptionPane.WARNING_MESSAGE);
+                b = true;
             }
+        }
+        if (b == true) {
+            if (JOptionPane.showConfirmDialog(null, "La compra seleccionada es correcta?", "Mostrar Detalle", JOptionPane.YES_NO_OPTION) == 0) {
+                String factura = (String) tablaCompras.getValueAt(tablaCompras.getSelectedRow(), 0);
+                detallesCompra = new DetallesCompra(factura);
+                detallesCompra.setVisible(true);
+                DefaultTableModel modelo = (DefaultTableModel) tablaCompras.getModel();
+                modelo.setRowCount(0);
+                tablaCompras.setModel(modelo);
+                manejoCompra.listarCompras((DefaultTableModel) tablaCompras.getModel());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una compra de la tabla para ver el detalle", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botonDetalleActionPerformed
 

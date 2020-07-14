@@ -126,23 +126,39 @@ public class BusquedaFecha extends javax.swing.JFrame {
                 ModeloCompras modeloCompras = new ModeloCompras();
                 Compra compra = new Compra();
                 compra.setFecha(fecha);
-                DefaultTableModel modelo = modeloCompras.ModeloCompras("Fecha", compra, (DefaultTableModel) tablaCompras.getModel());
+                DefaultTableModel modelo = (DefaultTableModel) tablaCompras.getModel();
+                modelo.setRowCount(0);
                 tablaCompras.setModel(modelo);
+                modelo = modeloCompras.ModeloCompras("Fecha", compra, (DefaultTableModel) tablaCompras.getModel());
+                if (modelo.getRowCount() <= 0) {
+                    JOptionPane.showMessageDialog(null, "No se encontro la fecha", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    manejoCompra.listarCompras((DefaultTableModel) tablaCompras.getModel());
+                } else {
+                    tablaCompras.setModel(modelo);
+                }
             }
         }
     }//GEN-LAST:event_botonBuscarFechaActionPerformed
 
     private void botonVerDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerDetalleActionPerformed
+        boolean b = false;
         for (int i = 0; i < tablaCompras.getRowCount(); i++) {
             if (tablaCompras.isRowSelected(i) == true) {
-                if (JOptionPane.showConfirmDialog(null, "La fecha seleccionada es correcta", "Mostrar Detalle", JOptionPane.YES_NO_OPTION) == 0) {
-                    String factura = (String) tablaCompras.getValueAt(i, 1);
-                    detallesCompra = new DetallesCompra(factura);
-                    detallesCompra.setVisible(true);
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Seleccione una celda de la tabla para ver el detalle de esa compra", "Error", JOptionPane.WARNING_MESSAGE);
+                b = true;
             }
+        }
+        if (b == true) {
+            if (JOptionPane.showConfirmDialog(null, "La compra seleccionada es correcta", "Mostrar Detalle", JOptionPane.YES_NO_OPTION) == 0) {
+                String factura = (String) tablaCompras.getValueAt(tablaCompras.getSelectedRow(), 0);
+                detallesCompra = new DetallesCompra(factura);
+                detallesCompra.setVisible(true);
+                DefaultTableModel modelo = (DefaultTableModel) tablaCompras.getModel();
+                modelo.setRowCount(0);
+                tablaCompras.setModel(modelo);
+                manejoCompra.listarCompras((DefaultTableModel) tablaCompras.getModel());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una compra de la tabla para ver el detalle", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botonVerDetalleActionPerformed
 
@@ -175,6 +191,7 @@ public class BusquedaFecha extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new BusquedaFecha().setVisible(true);
             }

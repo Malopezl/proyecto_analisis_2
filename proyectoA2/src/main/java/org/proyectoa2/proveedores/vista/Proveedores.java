@@ -19,6 +19,7 @@ public class Proveedores extends javax.swing.JFrame {
      */
     public Proveedores() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -131,6 +132,7 @@ public class Proveedores extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Proveedores().setVisible(true);
             }
