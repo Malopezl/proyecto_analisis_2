@@ -19,12 +19,12 @@ public class Compra {
     private Date fecha;
     private String noFactura;
     private double total;
-    private String estado;
     private int idProveedor;
     private Proveedor proveedor;
     private ArrayList<DetalleCompra> detalles;
 
     public Compra() {
+        detalles = new ArrayList<>();
     }
 
     public Compra(int idCompra, Date fecha, String noFactura, double total, int idProveedor) {
@@ -70,14 +70,6 @@ public class Compra {
         this.total = total;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
     public int getIdProveedor() {
         return idProveedor;
     }
@@ -94,7 +86,7 @@ public class Compra {
         this.proveedor = proveedor;
     }
 
-    public ArrayList<DetalleCompra> getDetalle() {
+    public ArrayList<DetalleCompra> getDetalles() {
         return detalles;
     }
 

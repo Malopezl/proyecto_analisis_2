@@ -23,7 +23,7 @@ public class CompraSql {
      * @return
      */
     public int Insertar(Compra nuevaCompra) {
-        String sentenciaInsertarCompra = "INSERT INTO Compra(fecha, no_factura, total, estado, Proveedor_idProveedor) VALUES (?, ?, ?, ?, ?)";
+        String sentenciaInsertarCompra = "INSERT INTO Compra(fecha, no_factura, total, idProveedor) VALUES (?, ?, ?, ?)";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -32,23 +32,26 @@ public class CompraSql {
         try {
             conn = ConexionSql.getConnection();
             stmt = conn.prepareStatement(sentenciaInsertarCompra);
-            int index = 1;
-            stmt.setDate(index++, (Date) nuevaCompra.getFecha());
-            stmt.setString(index++, nuevaCompra.getNoFactura());
-            stmt.setDouble(index++, nuevaCompra.getTotal());
-            stmt.setString(index++, nuevaCompra.getEstado());
-            stmt.setInt(index++, nuevaCompra.getIdProveedor());
+            java.sql.Date date = new java.sql.Date(nuevaCompra.getFecha().getTime());
+            stmt.setDate(1, date);
+            stmt.setString(2, nuevaCompra.getNoFactura());
+            stmt.setDouble(3, nuevaCompra.getTotal());
+            stmt.setInt(4, nuevaCompra.getIdProveedor());
             rows = stmt.executeUpdate();
             
-            String sentencia = "SELECT idCompra FROM Compra WHERE Proveedor_idProveedor = ? AND No_factura = ?";
+            String sentencia = "SELECT idCompra FROM Compra WHERE idProveedor = ? AND no_factura = ?";
             stmt = conn.prepareStatement(sentencia);
             stmt.setInt(1, nuevaCompra.getIdProveedor());
             stmt.setString(2, nuevaCompra.getNoFactura());
             rs = stmt.executeQuery();
-            int id = rs.getInt(1);
+            int id = 0;
+            while (rs.next()) {
+                id = rs.getInt(1);
+                break;
+            }
             nuevaCompra.setIdCompra(id);
             DetalleCompraSql detalle = new DetalleCompraSql();
-            detalle.InsertarListado(nuevaCompra.getDetalle(), id);
+            detalle.InsertarListado(nuevaCompra.getDetalles(), id);
         } catch (SQLException ex) {
             Logger.getLogger(OrdenSql.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -65,14 +68,95 @@ public class CompraSql {
      *
      * @return
      */
-    public static ResultSet mostrarMain() {
+    public static ResultSet listarCompras() {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
         try{
             conn = ConexionSql.getConnection();
-            String sentenciaBuscar = "SELECT c.no_factura, p.nombreProveedor, c.fecha, c.total FROM Proveedor p INNER JOIN Compra c on p.idProveedor = c.idProveedor";
+            String sentenciaBuscar = "SELECT c.no_factura, c.fecha, p.nombreProveedor, c.total FROM Proveedor p INNER JOIN Compra c on p.idProveedor = c.idProveedor";
+            stmt = conn.prepareStatement(sentenciaBuscar);
+            rs = stmt.executeQuery(sentenciaBuscar);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdenSql.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(conn != null){
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return rs;
+    }
+    
+    /**
+     *
+     * @param fecha
+     * @return
+     */
+    public static ResultSet listarPorFecha(String fecha) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            conn = ConexionSql.getConnection();
+            String sentenciaBuscar = "SELECT c.no_factura, c.fecha, p.nombreProveedor, c.total FROM Proveedor p INNER JOIN Compra c on p.idProveedor = c.idProveedor "
+                      + "where c.fecha LIKE '%" + fecha + "%'";
+            stmt = conn.prepareStatement(sentenciaBuscar);
+            rs = stmt.executeQuery(sentenciaBuscar);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdenSql.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(conn != null){
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return rs;
+    }
+    
+    /**
+     *
+     * @param factura
+     * @return
+     */
+    public static ResultSet listarPorFactura(String factura) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            conn = ConexionSql.getConnection();
+            String sentenciaBuscar = "SELECT c.no_factura, c.fecha, p.nombreProveedor, c.total FROM Proveedor p INNER JOIN Compra c on p.idProveedor = c.idProveedor "
+                      + "where c.no_factura LIKE '%" + factura + "%'";
+            stmt = conn.prepareStatement(sentenciaBuscar);
+            rs = stmt.executeQuery(sentenciaBuscar);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdenSql.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(conn != null){
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return rs;
+    }
+    
+    /**
+     *
+     * @param nombre
+     * @return
+     */
+    public static ResultSet listarPorProveedor(String nombre) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            conn = ConexionSql.getConnection();
+            String sentenciaBuscar = "SELECT c.no_factura, c.fecha, p.nombreProveedor, c.total FROM Proveedor p INNER JOIN Compra c on p.idProveedor = c.idProveedor "
+                      + "where p.nombreProveedor LIKE '%" + nombre + "%'";
             stmt = conn.prepareStatement(sentenciaBuscar);
             rs = stmt.executeQuery(sentenciaBuscar);
         } catch (SQLException ex) {
