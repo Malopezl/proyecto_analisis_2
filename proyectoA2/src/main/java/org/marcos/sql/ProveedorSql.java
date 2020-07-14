@@ -94,7 +94,7 @@ public class ProveedorSql {
         
         try {
             conn = ConexionSql.getConnection();
-            String sentenciaBuscar = "SELECT NIT, nombreProveedor, No_cuenta, telefono, direccionProveedor, correo, saldoPendiente FROM Proveedor "
+            String sentenciaBuscar = "SELECT NIT, No_cuenta, nombreProveedor, telefono, direccionProveedor, correo, saldoPendiente FROM Proveedor "
                       + "where NIT LIKE '%" + nit + "%'";
             stmt = conn.prepareStatement(sentenciaBuscar);
             rs = stmt.executeQuery(sentenciaBuscar);
@@ -116,7 +116,7 @@ public class ProveedorSql {
         
         try {
             conn = ConexionSql.getConnection();
-            String sentenciaBuscar = "SELECT NIT, nombreProveedor, No_cuenta, telefono, direccionProveedor, correo, saldoPendiente FROM Proveedor "
+            String sentenciaBuscar = "SELECT NIT, No_cuenta, nombreProveedor, telefono, direccionProveedor, correo, saldoPendiente FROM Proveedor "
                       + "where nombreProveedor LIKE '%" + nombre + "%'";
             stmt = conn.prepareStatement(sentenciaBuscar);
             rs = stmt.executeQuery(sentenciaBuscar);
@@ -180,16 +180,15 @@ public class ProveedorSql {
         return rows;
     }
     
-    public int eliminarProveedor(Proveedor proveedor) {
+    public int eliminarProveedor(String nit) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
         
         try {
             conn = ConexionSql.getConnection();
-            String sentenciaEliminar = "DELETE FROM Proveedor WHERE NIT=?";
+            String sentenciaEliminar = "DELETE FROM Proveedor WHERE NIT LIKE '%" + nit + "%'";
             stmt = conn.prepareStatement(sentenciaEliminar);
-            stmt.setString(1, proveedor.getNit());
             rows = stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProveedorSql.class.getName()).log(Level.SEVERE, null, ex);
