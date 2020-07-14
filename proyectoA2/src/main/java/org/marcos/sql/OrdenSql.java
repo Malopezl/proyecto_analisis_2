@@ -15,7 +15,7 @@ import org.marcos.dto.Orden;
  * @author marcos
  */
 public class OrdenSql {
-    private String sentenciaInsertNuevaOrden = "INSERT INTO Orden(No_factura, fechaOrden, total, Usuario_idUsuario, Cliente_idCliente) VALUES (?, ?, ?, ?, ?) ";
+    private String sentenciaInsertNuevaOrden = "INSERT INTO Orden(No_factura, fechaOrden, total, Cliente_idCliente) VALUES (?, ?, ?, ?) ";
     
     public OrdenSql(){
         
@@ -35,15 +35,13 @@ public class OrdenSql {
             convertidor = new java.sql.Date(nuevaOrden.getFechaOrden().getTime());
             stmt.setDate(index++, convertidor);
             stmt.setDouble(index++, nuevaOrden.getTotal());
-            stmt.setInt(index++, nuevaOrden.getIdUsuario());
             stmt.setInt(index++, nuevaOrden.getIdCliente());
             rows = stmt.executeUpdate();
-            String sentencia = "Select idOrden from Orden where Usuario_idUsuario = ? AND Cliente_idCliente = ? AND fechaOrden = ? AND No_factura = ?";
+            String sentencia = "Select idOrden from Orden where Cliente_idCliente = ? AND fechaOrden = ? AND No_factura = ?";
             stmt = conn.prepareStatement(sentencia);
-            stmt.setInt(1, nuevaOrden.getIdUsuario());
-            stmt.setInt(2, nuevaOrden.getIdCliente());
-            stmt.setDate(3, convertidor);
-            stmt.setString(4, nuevaOrden.getNoFactura());
+            stmt.setInt(1, nuevaOrden.getIdCliente());
+            stmt.setDate(2, convertidor);
+            stmt.setString(3, nuevaOrden.getNoFactura());
             rs = stmt.executeQuery();
             int id = 0;
             while(rs.next()){
