@@ -5,6 +5,7 @@
  */
 package org.proyectoa2.compras.vista;
 
+import javax.swing.JFrame;
 import org.proyectoa2.proveedores.vista.Proveedores;
 
 
@@ -19,12 +20,23 @@ public class MainCompras extends javax.swing.JPanel {
     private Proveedores gestionarProveedores;
     private BusquedaFactura busquedaFactura;
     private BusquedaProveedor busquedaProveedor;
+    private JFrame frame;
     
     /**
      * Creates new form MainCompras
      */
     public MainCompras() {
         initComponents();
+        this.panelCompras.setVisible(false);
+    }
+    
+    /**
+     *
+     * @param main
+     */
+    public MainCompras(JFrame main) {
+        initComponents();
+        this.frame = main;
         this.panelCompras.setVisible(false);
     }
 
@@ -161,7 +173,7 @@ public class MainCompras extends javax.swing.JPanel {
     }//GEN-LAST:event_botonConsultarInventarioActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
-        this.setVisible(false);
+        this.frame.dispose();
     }//GEN-LAST:event_botonSalirActionPerformed
 
     private void botonGestionarComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGestionarComprasActionPerformed

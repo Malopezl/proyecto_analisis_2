@@ -22,6 +22,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
      */
     public AgregarProveedor() {
         initComponents();
+        this.setLocationRelativeTo(null);
         proveedor = new Proveedor();
         manejoProveedor = new ManejoProveedor();
     }
@@ -143,6 +144,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
                 proveedor.setCorreo(campoCorreo.getText());
                 proveedor.setSaldoPendiente(0);
                 manejoProveedor.registrarProveedor(proveedor);
+                JOptionPane.showMessageDialog(null, "Se ha agregado el proveedor con exito", "Nuevo Proveedor", JOptionPane.INFORMATION_MESSAGE);
                 limpiar();
             }
             
@@ -182,6 +184,7 @@ public class AgregarProveedor extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new AgregarProveedor().setVisible(true);
             }

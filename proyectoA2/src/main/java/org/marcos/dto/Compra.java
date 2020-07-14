@@ -24,6 +24,7 @@ public class Compra {
     private ArrayList<DetalleCompra> detalles;
 
     public Compra() {
+        detalles = new ArrayList<>();
     }
 
     public Compra(int idCompra, Date fecha, String noFactura, double total, int idProveedor) {

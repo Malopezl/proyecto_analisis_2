@@ -121,15 +121,23 @@ public class BusquedaNombre extends javax.swing.JFrame {
 
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
         if (campoNombre.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Ingrese un NIT valido", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingrese un nombre valido", "Error", JOptionPane.WARNING_MESSAGE);
         } else {
-            if (JOptionPane.showConfirmDialog(null, "El NIT es correcto?", "Confirmar Busqueda", JOptionPane.YES_NO_OPTION) == 0) {
+            if (JOptionPane.showConfirmDialog(null, "El nombre es correcto?", "Confirmar Busqueda", JOptionPane.YES_NO_OPTION) == 0) {
                 String nombre = campoNombre.getText();
                 ModeloProveedores modeloProveedores = new ModeloProveedores();
                 Proveedor proveedor = new Proveedor();
                 proveedor.setNombreProveedor(nombre);
-                DefaultTableModel modelo = modeloProveedores.ModeloProveedores("Nombre", proveedor, (DefaultTableModel) tablaProveedores.getModel());
+                DefaultTableModel modelo = (DefaultTableModel) tablaProveedores.getModel();
+                modelo.setRowCount(0);
                 tablaProveedores.setModel(modelo);
+                modelo = modeloProveedores.ModeloProveedores("Nombre", proveedor, (DefaultTableModel) tablaProveedores.getModel());
+                if (modelo.getRowCount() <= 0) {
+                    JOptionPane.showMessageDialog(null, "No se encontro el Proveedor", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    manejoProveedor.listarProveedores((DefaultTableModel) tablaProveedores.getModel());
+                } else {
+                    tablaProveedores.setModel(modelo);
+                }
                 this.campoNombre.setText("");
             }
         }
@@ -142,11 +150,11 @@ public class BusquedaNombre extends javax.swing.JFrame {
             
             for (int i = 0; i < tablaProveedores.getRowCount(); i++) {
                 proveedor = new Proveedor();
-                nit = (String) tablaProveedores.getValueAt(i, 1);
-                nombre = (String) tablaProveedores.getValueAt(i, 3);
-                telefono = (String) tablaProveedores.getValueAt(i, 4);
-                direccion = (String) tablaProveedores.getValueAt(i, 5);
-                correo = (String) tablaProveedores.getValueAt(i, 6);
+                nit = (String) tablaProveedores.getValueAt(i, 0);
+                nombre = (String) tablaProveedores.getValueAt(i, 2);
+                telefono = (String) tablaProveedores.getValueAt(i, 3);
+                direccion = (String) tablaProveedores.getValueAt(i, 4);
+                correo = (String) tablaProveedores.getValueAt(i, 5);
                 proveedor.setNit(nit);
                 proveedor.setNombreProveedor(nombre);
                 proveedor.setTelefono(telefono);
@@ -154,17 +162,24 @@ public class BusquedaNombre extends javax.swing.JFrame {
                 proveedor.setCorreo(correo);
                 manejoProveedor.actualizarProveedores(proveedor);
             }
+            
+            DefaultTableModel modelo = (DefaultTableModel) tablaProveedores.getModel();
+            modelo.setRowCount(0);
+            tablaProveedores.setModel(modelo);
+            manejoProveedor.listarProveedores((DefaultTableModel) tablaProveedores.getModel());
         }
     }//GEN-LAST:event_botonEditarActionPerformed
 
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
         if (tablaProveedores.getSelectedRowCount() == 1) {
             if(JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar este proveedor", "Eliminar", JOptionPane.YES_NO_OPTION) == 0) {
-                Proveedor proveedor = new Proveedor();
+                DefaultTableModel modelo = (DefaultTableModel) tablaProveedores.getModel();
                 String nit = (String) tablaProveedores.getValueAt(tablaProveedores.getSelectedRow(), 1);
-                proveedor.setNit(nit);
-                manejoProveedor.eliminarProveedores(proveedor);
-            } else {
+                manejoProveedor.eliminarProveedores(nit);
+                modelo.setRowCount(0);
+                tablaProveedores.setModel(modelo);
+                manejoProveedor.listarProveedores((DefaultTableModel) tablaProveedores.getModel());
+                JOptionPane.showMessageDialog(null, "Se ha eliminado el proveedor con exito", "Eliminar Proveedor", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Por favor seleccione un proveedores a eliminar", "Error", JOptionPane.WARNING_MESSAGE);
@@ -204,6 +219,7 @@ public class BusquedaNombre extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new BusquedaNombre().setVisible(true);
             }

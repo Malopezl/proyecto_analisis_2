@@ -61,24 +61,24 @@ public final class NuevaCompra extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        campoFactura = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        listaProveedores = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        seleccionadorFecha = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
-        listaInsumos = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        campoCantidad = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaInsumosCompra = new javax.swing.JTable();
-        botonCrearProveedor = new javax.swing.JButton();
-        botonCrearInsumo = new javax.swing.JButton();
-        botonAgregarInsumo = new javax.swing.JButton();
-        botonEditarCantidad = new javax.swing.JButton();
-        botonBorrarInsumo = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         campoTotal = new javax.swing.JLabel();
+        campoFactura = new javax.swing.JTextField();
+        listaProveedores = new javax.swing.JComboBox<>();
+        seleccionadorFecha = new com.toedter.calendar.JDateChooser();
+        botonCrearProveedor = new javax.swing.JButton();
+        listaInsumos = new javax.swing.JComboBox<>();
+        campoCantidad = new javax.swing.JTextField();
+        botonCrearInsumo = new javax.swing.JButton();
+        botonAgregarInsumo = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaInsumosCompra = new javax.swing.JTable();
+        botonEditarCantidad = new javax.swing.JButton();
+        botonBorrarInsumo = new javax.swing.JButton();
         botonEnviarPedido = new javax.swing.JButton();
         botonSalir = new javax.swing.JButton();
 
@@ -95,70 +95,43 @@ public final class NuevaCompra extends javax.swing.JFrame {
         jLabel8.setText("No. Factura");
         jLabel8.setFocusable(false);
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, -1));
-        getContentPane().add(campoFactura, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 160, 30));
 
         jLabel2.setFont(new java.awt.Font("DialogInput", 0, 14)); // NOI18N
         jLabel2.setText("Seleccione Proveedor");
         jLabel2.setFocusable(false);
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
 
-        listaProveedores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(listaProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 210, 30));
-
         jLabel3.setFont(new java.awt.Font("DialogInput", 0, 14)); // NOI18N
         jLabel3.setText("Fecha");
         jLabel3.setFocusable(false);
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 130, -1, -1));
-
-        seleccionadorFecha.setDateFormatString("dd MMM, yyyy");
-        getContentPane().add(seleccionadorFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, 160, -1));
 
         jLabel4.setFont(new java.awt.Font("DialogInput", 0, 14)); // NOI18N
         jLabel4.setText("Seleccione Insumo");
         jLabel4.setFocusable(false);
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
 
-        listaInsumos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(listaInsumos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 210, 30));
-
         jLabel5.setFont(new java.awt.Font("DialogInput", 0, 14)); // NOI18N
         jLabel5.setText("Cantidad");
         jLabel5.setFocusable(false);
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, -1, -1));
 
-        campoCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoCantidadKeyTyped(evt);
-            }
-        });
-        getContentPane().add(campoCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 110, 30));
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel6.setText("Total:");
+        jLabel6.setFocusable(false);
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 550, -1, -1));
 
-        tablaInsumosCompra.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        campoTotal.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        campoTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        campoTotal.setFocusable(false);
+        getContentPane().add(campoTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 540, 180, 30));
+        getContentPane().add(campoFactura, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 160, 30));
 
-            },
-            new String [] {
-                "Insumo", "Cantidad", "Precio", "Subtotal"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Float.class, java.lang.Object.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true, false, false
-            };
+        listaProveedores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(listaProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 210, 30));
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tablaInsumosCompra);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 480, 210));
+        seleccionadorFecha.setDateFormatString("dd MMM, yyyy");
+        getContentPane().add(seleccionadorFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, 160, -1));
 
         botonCrearProveedor.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
         botonCrearProveedor.setText("Nuevo Proveedor");
@@ -168,6 +141,16 @@ public final class NuevaCompra extends javax.swing.JFrame {
             }
         });
         getContentPane().add(botonCrearProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 150, -1, 50));
+
+        listaInsumos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(listaInsumos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 210, 30));
+
+        campoCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoCantidadKeyTyped(evt);
+            }
+        });
+        getContentPane().add(campoCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 110, 30));
 
         botonCrearInsumo.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
         botonCrearInsumo.setText("Nuevo Insumo");
@@ -187,6 +170,26 @@ public final class NuevaCompra extends javax.swing.JFrame {
         });
         getContentPane().add(botonAgregarInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 310, 180, 50));
 
+        tablaInsumosCompra.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Insumo", "Cantidad", "Precio", "Subtotal"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tablaInsumosCompra);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 480, 210));
+
         botonEditarCantidad.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
         botonEditarCantidad.setText("Editar Cantidad");
         botonEditarCantidad.addActionListener(new java.awt.event.ActionListener() {
@@ -204,16 +207,6 @@ public final class NuevaCompra extends javax.swing.JFrame {
             }
         });
         getContentPane().add(botonBorrarInsumo, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 450, -1, 50));
-
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel6.setText("Total:");
-        jLabel6.setFocusable(false);
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 550, -1, -1));
-
-        campoTotal.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        campoTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        campoTotal.setFocusable(false);
-        getContentPane().add(campoTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 540, 180, 30));
 
         botonEnviarPedido.setFont(new java.awt.Font("DialogInput", 0, 14)); // NOI18N
         botonEnviarPedido.setText("Enviar Pedido");
@@ -255,7 +248,7 @@ public final class NuevaCompra extends javax.swing.JFrame {
             Inventario tmp;
             DefaultTableModel modelo = (DefaultTableModel) this.tablaInsumosCompra.getModel();
             tmp = manejadorInsumos.getInsumo(this.listaInsumos.getSelectedIndex() - 1);
-            double precio = Math.random()*100 + 1;
+            double precio = Math.random()*50 + 1;
             double subtotal = Integer.parseInt(campoCantidad.getText()) * precio;
             modelo.addRow(new Object[]{tmp.getNombre(), campoCantidad.getText(), precio, subtotal});
             total = total + subtotal;
@@ -263,17 +256,29 @@ public final class NuevaCompra extends javax.swing.JFrame {
             
             if (this.botonEditarCantidad.isEnabled() == false && this.botonEnviarPedido.isEnabled() == false) {
                 this.botonEditarCantidad.setEnabled(true);
+                this.botonBorrarInsumo.setEnabled(true);
                 this.botonEnviarPedido.setEnabled(true);
             }
         }
     }//GEN-LAST:event_botonAgregarInsumoActionPerformed
 
     private void botonBorrarInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBorrarInsumoActionPerformed
-        if (JOptionPane.showConfirmDialog(null, "Esta seguro de que quiere borrar el insumo", "Confirmar Borrar Insumo", JOptionPane.OK_CANCEL_OPTION) == 0) {
-            DefaultTableModel modelo = (DefaultTableModel) this.tablaInsumosCompra.getModel();
-            int[] rows = tablaInsumosCompra.getSelectedRows();
-            for (int i = 0; i < rows.length; i++)
-                modelo.removeRow(i);
+        if (tablaInsumosCompra.getRowCount() <= 0) {
+            JOptionPane.showMessageDialog(null, "No hay insumos agregados", "Error", JOptionPane.WARNING_MESSAGE);
+        } else if (tablaInsumosCompra.getSelectedRowCount() <= 0) {
+            JOptionPane.showMessageDialog(null, "Seleccione un insumo", "Error", JOptionPane.WARNING_MESSAGE);
+        } else {
+            if (JOptionPane.showConfirmDialog(null, "Esta seguro de que quiere borrar el insumo", "Confirmar Borrar Insumo", JOptionPane.OK_CANCEL_OPTION) == 0) {
+                double total = Double.parseDouble(campoTotal.getText());
+                double subtotal;
+                DefaultTableModel modelo = (DefaultTableModel) this.tablaInsumosCompra.getModel();
+                
+                subtotal = (double) tablaInsumosCompra.getValueAt(tablaInsumosCompra.getSelectedRow(), 3);
+                modelo.removeRow(tablaInsumosCompra.getSelectedRow());
+                tablaInsumosCompra.setModel(modelo);
+                total = total - subtotal;
+                campoTotal.setText(String.valueOf(total));
+            }
         }
     }//GEN-LAST:event_botonBorrarInsumoActionPerformed
 
@@ -296,7 +301,8 @@ public final class NuevaCompra extends javax.swing.JFrame {
 
                 for (int i = 0; i < tablaInsumosCompra.getRowCount(); i++) {
                     String nombre = (String) tablaInsumosCompra.getValueAt(i, 0);
-                    float cantidad = (float) tablaInsumosCompra.getValueAt(i, 1);
+                    String c = (String) tablaInsumosCompra.getValueAt(i, 1);
+                    float cantidad = Float.valueOf(c);
                     double precio = (double) tablaInsumosCompra.getValueAt(i, 2);
                     double subtotal = (double) tablaInsumosCompra.getValueAt(i, 3);
                     detalle = new DetalleCompra(compra.getIdCompra(), manejadorInsumos.getInsumo(nombre).getIdInventario(), cantidad, subtotal, precio);
@@ -306,6 +312,7 @@ public final class NuevaCompra extends javax.swing.JFrame {
                 compra.setTotal(total);
                 manejadorCompra.registrarCompra(compra);
                 manejadorProveedor.agregarSaldo(manejadorProveedor.getProveedor(listaProveedores.getSelectedIndex() - 1), total);
+                JOptionPane.showMessageDialog(null, "Se ha enviado el pedido exitosamente.", "Envio aceptado", JOptionPane.INFORMATION_MESSAGE);
                 limpiar();
             }
         }
@@ -323,9 +330,10 @@ public final class NuevaCompra extends javax.swing.JFrame {
             float cantidad;
             
             for (int i = 0; i < tablaInsumosCompra.getRowCount(); i++) {
-                cantidad = (float) tablaInsumosCompra.getValueAt(i, 1);
+                String c = (String) tablaInsumosCompra.getValueAt(i, 1);
+                cantidad = Float.valueOf(c);
                 precio = (double) tablaInsumosCompra.getValueAt(i, 2);
-                subtotal = cantidad * precio;
+                subtotal = (double) cantidad * precio;
                 tablaInsumosCompra.setValueAt((Object) subtotal, i, 3);
                 total = total + subtotal;
             }
@@ -398,7 +406,7 @@ public final class NuevaCompra extends javax.swing.JFrame {
         String tmp;
         for (Inventario item : lista) {
             tmp = item.getNombre();
-            listaProveedores.addItem(tmp);
+            listaInsumos.addItem(tmp);
         }
     }
     
@@ -408,6 +416,13 @@ public final class NuevaCompra extends javax.swing.JFrame {
         this.campoFactura.setText("");
         this.campoCantidad.setText("");
         this.campoTotal.setText("");
+        DefaultTableModel modelo = (DefaultTableModel) tablaInsumosCompra.getModel();
+        modelo.setRowCount(0);
+        tablaInsumosCompra.setModel(modelo);
+        this.botonAgregarInsumo.setEnabled(false);
+        this.botonBorrarInsumo.setEnabled(false);
+        this.botonEditarCantidad.setEnabled(false);
+        this.botonEnviarPedido.setEnabled(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

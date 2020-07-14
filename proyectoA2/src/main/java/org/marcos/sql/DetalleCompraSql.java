@@ -20,8 +20,8 @@ import org.marcos.dto.Proveedor;
  */
 public class DetalleCompraSql {
     public int InsertarListado(ArrayList<DetalleCompra> lista, int idCompra) {
-        String sentenciaInsertar = "INSERT INTO DetalleCompra(idCompra, idInventario, cantidad, subtotal, precio) VALUES(?, ?, ?, ?, ?)";
-        Connection conn;
+        String sentenciaInsertar = "INSERT INTO detalleCompra(idCompra, idInventario, cantidad, subtotal, precio) VALUES(?, ?, ?, ?, ?)";
+        Connection conn = null;
         PreparedStatement stmt;
         int rows = 0;
         int tmp;
@@ -67,9 +67,14 @@ public class DetalleCompraSql {
             String sentencia = "SELECT nombreProveedor FROM Proveedor WHERE idProveedor = ?";
             stmt = conn.prepareStatement(sentencia);
             stmt.setInt(1, compra.getIdProveedor());
-            rs = stmt.executeQuery(sentencia);
+            rs = stmt.executeQuery();
+            String nombre = "";
+            while (rs.next()) {
+                nombre = rs.getString(1);
+                break;
+            }
             Proveedor proveedor = new Proveedor();
-            proveedor.setNombreProveedor(rs.getString(1));
+            proveedor.setNombreProveedor(nombre);
             compra.setProveedor(proveedor);
             
         } catch (SQLException ex) {

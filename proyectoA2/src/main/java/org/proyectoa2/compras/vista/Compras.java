@@ -18,7 +18,7 @@ public class Compras extends javax.swing.JFrame {
     public Compras() {
         initComponents();
         this.setLocationRelativeTo(null);
-        compras = new MainCompras();
+        compras = new MainCompras(this);
         this.setContentPane(compras);
     }
 
@@ -32,6 +32,7 @@ public class Compras extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(760, 530));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,6 +78,7 @@ public class Compras extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Compras().setVisible(true);
             }

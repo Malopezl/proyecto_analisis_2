@@ -19,16 +19,13 @@ import org.marcos.sql.ProveedorSql;
  * @author marvin <lopez.marvin9 at gmail.com>
  */
 public class ManejoProveedor {
-    private final Proveedor proveedor;
     private final ProveedorSql proveedorSql;
     
     public ManejoProveedor() {
-        proveedor = new Proveedor();
         proveedorSql = new ProveedorSql();
     }
     
     public ManejoProveedor(Proveedor p) {
-        this.proveedor = p;
         proveedorSql = new ProveedorSql();
     }
     
@@ -40,8 +37,8 @@ public class ManejoProveedor {
         proveedorSql.actualizarProveedores(p);
     }
     
-    public void eliminarProveedores(Proveedor p) {
-        proveedorSql.eliminarProveedor(p);
+    public void eliminarProveedores(String nit) {
+        proveedorSql.eliminarProveedor(nit);
     }
     
     public DefaultTableModel listarProveedores(DefaultTableModel modelo) {

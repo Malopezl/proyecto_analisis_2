@@ -103,6 +103,11 @@ public class BusquedaProveedor extends javax.swing.JFrame {
 
         botonCancelar.setFont(new java.awt.Font("DialogInput", 0, 16)); // NOI18N
         botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCancelarActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 450, -1, -1));
 
         pack();
@@ -119,26 +124,46 @@ public class BusquedaProveedor extends javax.swing.JFrame {
                 Proveedor proveedor = new Proveedor();
                 proveedor.setNombreProveedor(nombre);
                 compra.setProveedor(proveedor);
-                DefaultTableModel modelo = modeloCompras.ModeloCompras("Proveedor", compra, (DefaultTableModel) tablaCompras.getModel());
+                DefaultTableModel modelo = (DefaultTableModel) tablaCompras.getModel();
+                modelo.setRowCount(0);
                 tablaCompras.setModel(modelo);
+                modelo = modeloCompras.ModeloCompras("Proveedor", compra, (DefaultTableModel) tablaCompras.getModel());
+                if (modelo.getRowCount() <= 0) {
+                    JOptionPane.showMessageDialog(null, "No se encontro el proveedor", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    manejoCompra.listarCompras((DefaultTableModel) tablaCompras.getModel());
+                } else {
+                    tablaCompras.setModel(modelo);
+                }
                 this.campoProveedor.setText("");
             }
         }
     }//GEN-LAST:event_botonBuscarActionPerformed
 
     private void botonDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDetalleActionPerformed
+        boolean b = false;
         for (int i = 0; i < tablaCompras.getRowCount(); i++) {
             if (tablaCompras.isRowSelected(i) == true) {
-                if (JOptionPane.showConfirmDialog(null, "El proveedor seleccionado es correcto?", "Mostrar Detalle", JOptionPane.YES_NO_OPTION) == 0) {
-                    String factura = (String) tablaCompras.getValueAt(i, 1);
-                    detallesCompra = new DetallesCompra(factura);
-                    detallesCompra.setVisible(true);
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Seleccione un proveedor de la tabla para ver el detalle de esa compra", "Error", JOptionPane.WARNING_MESSAGE);
+                b = true;
             }
         }
+        if (b == true) {
+            if (JOptionPane.showConfirmDialog(null, "El proveedor seleccionado es correcto?", "Mostrar Detalle", JOptionPane.YES_NO_OPTION) == 0) {
+                String factura = (String) tablaCompras.getValueAt(tablaCompras.getSelectedRow(), 0);
+                detallesCompra = new DetallesCompra(factura);
+                detallesCompra.setVisible(true);
+                DefaultTableModel modelo = (DefaultTableModel) tablaCompras.getModel();
+                modelo.setRowCount(0);
+                tablaCompras.setModel(modelo);
+                manejoCompra.listarCompras((DefaultTableModel) tablaCompras.getModel());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un proveedor de la tabla para ver el detalle de esa compra", "Error", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_botonDetalleActionPerformed
+
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_botonCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,6 +194,7 @@ public class BusquedaProveedor extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new BusquedaProveedor().setVisible(true);
             }
