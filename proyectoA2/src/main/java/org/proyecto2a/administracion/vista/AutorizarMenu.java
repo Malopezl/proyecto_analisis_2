@@ -38,6 +38,7 @@ public class AutorizarMenu extends javax.swing.JFrame {
         this.menus = MenuSql.MENU_ESTADO("CREADO");
         System.out.println(menus.size());
         DefaultTableModel tabla = (DefaultTableModel) jTableMenus.getModel();
+        tabla.setRowCount(0);
         for(int i=0; i<this.menus.size(); i++)
         {
            tabla.addRow(new Object[]{menus.get(i).getIdMenu(), menus.get(i).getNombreMenu()});  
@@ -152,19 +153,21 @@ public class AutorizarMenu extends javax.swing.JFrame {
             {
                 autorizar.setEstado("ACTIVO");
                 MenuSql.ACTUALIZAR(autorizar);
-                JOptionPane.showConfirmDialog(this, "El menú: "+ autorizar.getNombreMenu()+" ha cambiado a ACTIVO exitosamemente.", "Menu autorizado exitosamente", JOptionPane.OK_OPTION);
+                JOptionPane.showMessageDialog(this, "El menú: "+ autorizar.getNombreMenu()+" ha cambiado a ACTIVO exitosamemente.", "Menu autorizado exitosamente", JOptionPane.INFORMATION_MESSAGE);
                 this.obtenerMenus();
             }
             
         }
         else{
-            System.out.println("no ha seleccionado nada");
+            JOptionPane.showMessageDialog(this, "Seleccione un menú de la lista para autorizar.", "Selección de menú incorrecta", JOptionPane.ERROR_MESSAGE);
+            
         }
     }//GEN-LAST:event_botonAutorizarMenuActionPerformed
 
     private void botonVerMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerMenuActionPerformed
         // TODO add your handling code here:
-        VerMenu ver = new VerMenu();
+        Menu menu=this.menus.get(this.jTableMenus.getSelectedRow());
+        VerMenu ver = new VerMenu(menu);
         ver.setVisible(true);
     }//GEN-LAST:event_botonVerMenuActionPerformed
 

@@ -6,6 +6,7 @@
 package org.proyecto2a.administracion.vista;
 
 import java.awt.Dimension;
+import org.marcos.dto.Menu;
 
 /**
  *
@@ -152,7 +153,7 @@ public class SeleccionarMenu extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        VerMenu ver = new VerMenu();
+        VerMenu ver = new VerMenu(new Menu());
         ver.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 

@@ -6,6 +6,13 @@
 package org.proyecto2a.administracion.vista;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import org.marcos.dto.IngredienteMenu;
+import org.marcos.dto.Inventario;
+import org.marcos.dto.Menu;
+import org.marcos.sql.IngredienteMenuSql;
+import org.marcos.sql.InventarioSql;
 
 /**
  *
@@ -16,7 +23,18 @@ public class VerMenu extends javax.swing.JFrame {
     /**
      * Creates new form CrearMenu
      */
-    public VerMenu() {
+    
+    private Menu menu;
+    private ArrayList<Inventario> listaInventario;
+    private ArrayList<IngredienteMenu> listaIngredientes;
+    public VerMenu(Menu menu) {
+        initComponents();
+        this.inicializar();
+        this.SetMenu(menu);
+        this.SetDatos();
+    }
+
+    private VerMenu() {
         initComponents();
         this.inicializar();
     }
@@ -25,6 +43,38 @@ public class VerMenu extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
     }
+     private void SetMenu(Menu menu){
+         this.menu = menu;
+     }
+     private void SetDatos(){
+         this.jlabelSetNombre.setText(menu.getNombreMenu());
+         this.jTextAreaSetDesc.setText(menu.getDescripcionMenu());
+         this.jLabelSetPrecio.setText(String.valueOf(menu.getPrecio()));
+         this.jTextAreaSetReceta.setText(menu.getReceta());
+         this.jLabelSetEstado.setText(menu.getEstado());
+         
+         InventarioSql iSql = new InventarioSql();
+         listaInventario= iSql.selectAll();
+         listaIngredientes = IngredienteMenuSql.LINGREDIENTES(menu.getIdMenu());
+         DefaultTableModel modelo = (DefaultTableModel) jTableIngredientes.getModel();
+         modelo.setRowCount(0);
+         for(IngredienteMenu ingrediente : listaIngredientes){
+             Inventario inventario = BuscarInventario(ingrediente.getIdInventario());
+             modelo.addRow(new Object[]{inventario.getNombre(), ingrediente.getCantidad(), inventario.getDimension()});
+         }
+     
+     }
+     private Inventario BuscarInventario(int idInventario){
+         Inventario temp= new Inventario();
+         for(Inventario inventario: listaInventario)
+         {
+             if(inventario.getIdInventario()==idInventario){
+                 temp = inventario;
+             }
+         }
+         return temp;
+     }
+     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,19 +92,16 @@ public class VerMenu extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaSetDesc = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        jTextAreaSetReceta = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        jLabelSetPrecio = new javax.swing.JLabel();
+        jlabelSetNombre = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTableIngredientes = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        jLabelSetEstado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,45 +128,38 @@ public class VerMenu extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextAreaSetDesc.setColumns(20);
+        jTextAreaSetDesc.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaSetDesc);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        jTextAreaSetReceta.setColumns(20);
+        jTextAreaSetReceta.setRows(5);
+        jScrollPane2.setViewportView(jTextAreaSetReceta);
 
         jLabel8.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         jLabel8.setText("Lista de ingrediente añadidos:");
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane5.setViewportView(jList2);
+        jLabelSetPrecio.setFont(new java.awt.Font("FreeSerif", 0, 18)); // NOI18N
+        jLabelSetPrecio.setText("precio de venta del menú");
 
-        jCheckBox1.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jCheckBox1.setText("Menú activo");
+        jlabelSetNombre.setFont(new java.awt.Font("FreeSerif", 0, 18)); // NOI18N
+        jlabelSetNombre.setText("nombre del menú:");
 
-        jLabel9.setFont(new java.awt.Font("FreeSerif", 0, 18)); // NOI18N
-        jLabel9.setText("precio de venta del menú");
+        jTableIngredientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jLabel10.setFont(new java.awt.Font("FreeSerif", 0, 18)); // NOI18N
-        jLabel10.setText("nombre del menú:");
+            },
+            new String [] {
+                "Ingrediente", "Cantidad", "Dimensión"
+            }
+        ));
+        jScrollPane4.setViewportView(jTableIngredientes);
 
-        jList3.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(jList3);
+        jLabel6.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        jLabel6.setText("Estado: ");
 
-        jLabel11.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jLabel11.setText("Cantidad");
-
-        jLabel12.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jLabel12.setText("Ingrediente");
+        jLabelSetEstado.setFont(new java.awt.Font("FreeSerif", 0, 18)); // NOI18N
+        jLabelSetEstado.setText("estado de menú");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,9 +172,11 @@ public class VerMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(367, 367, 367)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox1)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel5)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
@@ -142,25 +184,18 @@ public class VerMenu extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addComponent(jLabel3)
                                 .addComponent(jLabel4))
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10))
-                        .addGap(77, 77, 77)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelSetPrecio)
+                            .addComponent(jlabelSetNombre)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabelSetEstado))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel8)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(82, 82, 82)
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel11)
-                                .addGap(8, 8, 8))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(367, 367, 367)
-                        .addComponent(jLabel1)))
-                .addContainerGap(64, Short.MAX_VALUE))
+                                .addGap(77, 77, 77)
+                                .addComponent(jLabel8))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,9 +203,16 @@ public class VerMenu extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(83, 83, 83)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                        .addComponent(jLabel10)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel8)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlabelSetNombre)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -178,28 +220,17 @@ public class VerMenu extends javax.swing.JFrame {
                         .addGap(35, 35, 35)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)
+                        .addComponent(jLabelSetPrecio)
                         .addGap(42, 42, 42)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(jCheckBox1)
-                        .addGap(44, 44, 44))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
-                            .addComponent(jScrollPane5))
-                        .addGap(64, 64, 64)))
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel6))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelSetEstado)
+                .addGap(15, 15, 15)
                 .addComponent(jButton1)
                 .addGap(36, 36, 36))
         );
@@ -252,24 +283,21 @@ public class VerMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList2;
-    private javax.swing.JList<String> jList3;
+    private javax.swing.JLabel jLabelSetEstado;
+    private javax.swing.JLabel jLabelSetPrecio;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTable jTableIngredientes;
+    private javax.swing.JTextArea jTextAreaSetDesc;
+    private javax.swing.JTextArea jTextAreaSetReceta;
+    private javax.swing.JLabel jlabelSetNombre;
     // End of variables declaration//GEN-END:variables
 }
