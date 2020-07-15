@@ -11,6 +11,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.marcos.dto.Usuario;
+import org.proectoa2.main.Main;
 import org.proyecto2a.administracion.controller.ControladorLogin;
 
 /**
@@ -147,6 +148,10 @@ public class IniciarSesion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error. Usuario o contraseña incorrectos.", "Inicio de sesión fallido.", JOptionPane.ERROR_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "Bienvenido.", "Inicio de sesión aprobado", JOptionPane.INFORMATION_MESSAGE);
+            Main menuPrincipal = new Main(hallado);
+            menuPrincipal.setVisible(true);
+            
+            
         }
     
             

@@ -5,6 +5,12 @@
  */
 package org.proectoa2.main;
 
+import java.util.ArrayList;
+import org.marcos.dto.Puesto;
+import org.marcos.dto.Usuario;
+import org.marcos.sql.PuestoSql;
+import org.proyecto2a.administracion.vista.PrincipaAdministrador;
+import org.proyecto2a.administracion.vista.PrincipalEmpleado;
 import org.proyectoa2.compras.vista.Compras;
 import org.proyectoa2.inventario.vista.MainInventario;
 import org.proyectoa2.ventas.vista.DesplegarVentasMain;
@@ -20,8 +26,25 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
+    
+    private Puesto logeado;
     public Main() {
         initComponents();
+    }
+    public Main(Usuario usuario){
+        initComponents();
+        logeado = this.buscarPuesto(usuario.getIdPuesto());
+        if(logeado.getRol().equals("EMPLEADO"))
+        {
+            this.jButton4.setVisible(false);
+        }
+        
+        
+        
+    }
+    private Puesto buscarPuesto(int idPuesto){
+        Puesto puesto = PuestoSql.PUESTO_ID(idPuesto);
+        return puesto;
     }
 
     /**
@@ -65,6 +88,11 @@ public class Main extends javax.swing.JFrame {
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 260, 50));
 
         jButton3.setText("Administracion");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 260, 50));
 
         jButton4.setText("Compras");
@@ -93,6 +121,19 @@ public class Main extends javax.swing.JFrame {
         comprasMain = new Compras();
         comprasMain.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(this.logeado.getRol().equals("EMPLEADO")){
+            PrincipalEmpleado PEmpleado = new PrincipalEmpleado();
+            PEmpleado.setVisible(true);
+        }
+        else{
+            PrincipaAdministrador PAdmin = new PrincipaAdministrador();
+            PAdmin.setVisible(true);
+        }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
