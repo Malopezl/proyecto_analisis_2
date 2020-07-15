@@ -7,6 +7,8 @@ package org.proyecto2a.administracion.vista;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import org.marcos.dto.Menu;
 import org.marcos.sql.MenuSql;
@@ -29,6 +31,7 @@ public class AutorizarMenu extends javax.swing.JFrame {
         this.setSize(new Dimension(500, 700));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        jTableMenus.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); 
         this.obtenerMenus();
     }
     private void obtenerMenus(){
@@ -61,7 +64,7 @@ public class AutorizarMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jLabel1.setText("AUTORIZAR MENÚ");
+        jLabel1.setText("AUTORIZAR MENÚS");
 
         botonAutorizarMenu.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         botonAutorizarMenu.setText("Autorizar Menú");
@@ -124,12 +127,12 @@ public class AutorizarMenu extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonRegresar)
                     .addComponent(botonAutorizarMenu)
                     .addComponent(botonVerMenu))
-                .addGap(24, 24, 24))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -141,7 +144,22 @@ public class AutorizarMenu extends javax.swing.JFrame {
 
     private void botonAutorizarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAutorizarMenuActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        if(this.jTableMenus.getSelectedRow()>=0){
+            Menu autorizar=this.menus.get(this.jTableMenus.getSelectedRow());
+            String [] botones = { "Autorizar Menu", " Cancelar"};
+            int eleccion = JOptionPane.showOptionDialog (null, " ¿Esta seguro que desea autorizar este menu?", "Autorización de menu", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null/*icono*/, botones, botones[0]);
+            if(eleccion==0)
+            {
+                autorizar.setEstado("ACTIVO");
+                MenuSql.ACTUALIZAR(autorizar);
+                JOptionPane.showConfirmDialog(this, "El menú: "+ autorizar.getNombreMenu()+" ha cambiado a ACTIVO exitosamemente.", "Menu autorizado exitosamente", JOptionPane.OK_OPTION);
+                this.obtenerMenus();
+            }
+            
+        }
+        else{
+            System.out.println("no ha seleccionado nada");
+        }
     }//GEN-LAST:event_botonAutorizarMenuActionPerformed
 
     private void botonVerMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerMenuActionPerformed
