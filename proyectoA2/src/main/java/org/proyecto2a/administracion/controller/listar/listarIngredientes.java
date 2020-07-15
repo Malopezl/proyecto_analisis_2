@@ -6,8 +6,10 @@
 package org.proyecto2a.administracion.controller.listar;
 
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
+import org.marcos.dto.Inventario;
 import org.marcos.sql.InventarioSql;
 
 /**
@@ -15,14 +17,17 @@ import org.marcos.sql.InventarioSql;
  * @author sharon
  */
 public class listarIngredientes {
-    public static DefaultListModel listarInventario() {
-    DefaultListModel modelo = new DefaultListModel();
-    ArrayList<String> listaNombre = InventarioSql.selectNombre();
-    
-    for(String nombre : listaNombre){
-        modelo.addElement(nombre);
+    public static ArrayList<Inventario> listarInventario() throws SQLException {
+    ResultSet rs = InventarioSql.LGENERAL();
+    ArrayList <Inventario> lista = new ArrayList<>();
+    while(rs.next()){
+        Inventario inventario = new Inventario();
+        inventario.setIdInventario(rs.getInt("idInventario"));
+        inventario.setNombre(rs.getString("nombre"));
+        inventario.setDimension(rs.getString("dimension"));
+        lista.add(inventario);
     }
-    return modelo;
+    return lista;
     
     }
 }

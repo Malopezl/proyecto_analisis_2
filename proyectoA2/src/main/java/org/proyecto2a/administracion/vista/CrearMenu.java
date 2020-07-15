@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import org.marcos.dto.IngredienteMenu;
+import org.marcos.dto.Inventario;
 import org.proyecto2a.administracion.controller.ControladorMenu;
 import org.proyecto2a.administracion.controller.listar.listarIngredientes;
 
@@ -27,21 +29,29 @@ public class CrearMenu extends javax.swing.JFrame {
     private ArrayList<String> listaNombres;
     private ArrayList<Double> listaCantidad;
     private ArrayList<String> listaDimensiones;
+    private ArrayList<IngredienteMenu> ingredientesAgregados;
+    private ArrayList<Inventario>listaInventario;
     
-    public CrearMenu() {
+    public CrearMenu() throws SQLException {
         initComponents();
         this.inicializar();
        
     }
-     private void inicializar(){
+     private void inicializar() throws SQLException{
         this.setSize(new Dimension(1000, 700));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        this.listaIngredientes.setModel(listarIngredientes.listarInventario());
+        DefaultListModel modelo = new DefaultListModel();
+        this.listaInventario=listarIngredientes.listarInventario();
+        System.out.println(listaInventario.size());
+        for(Inventario i : listaInventario){
+            modelo.addElement(i.getNombre());
+        }
+        this.listaIngredientes.setModel(modelo);
         this.listaIngredientesSeleccionados.setModel(new DefaultListModel());
         this.botonEliminarIngrediente.setEnabled(false);
         
-        
+        this.ingredientesAgregados = new ArrayList<>();
         this.listaNombres = new ArrayList<>();
         this.listaCantidad = new ArrayList<>();
         this.listaDimensiones = new ArrayList<>();
@@ -54,20 +64,18 @@ public class CrearMenu extends javax.swing.JFrame {
              this.listaIngredientesSeleccionados.setModel(seleccionados);
          }else{
          for(int i=0; i<this.listaNombres.size(); i++){
-             seleccionados.addElement(this.listaNombres.get(i) + "- Cantidad: "+ this.listaCantidad.get(i) + " " + this.listaDimensiones.get(i));
+             seleccionados.addElement( this.listaNombres.get(i) + "- Cantidad: "+ this.listaCantidad.get(i) + " " + this.listaDimensiones.get(i));
          }
          this.listaIngredientesSeleccionados.setModel(seleccionados);
          }
      } 
      private boolean validarDouble(String ContenedorDouble){
-        
          try{
              Double.parseDouble(ContenedorDouble);
              return true;
          } catch(NumberFormatException e){
              return false;
          }
-         
      }
      
      private boolean validarForm(){
@@ -88,7 +96,7 @@ public class CrearMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Ingrese la receta del menú", "Receta de menú incorrecta", JOptionPane.ERROR_MESSAGE);
             return false; 
          }
-         else if(this.listaNombres.isEmpty() || this.listaCantidad.isEmpty() ){
+         else if(this.listaNombres.isEmpty()){
             JOptionPane.showMessageDialog(this, "Ingrese ingredientes a utilizar en el menú.", "Listado de ingredientes incorrecto", JOptionPane.ERROR_MESSAGE);
             return false;
          }
@@ -109,16 +117,32 @@ public class CrearMenu extends javax.swing.JFrame {
      else if(!this.validarDouble(this.jTextFieldCantidad.getText())){
          JOptionPane.showMessageDialog(this, "La cantidad de ingrediente no es válida", "Cantidad de ingrediente incorrecta8", JOptionPane.ERROR_MESSAGE);
          return false;
-         
-     }else if(this.jComboBoxDimensiones.getSelectedIndex()==0)
-     {
-         JOptionPane.showMessageDialog(this, "La dimesión de la cantidad de ingrediente no es válida", "Dimensión de cantidad de ingrediente incorrecta8", JOptionPane.ERROR_MESSAGE);
-         return false;
      }
      else{
          return true;
      } 
      
+     }
+     private String buscarDimensiones(String nombreInventario)
+     {
+         String dimension="";
+         for(Inventario i : listaInventario)
+         {
+             if(i.getNombre().equals(nombreInventario))
+                 dimension=i.getDimension();
+         }
+         return dimension;
+     }
+     private int buscarIdInventario(String nombreInventario)
+     {
+         int idInventario=-1;
+         for(Inventario i : listaInventario)
+         {
+             if(i.getNombre().equals(nombreInventario))
+                 idInventario=i.getIdInventario();
+         }
+         return idInventario;
+         
      }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -152,8 +176,6 @@ public class CrearMenu extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         listaIngredientesSeleccionados = new javax.swing.JList<>();
         botonEliminarIngrediente = new javax.swing.JButton();
-        jComboBoxDimensiones = new javax.swing.JComboBox<>();
-        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -246,16 +268,6 @@ public class CrearMenu extends javax.swing.JFrame {
             }
         });
 
-        jComboBoxDimensiones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "seleccione", "gramos", "mililitros", "unidades" }));
-        jComboBoxDimensiones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxDimensionesActionPerformed(evt);
-            }
-        });
-
-        jLabel10.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jLabel10.setText("Dimensión a utilizar:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -273,17 +285,13 @@ public class CrearMenu extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel7)
-                                                    .addComponent(jTextFieldCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel10)
-                                                    .addComponent(jComboBoxDimensiones, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(0, 0, Short.MAX_VALUE)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jLabel7)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                        .addComponent(jTextFieldCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                     .addComponent(botonGuardar)
                                                     .addComponent(botonAgregarIngrediente)
                                                     .addComponent(botonEliminarIngrediente)
@@ -332,24 +340,19 @@ public class CrearMenu extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel7)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jTextFieldCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxDimensiones))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel7))
+                        .addGap(51, 51, 51)
                         .addComponent(botonAgregarIngrediente)
                         .addGap(21, 21, 21)))
                 .addComponent(jLabel8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -384,21 +387,29 @@ public class CrearMenu extends javax.swing.JFrame {
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
         // TODO add your handling code here:
-        if(this.validarForm()){
+        if (this.validarForm()) {
             try {
+                for(int i=0; i<listaNombres.size(); i++)
+                {
+                    IngredienteMenu im = new IngredienteMenu();
+                    im.setCantidad(listaCantidad.get(i));
+                    int idInventarioTemp =this.buscarIdInventario(listaNombres.get(i));
+                    if(idInventarioTemp != (-1));
+                    im.setIdInventario(idInventarioTemp);
+                    this.ingredientesAgregados.add(im);
+                }
                 ControladorMenu.AgregarMenu(
                         this.jTextFieldNombre.getText().trim(),
                         this.jTextAreaDescripcion.getText().trim(),
                         Double.parseDouble(this.jTextFieldPrecio.getText().trim()),
                         this.jTextAreaReceta.getText().trim(),
-                        this.listaNombres,
-                        this.listaCantidad
+                        this.ingredientesAgregados
                 );
             } catch (SQLException ex) {
                 Logger.getLogger(CrearMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
-        this.dispose();
+
+            this.dispose();
         }
     }//GEN-LAST:event_botonGuardarActionPerformed
 
@@ -406,8 +417,8 @@ public class CrearMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (this.validarAgregarIngredientes()) {
             this.listaNombres.add(this.listaIngredientes.getSelectedValue());
-            this.listaCantidad.add(Double.parseDouble(this.jTextFieldCantidad.getText()));
-            this.listaDimensiones.add(this.jComboBoxDimensiones.getSelectedItem().toString());
+            this.listaCantidad.add(Double.parseDouble(this.jTextFieldCantidad.getText().trim()));
+            this.listaDimensiones.add(this.buscarDimensiones(this.listaIngredientes.getSelectedValue()));
             this.actualizarLista();
 
             if (!this.listaNombres.isEmpty()) {
@@ -417,24 +428,20 @@ public class CrearMenu extends javax.swing.JFrame {
         
     }//GEN-LAST:event_botonAgregarIngredienteActionPerformed
 
-    private void jComboBoxDimensionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDimensionesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxDimensionesActionPerformed
-
     private void botonEliminarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarIngredienteActionPerformed
         // TODO add your handling code here:
-        if(this.listaIngredientesSeleccionados.isSelectionEmpty()){
-        JOptionPane.showMessageDialog(this, "Seleccione un ingrediente para agregar al menú.", "Ingrediente seleccionado incorrecto", JOptionPane.ERROR_MESSAGE);
-        }else{
-        int indice = this.listaIngredientesSeleccionados.getSelectedIndex();
-        this.listaNombres.remove(indice);
-        this.listaCantidad.remove(indice);
-        this.listaDimensiones.remove(indice);
-        this.actualizarLista();
-        
-        if(this.listaNombres.isEmpty()){
-            this.botonEliminarIngrediente.setEnabled(false);
-        }
+        if (this.listaIngredientesSeleccionados.isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(this, "Seleccione un ingrediente para eliminar del menú.", "Ingrediente seleccionado incorrecto", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int indice = this.listaIngredientesSeleccionados.getSelectedIndex();
+            this.listaNombres.remove(indice);
+            this.listaCantidad.remove(indice);
+            this.listaDimensiones.remove(indice);
+            this.actualizarLista();
+
+            if (this.listaNombres.isEmpty()) {
+                this.botonEliminarIngrediente.setEnabled(false);
+            }
         }
         
     }//GEN-LAST:event_botonEliminarIngredienteActionPerformed
@@ -469,7 +476,11 @@ public class CrearMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CrearMenu().setVisible(true);
+                try {
+                    new CrearMenu().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CrearMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -479,9 +490,7 @@ public class CrearMenu extends javax.swing.JFrame {
     private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonEliminarIngrediente;
     private javax.swing.JButton botonGuardar;
-    private javax.swing.JComboBox<String> jComboBoxDimensiones;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

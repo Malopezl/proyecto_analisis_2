@@ -21,23 +21,20 @@ public class ControladorMenu {
     
     
     
-    public static void AgregarMenu(String nombre, String descripcion, double precio, String receta, ArrayList<String>ingrediente, ArrayList<Double> cantidad) throws SQLException{
+    public static void AgregarMenu(String nombre, String descripcion, double precio, String receta, ArrayList<IngredienteMenu>ingredientes) throws SQLException{
       Menu menuNuevo = new Menu(nombre, descripcion, precio, receta, "CREADO");
       int idMenu = MenuSql.Insertar(menuNuevo);
-      ControladorMenu.AgregarIngredientes(idMenu, ingrediente, cantidad);    
+      ControladorMenu.AgregarIngredientes(idMenu, ingredientes);    
     }
-    private static void AgregarIngredientes(int idMenu, ArrayList<String>nombre, ArrayList<Double>cantidad) throws SQLException{
-        if (!(nombre.isEmpty() || cantidad.isEmpty())) {
-            for (int i = 0; i < nombre.size(); i++) {
-                IngredienteMenu ingrediente = new IngredienteMenu();
-                ingrediente.setIdInventario(getIDProducto(nombre.get(i)));
-                ingrediente.setCantidad(cantidad.get(i));
-                ingrediente.setIdMenu(idMenu);
-                // llamar a IngredienteMenu Sql
-                // agregar las dimensiones del ingrediente
-                
-            }
+    private static void AgregarIngredientes(int idMenu, ArrayList<IngredienteMenu>ingredientes) throws SQLException{
+        for (int i = 0; i < ingredientes.size(); i++) {
+            ingredientes.get(i).setIdMenu(idMenu);
+            
+            // llamar a IngredienteMenu Sql
+            // agregar las dimensiones del ingrediente
+
         }
+
     }
     public static void EditarMenu(){
         
