@@ -150,7 +150,7 @@ public class InventarioSql {
     }
     public ArrayList<Inventario> selectAll(){
         Connection conn = null;
-        String sentencia = "SELECT idInventario, descripcionInventario, existencia, lote, fechaCaducidad, nombre FROM Inventario";
+        String sentencia = "SELECT idInventario, descripcionInventario, existencia, lote, fechaCaducidad, nombre, dimension FROM Inventario";
         PreparedStatement stmt = null;
         ResultSet rs = null;
         ArrayList<Inventario> lista = new ArrayList<>();
@@ -167,6 +167,7 @@ public class InventarioSql {
                 tmp.setLote(rs.getString("lote"));
                 tmp.setFechaCaducidad(rs.getDate("fechaCaducidad"));
                 tmp.setNombre(rs.getString("nombre"));
+                tmp.setDimension(rs.getString("dimension"));
                 lista.add(tmp);
             }
         } catch (SQLException ex) {

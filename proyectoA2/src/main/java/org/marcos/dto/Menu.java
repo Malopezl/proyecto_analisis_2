@@ -8,7 +8,7 @@ package org.marcos.dto;
 import java.util.ArrayList;
 
 /**
- *
+ *|
  * @author marcos
  */
 public class Menu {
@@ -22,6 +22,7 @@ public class Menu {
     
 
     public Menu() {
+        this.ingredientes= new ArrayList<>();
     }
 
     public Menu(String nombreMenu, String descripcionMenu, double precio, String receta, String estado) {
@@ -30,6 +31,7 @@ public class Menu {
         this.precio = precio;
         this.receta = receta;
         this.estado = estado;
+        this.ingredientes= new ArrayList<>();
     }
 
     public int getIdMenu() {
