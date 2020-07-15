@@ -33,9 +33,18 @@ public class ControladorMenu {
         }
 
     }
-    public static void EditarMenu(){
-        
+    public static boolean EditarMenu(int idMenu, String nombre, String descripcion, double precio, String receta,String estado, ArrayList<IngredienteMenu>ingredientes) throws SQLException{
+      Menu menuActualizado = new Menu(nombre, descripcion, precio, receta, estado);
+      menuActualizado.setIdMenu(idMenu);
+      MenuSql.ACTUALIZAR(menuActualizado);
+      IngredienteMenuSql.ELIMINARMENU(idMenu);
+      ControladorMenu.ActualizarIngredientes(idMenu, ingredientes);
+      return true; 
     }
+    private static void ActualizarIngredientes(int idMenu, ArrayList<IngredienteMenu>ingredientes) throws SQLException{
+      ControladorMenu.AgregarIngredientes(idMenu, ingredientes);  
+    }
+    
     public static boolean EliminarMenu(int idMenu){
         IngredienteMenuSql.ELIMINARMENU(idMenu);
         MenuSql.ELIMINAR(idMenu);

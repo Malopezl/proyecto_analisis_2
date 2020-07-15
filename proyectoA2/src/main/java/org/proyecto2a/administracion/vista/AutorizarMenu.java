@@ -36,7 +36,6 @@ public class AutorizarMenu extends javax.swing.JFrame {
     }
     private void obtenerMenus(){
         this.menus = MenuSql.MENU_ESTADO("CREADO");
-        System.out.println(menus.size());
         DefaultTableModel tabla = (DefaultTableModel) jTableMenus.getModel();
         tabla.setRowCount(0);
         for(int i=0; i<this.menus.size(); i++)

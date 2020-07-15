@@ -6,7 +6,10 @@
 package org.proyecto2a.administracion.vista;
 
 import java.awt.Dimension;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -37,7 +40,6 @@ public class SeleccionarMenu extends javax.swing.JFrame {
     }
       private void obtenerMenus(){
         this.menus = MenuSql.getAllMenu();
-        System.out.println(menus.size());
         DefaultTableModel tabla = (DefaultTableModel) jTableMenus.getModel();
         tabla.setRowCount(0);
         for(int i=0; i<this.menus.size(); i++)
@@ -162,6 +164,7 @@ public class SeleccionarMenu extends javax.swing.JFrame {
 
     private void botonEliminarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarMenuActionPerformed
         // TODO add your handling code here:
+       if(this.jTableMenus.getSelectedRow()>=0){
         String[] botones = {"Eliminar Menu", " Cancelar"};
         int eleccion = JOptionPane.showOptionDialog(null, " ¿Esta seguro que desea eliminar este menu?. Esta acción será permanente y no podrá recuperar los datos.", "Eliminar menu", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null/*icono*/, botones, botones[0]);
         if (eleccion == 0) {
@@ -170,20 +173,38 @@ public class SeleccionarMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "El menú: fue eliminado exitosamemente.", "Menu eliminado exitosamente", JOptionPane.INFORMATION_MESSAGE);
             this.obtenerMenus();
         }
+       }else{
+           JOptionPane.showMessageDialog(this, "Seleccione un menú de la lista para eliminar.", "Selección de menú incorrecta", JOptionPane.ERROR_MESSAGE);
+       }
     }//GEN-LAST:event_botonEliminarMenuActionPerformed
 
     private void botonEditarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEditarMenuActionPerformed
         // TODO add your handling code here:
-        EditarMenu editar = new EditarMenu();
-        editar.setVisible(true);
+        if(this.jTableMenus.getSelectedRow()>=0){
+        Menu menu=this.menus.get(this.jTableMenus.getSelectedRow());
+        EditarMenu editar;
+            try {
+                editar = new EditarMenu(menu);
+                editar.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(SeleccionarMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
         this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione un menú de la lista para editar.", "Selección de menú incorrecta", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_botonEditarMenuActionPerformed
 
     private void botonVerMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerMenuActionPerformed
         // TODO add your handling code here:
+        if(this.jTableMenus.getSelectedRow()>=0){
         Menu menu=this.menus.get(this.jTableMenus.getSelectedRow());
         VerMenu ver = new VerMenu(menu);
         ver.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione un menú de la lista para ver.", "Selección de menú incorrecta", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_botonVerMenuActionPerformed
 
     /**
