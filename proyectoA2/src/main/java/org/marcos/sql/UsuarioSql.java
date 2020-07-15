@@ -29,7 +29,7 @@ public class UsuarioSql {
             conn = ConexionSql.getConnection();
             String selectAllPuestos = "SELECT *FROM Usuario ";
             stmt = conn.prepareStatement(selectAllPuestos);
-            rs = stmt.executeQuery();
+            rs = stmt.executeQuery(selectAllPuestos);
             Usuario usuario;
             while(rs.next()){
                 usuario = new Usuario();
@@ -117,7 +117,7 @@ public class UsuarioSql {
             conn = ConexionSql.getConnection();
             String SQL_CONSULTA = "SELECT *FROM Usuario WHERE nombreUsuario = '%"+ nombreUsuario+"%' AND password ='%" + pass + "%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
-            rs = stmt.executeQuery();
+            rs = stmt.executeQuery(SQL_CONSULTA);
             if(rs.next()){
                 usuario.setIdUsuario(rs.getInt("idUsuario"));
                 usuario.setNombreUsuario(rs.getString("nombreUsuario"));
@@ -147,7 +147,7 @@ public class UsuarioSql {
             conn = ConexionSql.getConnection();
             String SQL_CONSULTA = "SELECT *FROM Usuario WHERE idUsuario = '%"+ idUsuario+"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
-            rs = stmt.executeQuery();
+            rs = stmt.executeQuery(SQL_CONSULTA);
             while(rs.next()){
                 usuario = new Usuario();
                 usuario.setIdUsuario(rs.getInt("idUsuario"));
@@ -179,7 +179,7 @@ public class UsuarioSql {
             conn = ConexionSql.getConnection();
             String SQL_CONSULTA = "SELECT *FROM Usuario WHERE correoUsuario = '%"+ correo +"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
-            rs = stmt.executeQuery();
+            rs = stmt.executeQuery(SQL_CONSULTA);
             while(rs.next()){
                 usuario = new Usuario();
                 usuario.setIdUsuario(rs.getInt("idUsuario"));
@@ -211,7 +211,7 @@ public class UsuarioSql {
             conn = ConexionSql.getConnection();
             String SQL_CONSULTA = "SELECT *FROM Usuario WHERE telefonoUsuario = '%"+ telefono +"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
-            rs = stmt.executeQuery();
+            rs = stmt.executeQuery(SQL_CONSULTA);
             while(rs.next()){
                 usuario = new Usuario();
                 usuario.setIdUsuario(rs.getInt("idUsuario"));

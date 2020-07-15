@@ -108,7 +108,7 @@ public class PuestoSql {
             conn = ConexionSql.getConnection();
             String SQL_Consulta = "SELECT *FROM Puesto WHERE id = '%"+ id+"%'";
             stmt = conn.prepareStatement(SQL_Consulta);
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery(SQL_Consulta);
             while(rs.next())
             {
                 puesto = new Puesto();
@@ -135,7 +135,7 @@ public class PuestoSql {
             conn = ConexionSql.getConnection();
             String SQL_Consulta = "SELECT *FROM Puesto WHERE Nombre = '%"+ nombre+"%'";
             stmt = conn.prepareStatement(SQL_Consulta);
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery(SQL_Consulta);
             while(rs.next())
             {
                 puesto = new Puesto();
@@ -163,7 +163,7 @@ public class PuestoSql {
             conn = ConexionSql.getConnection();
             String SQL_Consulta = "SELECT *FROM Puesto WHERE Rol = '%"+ rol+"%'";
             stmt = conn.prepareStatement(SQL_Consulta);
-            ResultSet rs = stmt.executeQuery();
+            ResultSet rs = stmt.executeQuery(SQL_Consulta);
             while(rs.next())
             {
                 puesto = new Puesto();

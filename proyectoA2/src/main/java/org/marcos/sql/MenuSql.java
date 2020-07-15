@@ -127,7 +127,7 @@ public class MenuSql {
             conn = ConexionSql.getConnection();
             String SQL_CONSULTA = "SELECT *FROM Menu WHERE idMenu = '%"+ idMenu+"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
-            rs = stmt.executeQuery();
+            rs = stmt.executeQuery(SQL_CONSULTA);
             while(rs.next()){
                 menu.setIdMenu(rs.getInt(1));
                 menu.setNombreMenu(rs.getString(2));
@@ -157,7 +157,7 @@ public class MenuSql {
             conn = ConexionSql.getConnection();
             String SQL_CONSULTA = "SELECT *FROM Menu WHERE nombreMenu = '%"+nombre+"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
-            rs = stmt.executeQuery();
+            rs = stmt.executeQuery(SQL_CONSULTA);
             Menu menu;
             while(rs.next()){
                 menu = new Menu();
@@ -189,7 +189,7 @@ public class MenuSql {
             conn = ConexionSql.getConnection();
             String SQL_CONSULTA = "SELECT *FROM Menu WHERE precio = '%"+ precio+"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
-            rs = stmt.executeQuery();
+            rs = stmt.executeQuery(SQL_CONSULTA);
             Menu menu;
             while(rs.next()){
                 menu = new Menu();
@@ -222,7 +222,7 @@ public class MenuSql {
             conn = ConexionSql.getConnection();
             String SQL_CONSULTA = "SELECT *FROM Menu WHERE estado = '%"+ estado +"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
-            rs = stmt.executeQuery();
+            rs = stmt.executeQuery(SQL_CONSULTA);
             Menu menu;
             while(rs.next()){
                 menu = new Menu();
