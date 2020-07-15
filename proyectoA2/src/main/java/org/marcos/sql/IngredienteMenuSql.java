@@ -82,7 +82,7 @@ public class IngredienteMenuSql {
             conn = ConexionSql.getConnection();
             String SQL_CONSULTA = "SELECT * FROM IngredienteMenu WHERE idMenu LIKE '%" + idMenu + "%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
-            rs = stmt.executeQuery();
+            rs = stmt.executeQuery(SQL_CONSULTA);
             IngredienteMenu ingrediente;
             while(rs.next()){
                 ingrediente = new IngredienteMenu();
