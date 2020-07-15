@@ -16,7 +16,7 @@ public class DesplegarVentasMain extends javax.swing.JFrame {
      */
     public DesplegarVentasMain() {
         initComponents();
-        ventas = new MainVentas();
+        ventas = new MainVentas(this);
         this.setContentPane(ventas);
     }
 
