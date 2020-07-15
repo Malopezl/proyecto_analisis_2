@@ -211,11 +211,11 @@ public class PrincipalMenu extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBoxFiltro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jComboBoxFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
@@ -257,10 +257,10 @@ public class PrincipalMenu extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(jTextFieldFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
+                            .addComponent(jTextFieldFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -368,6 +368,7 @@ public class PrincipalMenu extends javax.swing.JFrame {
 
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
         // TODO add your handling code here:
+        
         switch(jComboBoxFiltro.getSelectedIndex())
         {
             case 0: {
@@ -380,26 +381,29 @@ public class PrincipalMenu extends javax.swing.JFrame {
             this.obtenerMenusEstado("CREADO");    
             }break;
             case 3: {
-            this.obtenerMenusNombre(jTextFieldFiltro.getText());
+                if (!jTextFieldFiltro.getText().isBlank())
+                    this.obtenerMenusNombre(jTextFieldFiltro.getText());
+                else
+                    JOptionPane.showMessageDialog(this, "Ingrese un parametro válido para realizar la búsqueda.", "Palabra clave de filtro incorrecto", JOptionPane.ERROR_MESSAGE);      
             }break;
             case 4: {
-            this.obtenerMenusPrecio(Double.parseDouble(jTextFieldFiltro.getText()));
+                if (!jTextFieldFiltro.getText().isBlank())
+                    this.obtenerMenusPrecio(Double.parseDouble(jTextFieldFiltro.getText()));
+                else
+                    JOptionPane.showMessageDialog(this, "Ingrese un parametro válido para realizar la búsqueda.", "Palabra clave de filtro incorrecto", JOptionPane.ERROR_MESSAGE);      
             }break;
             case 5: {
-            this.obtenerMenusid(Integer.parseInt(jTextFieldFiltro.getText()));
+                if (!jTextFieldFiltro.getText().isBlank())
+                    this.obtenerMenusid(Integer.parseInt(jTextFieldFiltro.getText()));
+                else
+                    JOptionPane.showMessageDialog(this, "Ingrese un parametro válido para realizar la búsqueda.", "Palabra clave de filtro incorrecto", JOptionPane.ERROR_MESSAGE);      
             }break;
             default: {
             JOptionPane.showMessageDialog(this, "Ingrese un filtro válido para realizar la búsqueda.", "Parámetro de filtro incorrecto", JOptionPane.ERROR_MESSAGE);     
             }
             
         }
-        if(jComboBoxFiltro.getSelectedIndex()==0)
-        {
-           
-        }
-        else{
-            
-        }
+       
     }//GEN-LAST:event_botonBuscarActionPerformed
 
     /**

@@ -170,7 +170,7 @@ public class SeleccionarMenu extends javax.swing.JFrame {
         if (eleccion == 0) {
             Menu menu = this.menus.get(this.jTableMenus.getSelectedRow());
             boolean eliminado = ControladorMenu.EliminarMenu(menu.getIdMenu());
-            JOptionPane.showMessageDialog(this, "El menú: fue eliminado exitosamemente.", "Menu eliminado exitosamente", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El menú fue eliminado exitosamente.", "Menu eliminado exitosamente", JOptionPane.INFORMATION_MESSAGE);
             this.obtenerMenus();
         }
        }else{

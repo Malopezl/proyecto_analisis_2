@@ -6,6 +6,7 @@
 package org.proyecto2a.administracion.vista;
 
 import java.awt.Dimension;
+import org.marcos.dto.Puesto;
 
 /**
  *
@@ -16,14 +17,27 @@ public class VerPuesto extends javax.swing.JFrame {
     /**
      * Creates new form EditarPerfilUsuario
      */
+    private Puesto puesto;
     public VerPuesto() {
         initComponents();
         this.inicializar();
+    }
+    public VerPuesto(Puesto puesto) {
+        initComponents();
+        this.inicializar();
+        this.puesto =puesto;
+        this.setDatos();
     }
     private void inicializar(){
         this.setSize(new Dimension(500, 700));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        
+    }
+    private void setDatos(){
+        this.jLabelNombre.setText(this.puesto.getNombre());
+        this.jTextAreaDescripcion.setText(this.puesto.getDescripcion());
+        this.jLabelRol.setText(this.puesto.getRol());
     }
 
     /**
@@ -41,9 +55,9 @@ public class VerPuesto extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jTextAreaDescripcion = new javax.swing.JTextArea();
+        jLabelNombre = new javax.swing.JLabel();
+        jLabelRol = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -65,17 +79,17 @@ public class VerPuesto extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jLabel4.setText("Nivel de acceso:");
+        jLabel4.setText("Rol:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextAreaDescripcion.setColumns(20);
+        jTextAreaDescripcion.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaDescripcion);
 
-        jLabel5.setFont(new java.awt.Font("FreeSerif", 0, 18)); // NOI18N
-        jLabel5.setText("nombre puesto");
+        jLabelNombre.setFont(new java.awt.Font("FreeSerif", 0, 18)); // NOI18N
+        jLabelNombre.setText("nombre puesto");
 
-        jLabel6.setFont(new java.awt.Font("FreeSerif", 0, 18)); // NOI18N
-        jLabel6.setText("nivel de acceso");
+        jLabelRol.setFont(new java.awt.Font("FreeSerif", 0, 18)); // NOI18N
+        jLabelRol.setText("rol del puesto");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,8 +108,8 @@ public class VerPuesto extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabelNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelRol, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(194, 194, 194)
                         .addComponent(jButton1)))
@@ -109,7 +123,7 @@ public class VerPuesto extends javax.swing.JFrame {
                 .addGap(68, 68, 68)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -117,7 +131,7 @@ public class VerPuesto extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelRol, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(28, 28, 28))
@@ -176,9 +190,9 @@ public class VerPuesto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelNombre;
+    private javax.swing.JLabel jLabelRol;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextAreaDescripcion;
     // End of variables declaration//GEN-END:variables
 }

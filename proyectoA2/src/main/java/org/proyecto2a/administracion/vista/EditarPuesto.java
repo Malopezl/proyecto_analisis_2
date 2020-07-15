@@ -6,6 +6,9 @@
 package org.proyecto2a.administracion.vista;
 
 import java.awt.Dimension;
+import javax.swing.JOptionPane;
+import org.marcos.dto.Puesto;
+import org.proyecto2a.administracion.controller.ControladorPuesto;
 
 /**
  *
@@ -16,14 +19,49 @@ public class EditarPuesto extends javax.swing.JFrame {
     /**
      * Creates new form EditarPerfilUsuario
      */
+    private Puesto puesto;
     public EditarPuesto() {
         initComponents();
         this.inicializar();
     }
+    public EditarPuesto(Puesto puesto) {
+        initComponents();
+        this.inicializar();
+        this.puesto = puesto;
+        this.setDatos();
+    }
+    
     private void inicializar(){
         this.setSize(new Dimension(500, 700));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+    }
+    private void setDatos(){
+        this.jTextFieldNombre.setText(this.puesto.getNombre());
+        this.jTextAreaDescripcion.setText(this.puesto.getDescripcion());
+        if("ADMINISTRADOR".equals(puesto.getRol()))
+        this.jComboBoxRol.setSelectedIndex(1);
+        else{
+            this.jComboBoxRol.setSelectedIndex(2);
+        }
+    }
+    private boolean validarForm(){
+        if (this.jTextFieldNombre.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Ingrese el nombre del puesto", "Nombre de puesto incorrecto", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        else if(this.jTextAreaDescripcion.getText().isBlank()){
+            JOptionPane.showMessageDialog(this, "Ingrese la descripción del puesto", "Descripción de puesto incorrecto", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        else if(this.jComboBoxRol.getSelectedIndex()<=0)
+        {
+            JOptionPane.showMessageDialog(this, "Seleccione un rol válido para el puesto", "Rol de puesto incorrecto", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        else
+            return true;
+            
     }
 
     /**
@@ -38,13 +76,13 @@ public class EditarPuesto extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jTextFieldNombre = new javax.swing.JTextField();
+        botonGuardar = new javax.swing.JButton();
+        botonCancelar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaDescripcion = new javax.swing.JTextArea();
+        jComboBoxRol = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -57,40 +95,37 @@ public class EditarPuesto extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         jLabel3.setText("Ingrese nuevo descripción:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextFieldNombreActionPerformed(evt);
             }
         });
 
-        jButton1.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonGuardar.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        botonGuardar.setText("Guardar");
+        botonGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonGuardarActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonCancelar.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botonCancelarActionPerformed(evt);
             }
         });
 
         jLabel4.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jLabel4.setText("Ingrese nuevo nivel de acceso:");
+        jLabel4.setText("Ingrese nuevo rol:");
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
+        jTextAreaDescripcion.setColumns(20);
+        jTextAreaDescripcion.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaDescripcion);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jComboBoxRol.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        jComboBoxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija el rol del puesto", "ADMINISTRADOR", "EMPLEADO" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,18 +137,18 @@ public class EditarPuesto extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(147, 147, 147)
-                                .addComponent(jButton2)
+                                .addComponent(botonCancelar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1))
+                                .addComponent(botonGuardar))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(21, 21, 21)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1))))
+                                    .addComponent(jScrollPane1)
+                                    .addComponent(jComboBoxRol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 16, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 37, Short.MAX_VALUE)
@@ -128,43 +163,45 @@ public class EditarPuesto extends javax.swing.JFrame {
                 .addGap(68, 68, 68)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jComboBoxRol, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(botonGuardar)
+                    .addComponent(botonCancelar))
                 .addGap(48, 48, 48))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTextFieldNombreActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //se guarda la información y se actualiza el perfil de usuario 
+    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
+        if(this.validarForm()){
+            this.puesto.setNombre(this.jTextFieldNombre.getText().trim());
+            this.puesto.setDescripcion(this.jTextAreaDescripcion.getText().trim());
+            this.puesto.setRol(this.jComboBoxRol.getSelectedItem().toString());
+            ControladorPuesto.EditarPuesto(puesto);
+            JOptionPane.showMessageDialog(this, "El puesto ha sido editado exitosamente.", "Puesto editado exitosamente.", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        }
+        
+    }//GEN-LAST:event_botonGuardarActionPerformed
+
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
         // se cierra el formulario
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // se cierra el formulario
-        this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_botonCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,15 +240,15 @@ public class EditarPuesto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton botonCancelar;
+    private javax.swing.JButton botonGuardar;
+    private javax.swing.JComboBox<String> jComboBoxRol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextArea jTextAreaDescripcion;
+    private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
 }

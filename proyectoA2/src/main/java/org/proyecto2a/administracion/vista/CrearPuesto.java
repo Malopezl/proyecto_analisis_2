@@ -6,6 +6,8 @@
 package org.proyecto2a.administracion.vista;
 
 import java.awt.Dimension;
+import javax.swing.JOptionPane;
+import org.proyecto2a.administracion.controller.ControladorPuesto;
 
 /**
  *
@@ -25,6 +27,29 @@ public class CrearPuesto extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
     }
+    private boolean validarForm(){
+        if (this.jTextFieldNombre.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Ingrese el nombre del puesto", "Nombre de puesto incorrecto", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        else if(this.jTextAreaDescripcion.getText().isBlank()){
+            JOptionPane.showMessageDialog(this, "Ingrese la descripción del puesto", "Descripción de puesto incorrecto", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        else if(this.jComboBoxRol.getSelectedIndex()<=0)
+        {
+            JOptionPane.showMessageDialog(this, "Seleccione un rol válido para el puesto", "Rol de puesto incorrecto", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        else
+            return true;
+            
+    }
+    private void clearForm(){
+        this.jTextFieldNombre.setText("");
+        this.jTextAreaDescripcion.setText("");
+        this.jComboBoxRol.setSelectedIndex(0);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,13 +63,13 @@ public class CrearPuesto extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldNombre = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaDescripcion = new javax.swing.JTextArea();
+        jComboBoxRol = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -57,9 +82,9 @@ public class CrearPuesto extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         jLabel3.setText("Ingrese descripción:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextFieldNombreActionPerformed(evt);
             }
         });
 
@@ -80,17 +105,14 @@ public class CrearPuesto extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jLabel4.setText("Ingrese nivel de acceso:");
+        jLabel4.setText("Ingrese Rol:");
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
+        jTextAreaDescripcion.setColumns(20);
+        jTextAreaDescripcion.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaDescripcion);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jComboBoxRol.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        jComboBoxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elija el rol del puesto", "ADMINISTRADOR", "EMPLEADO" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -108,10 +130,10 @@ public class CrearPuesto extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+                            .addComponent(jTextFieldNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1))))
+                            .addComponent(jScrollPane1)
+                            .addComponent(jComboBoxRol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(22, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 101, Short.MAX_VALUE)
@@ -126,7 +148,7 @@ public class CrearPuesto extends javax.swing.JFrame {
                 .addGap(69, 69, 69)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -134,8 +156,8 @@ public class CrearPuesto extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                .addComponent(jComboBoxRol, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -145,24 +167,27 @@ public class CrearPuesto extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTextFieldNombreActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //se guarda la información y se actualiza el perfil de usuario 
-        // se cierra el formulario
-        this.dispose();
+        if(this.validarForm()){
+            ControladorPuesto.AgregarPuesto(
+                    this.jTextFieldNombre.getText().trim(), 
+                    this.jTextAreaDescripcion.getText().trim(),
+                    this.jComboBoxRol.getSelectedItem().toString());
+            
+            JOptionPane.showMessageDialog(this, "El puesto ha sido creado exitosamente.", "Puesto creado exitosamente.", JOptionPane.INFORMATION_MESSAGE);
+            this.clearForm();
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // se cierra el formulario
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,13 +230,13 @@ public class CrearPuesto extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBoxRol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextArea jTextAreaDescripcion;
+    private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
 }
