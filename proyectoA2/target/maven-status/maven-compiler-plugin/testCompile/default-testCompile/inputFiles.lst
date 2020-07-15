@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /home/marcos/Documentos/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/IngredienteMenuSql.java
 /home/marcos/Documentos/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/dto/IngredienteMenu.java
 /home/marcos/Documentos/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/dto/Compra.java
@@ -23,29 +22,3 @@
 /home/marcos/Documentos/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/ProveedorSql.java
 /home/marcos/Documentos/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/dto/Cliente.java
 /home/marcos/Documentos/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/ClienteSql.java
-=======
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/dto/Cliente.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/dto/DetalleOrden.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/IngredienteMenuSql.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/pruebas.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/PuestoSql.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/dto/Orden.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/DetalleOrdenSql.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/dto/Menu.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/UsuarioSql.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/ClienteSql.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/dto/Proveedor.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/ConexionSql.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/OrdenSql.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/dto/DetalleCompra.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/dto/Compra.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/ProveedorSql.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/MenuSql.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/InventarioSql.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/dto/IngredienteMenu.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/dto/Puesto.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/CompraSql.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/dto/Usuario.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/dto/Inventario.java
-/home/sharon/GitProyects/proyecto_analisis_2/proyectoA2/src/test/java/org/marcos/sql/DetalleCompraSql.java
->>>>>>> Administracion
