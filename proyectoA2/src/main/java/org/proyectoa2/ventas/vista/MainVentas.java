@@ -22,11 +22,19 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
     private CobrarOrdenForm cobrarOrden;
     private CobrarSaldoForm cobrarSaldo;
     private ManejoColaOrdenes manejador;
+    private DesplegarVentasMain origen;
     /**
      * Creates new form MainVentas
      */
     public MainVentas() {
         initComponents();
+        this.actualizar();
+        
+        
+    }
+    public MainVentas(DesplegarVentasMain origen) {
+        initComponents();
+        this.origen = origen;
         manejador = ManejoColaOrdenes.obtenerControlador();
         manejador.addObservador(this);
         this.actualizar();
@@ -223,7 +231,7 @@ public class MainVentas extends javax.swing.JPanel implements ObservadorVentas {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
+        origen.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
