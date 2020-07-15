@@ -45,7 +45,7 @@ public class IngredienteMenuSql {
         PreparedStatement stmt = null;
         try {
             conn = ConexionSql.getConnection();
-            String SQL_DELETE = "DELETE FROM IngredienteMenu WHERE idMenu = '%"+ idMenu+ "%' AND idInventario ='%"+ idInventario+ "%'";
+            String SQL_DELETE = "DELETE FROM IngredienteMenu WHERE idMenu = "+ idMenu+ " AND idInventario ="+ idInventario;
             stmt = conn.prepareStatement(SQL_DELETE);
             int rows = stmt.executeUpdate();
 
@@ -61,7 +61,7 @@ public class IngredienteMenuSql {
         PreparedStatement stmt = null;
         try {
             conn = ConexionSql.getConnection();
-            String SQL_DELETE = "DELETE FROM IngredienteMenu WHERE idMenu = '%"+ idMenu+"%'";
+            String SQL_DELETE = "DELETE FROM IngredienteMenu WHERE idMenu = "+ idMenu;
             stmt = conn.prepareStatement(SQL_DELETE);
             int rows = stmt.executeUpdate();
 
