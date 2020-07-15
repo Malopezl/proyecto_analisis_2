@@ -180,28 +180,5 @@ public class InventarioSql {
         }
         return lista;
     }
-    public static ArrayList<String> selectNombre(){
-        Connection conn = null;
-        String sentencia = "SELECT nombre FROM Inventario";
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        ArrayList<String> lista = new ArrayList<>();
-        try{
-            conn = ConexionSql.getConnection();
-            stmt = conn.prepareStatement(sentencia);
-            rs = stmt.executeQuery();
-            while(rs.next()){
-                lista.add(rs.getString("nombre"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(InventarioSql.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            if(conn != null){
-                ConexionSql.close(rs);
-                ConexionSql.close(stmt);
-                ConexionSql.close(conn);
-            }
-        }
-        return lista;
-    }
+    
 }
