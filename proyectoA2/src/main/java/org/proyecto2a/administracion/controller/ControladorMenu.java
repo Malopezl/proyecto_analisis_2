@@ -36,8 +36,10 @@ public class ControladorMenu {
     public static void EditarMenu(){
         
     }
-    public static void VerMenu(){
-        
+    public static boolean EliminarMenu(int idMenu){
+        IngredienteMenuSql.ELIMINARMENU(idMenu);
+        MenuSql.ELIMINAR(idMenu);
+        return true;
     }
     public void notificar(){
         

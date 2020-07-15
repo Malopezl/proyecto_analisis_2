@@ -6,7 +6,13 @@
 package org.proyecto2a.administracion.vista;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 import org.marcos.dto.Menu;
+import org.marcos.sql.MenuSql;
+import org.proyecto2a.administracion.controller.ControladorMenu;
 
 /**
  *
@@ -17,6 +23,7 @@ public class SeleccionarMenu extends javax.swing.JFrame {
     /**
      * Creates new form SeleccionarMenu
      */
+    private ArrayList <Menu> menus = new ArrayList<>();
     public SeleccionarMenu() {
         initComponents();
         this.inicializar();
@@ -25,6 +32,18 @@ public class SeleccionarMenu extends javax.swing.JFrame {
         this.setSize(new Dimension(500, 700));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        jTableMenus.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); 
+        this.obtenerMenus();
+    }
+      private void obtenerMenus(){
+        this.menus = MenuSql.getAllMenu();
+        System.out.println(menus.size());
+        DefaultTableModel tabla = (DefaultTableModel) jTableMenus.getModel();
+        tabla.setRowCount(0);
+        for(int i=0; i<this.menus.size(); i++)
+        {
+           tabla.addRow(new Object[]{menus.get(i).getIdMenu(), menus.get(i).getNombreMenu()});  
+        }
     }
 
     /**
@@ -37,56 +56,59 @@ public class SeleccionarMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        botonEditarMenu = new javax.swing.JButton();
+        botonEliminarMenu = new javax.swing.JButton();
+        botonRegresar = new javax.swing.JButton();
+        botonVerMenu = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableMenus = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         jLabel1.setText("SELECCIONAR MENÚ");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
-
-        jButton1.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jButton1.setText("Editar Menú");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonEditarMenu.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        botonEditarMenu.setText("Editar Menú");
+        botonEditarMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonEditarMenuActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jButton2.setText("Eliminar Menú");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonEliminarMenu.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        botonEliminarMenu.setText("Eliminar Menú");
+        botonEliminarMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botonEliminarMenuActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jButton3.setText("Regresar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        botonRegresar.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        botonRegresar.setText("Regresar");
+        botonRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                botonRegresarActionPerformed(evt);
             }
         });
 
-        jButton4.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jButton4.setText("Ver Menú");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        botonVerMenu.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        botonVerMenu.setText("Ver Menú");
+        botonVerMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                botonVerMenuActionPerformed(evt);
             }
         });
+
+        jTableMenus.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "id", "Menu"
+            }
+        ));
+        jScrollPane2.setViewportView(jTableMenus);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,67 +117,74 @@ public class SeleccionarMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(167, 167, 167)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addGap(105, 105, 105)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(botonEditarMenu)
+                            .addComponent(botonVerMenu))
+                        .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(82, 82, 82)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jButton1)
-                                    .addComponent(jButton4))
-                                .addGap(39, 39, 39)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(jButton3))
-                                    .addComponent(jButton2))))))
-                .addContainerGap(31, Short.MAX_VALUE))
+                                .addGap(6, 6, 6)
+                                .addComponent(botonRegresar))
+                            .addComponent(botonEliminarMenu)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(149, 149, 149)
+                        .addComponent(jLabel1)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addGap(38, 38, 38)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(botonEditarMenu)
+                    .addComponent(botonEliminarMenu))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton3))
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addComponent(botonVerMenu)
+                    .addComponent(botonRegresar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void botonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegresarActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_botonRegresarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void botonEliminarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarMenuActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+        String[] botones = {"Eliminar Menu", " Cancelar"};
+        int eleccion = JOptionPane.showOptionDialog(null, " ¿Esta seguro que desea eliminar este menu?. Esta acción será permanente y no podrá recuperar los datos.", "Eliminar menu", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null/*icono*/, botones, botones[0]);
+        if (eleccion == 0) {
+            Menu menu = this.menus.get(this.jTableMenus.getSelectedRow());
+            boolean eliminado = ControladorMenu.EliminarMenu(menu.getIdMenu());
+            JOptionPane.showMessageDialog(this, "El menú: fue eliminado exitosamemente.", "Menu eliminado exitosamente", JOptionPane.INFORMATION_MESSAGE);
+            this.obtenerMenus();
+        }
+    }//GEN-LAST:event_botonEliminarMenuActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botonEditarMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEditarMenuActionPerformed
         // TODO add your handling code here:
         EditarMenu editar = new EditarMenu();
         editar.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botonEditarMenuActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void botonVerMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerMenuActionPerformed
         // TODO add your handling code here:
-        VerMenu ver = new VerMenu(new Menu());
+        Menu menu=this.menus.get(this.jTableMenus.getSelectedRow());
+        VerMenu ver = new VerMenu(menu);
         ver.setVisible(true);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_botonVerMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -193,12 +222,12 @@ public class SeleccionarMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton botonEditarMenu;
+    private javax.swing.JButton botonEliminarMenu;
+    private javax.swing.JButton botonRegresar;
+    private javax.swing.JButton botonVerMenu;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableMenus;
     // End of variables declaration//GEN-END:variables
 }
