@@ -13,14 +13,16 @@ public class Puesto {
     public int id;
     public String nombre;
     public String descripcion;
+    public String rol;
 
     public Puesto() {
     }
 
-    public Puesto(int id, String nombre, String descripcion) {
+    public Puesto(int id, String nombre, String descripcion, String rol) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.rol = rol;
     }
 
     
@@ -49,9 +51,17 @@ public class Puesto {
         this.descripcion = descripcion;
     }
 
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
     @Override
     public String toString() {
-        return "Puesto{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + '}';
+        return "Puesto{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion +", rol="+ rol+ '}';
     }
     
     

@@ -19,12 +19,12 @@ public class Compra {
     private Date fecha;
     private String noFactura;
     private double total;
-    private String estado;
     private int idProveedor;
     private Proveedor proveedor;
-    private ArrayList<DetalleCompra> detalle;
+    private ArrayList<DetalleCompra> detalles;
 
     public Compra() {
+        detalles = new ArrayList<>();
     }
 
     public Compra(int idCompra, Date fecha, String noFactura, double total, int idProveedor) {
@@ -33,7 +33,7 @@ public class Compra {
         this.noFactura = noFactura;
         this.total = total;
         this.idProveedor = idProveedor;
-        detalle = new ArrayList<>();
+        detalles = new ArrayList<>();
     }
     
     
@@ -70,14 +70,6 @@ public class Compra {
         this.total = total;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
     public int getIdProveedor() {
         return idProveedor;
     }
@@ -94,12 +86,16 @@ public class Compra {
         this.proveedor = proveedor;
     }
 
-    public ArrayList<DetalleCompra> getDetalle() {
-        return detalle;
+    public ArrayList<DetalleCompra> getDetalles() {
+        return detalles;
     }
 
-    public void setDetalle(ArrayList<DetalleCompra> detalle) {
-        this.detalle = detalle;
+    public void setDetalles(ArrayList<DetalleCompra> detalles) {
+        this.detalles = detalles;
+    }
+
+    public void addDetalle(DetalleCompra detalle) {
+        detalles.add(detalle);
     }
     
 }

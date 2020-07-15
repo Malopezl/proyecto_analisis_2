@@ -27,7 +27,7 @@ public class InventarioSql {
         PreparedStatement stmt = null;
         try {
             conn = ConexionSql.getConnection();
-            String SQL_INSERT = "INSERT INTO Inventario(descripcionInventario, existencia, lote, fechaCaducidad, nombre) VALUES(?,?,?,?,?) ";
+            String SQL_INSERT = "INSERT INTO Inventario(descripcionInventario, existencia, lote, fechaCaducidad, nombre, dimension) VALUES(?,?,?,?,?,?) ";
             stmt = conn.prepareStatement(SQL_INSERT);
             stmt.setString(1, inventario.getDescripcionInventario());
             stmt.setInt(2, inventario.getExistencia());
@@ -43,6 +43,7 @@ public class InventarioSql {
             }
             
             stmt.setString(5, inventario.getNombre());
+            stmt.setString(6, inventario.getDimension());
             int rows = stmt.executeUpdate();
 
         } catch (SQLException ex) {
@@ -179,28 +180,5 @@ public class InventarioSql {
         }
         return lista;
     }
-    public static ArrayList<String> selectNombre(){
-        Connection conn = null;
-        String sentencia = "SELECT nombre FROM Inventario";
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        ArrayList<String> lista = new ArrayList<>();
-        try{
-            conn = ConexionSql.getConnection();
-            stmt = conn.prepareStatement(sentencia);
-            rs = stmt.executeQuery();
-            while(rs.next()){
-                lista.add(rs.getString("nombre"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(InventarioSql.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            if(conn != null){
-                ConexionSql.close(rs);
-                ConexionSql.close(stmt);
-                ConexionSql.close(conn);
-            }
-        }
-        return lista;
-    }
+    
 }

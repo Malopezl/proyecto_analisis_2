@@ -9,7 +9,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.marcos.dto.Compra;
 import org.marcos.dto.DetalleCompra;
+import org.marcos.dto.Proveedor;
 
 /**
  *
@@ -18,23 +20,21 @@ import org.marcos.dto.DetalleCompra;
  */
 public class DetalleCompraSql {
     public int InsertarListado(ArrayList<DetalleCompra> lista, int idCompra) {
-        String sentenciaInsertar = "INSERT INTO DetalleCompra(idCompra, idInventario, cantidad, subtotal, precio) VALUES(?, ?, ?, ?, ?)";
-        Connection conn;
+        String sentenciaInsertar = "INSERT INTO detalleCompra(idCompra, idInventario, cantidad, subtotal, precio) VALUES(?, ?, ?, ?, ?)";
+        Connection conn = null;
         PreparedStatement stmt;
         int rows = 0;
         int tmp;
-        int indice = 1;
         
         try {
             conn = ConexionSql.getConnection();
             for (DetalleCompra detalle : lista) {
                 stmt = conn.prepareStatement(sentenciaInsertar);
-                stmt.setInt(indice++, idCompra);
-                stmt.setInt(indice++, detalle.getIdInventario());
-                stmt.setFloat(indice++, detalle.getCantidad());
-                stmt.setDouble(indice++, detalle.getSubtotal());
-                stmt.setDouble(indice, detalle.getPrecio());
-                indice = 1;
+                stmt.setInt(1, idCompra);
+                stmt.setInt(2, detalle.getIdInventario());
+                stmt.setFloat(3, detalle.getCantidad());
+                stmt.setDouble(4, detalle.getSubtotal());
+                stmt.setDouble(5, detalle.getPrecio());
                 tmp = stmt.executeUpdate();
                 rows = tmp + rows;
             }
@@ -44,20 +44,64 @@ public class DetalleCompraSql {
         return rows;
     }
     
-    public ResultSet mostrarDetalle(String factura) {
+    public Compra obtenerDetalle(String factura) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Compra compra = new Compra();
+        
+        try{
+            conn = ConexionSql.getConnection();
+            String sentenciaBuscar = "SELECT idCompra, fecha, no_factura, total, idProveedor FROM Compra WHERE no_factura LIKE '%" + factura + "%'";
+            stmt = conn.prepareStatement(sentenciaBuscar);
+            rs = stmt.executeQuery(sentenciaBuscar);
+            
+            while (rs.next()) {
+                compra.setIdCompra(rs.getInt(1));
+                compra.setFecha(rs.getDate(2));
+                compra.setNoFactura(rs.getString(3));
+                compra.setTotal(rs.getDouble(4));
+                compra.setIdProveedor(rs.getInt(5));
+            }
+            
+            String sentencia = "SELECT nombreProveedor FROM Proveedor WHERE idProveedor = ?";
+            stmt = conn.prepareStatement(sentencia);
+            stmt.setInt(1, compra.getIdProveedor());
+            rs = stmt.executeQuery();
+            String nombre = "";
+            while (rs.next()) {
+                nombre = rs.getString(1);
+                break;
+            }
+            Proveedor proveedor = new Proveedor();
+            proveedor.setNombreProveedor(nombre);
+            compra.setProveedor(proveedor);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdenSql.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(conn != null){
+                ConexionSql.close(rs);
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return compra;
+    }
+    
+    public ResultSet seleccionarDetalle(int id){
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
         try{
             conn = ConexionSql.getConnection();
-            String sentenciaBuscar = "SELECT c.no_factura, p.nombreProveedor, c.fecha, c.total, c.estado, i.nombre, dc.precio, dc.cantidad, dc.subtotal FROM Proveedor p INNER JOIN Compra c "
-                      + "ON p.idProveedor = c.idProveedor INNER JOIN detalleCompra dc ON c.idCompra = dc.idCompra INNER JOIN Inventario i on dc.idInventario = i.idInventario"
-                      + "WHERE e.no_factura LIKE '%" + factura + "%'";
-            stmt = conn.prepareStatement(sentenciaBuscar);
-            rs = stmt.executeQuery(sentenciaBuscar);
+            String sentenciaSeleccionar = "SELECT i.nombre, dc.precio, dc.cantidad, dc.subtotal FROM detalleCompra dc INNER JOIN Inventario i ON dc.idInventario = i.idInventario "
+                      + "where dc.idCompra LIKE '%" + id + "%'";
+            stmt = conn.prepareStatement(sentenciaSeleccionar);
+            rs = stmt.executeQuery();
         } catch (SQLException ex) {
-            Logger.getLogger(OrdenSql.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteSql.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             if(conn != null){
                 ConexionSql.close(stmt);

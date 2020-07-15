@@ -23,7 +23,7 @@ public class ProveedorSql {
      * @param nuevoProveedor
      * @return
      */
-    public static int Insertar(Proveedor nuevoProveedor) {
+    public int Insertar(Proveedor nuevoProveedor) {
         String sentenciaInsertar = "INSERT INTO Proveedor(NIT, No_cuenta, saldoPendiente, direccionProveedor, nombreProveedor, telefono, correo) VALUES (?, ?, ?, ?, ?, ?, ?)";
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -85,5 +85,140 @@ public class ProveedorSql {
             }
         }
         return lista;
+    }
+    
+    public ResultSet listarPorNit(String nit) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = ConexionSql.getConnection();
+            String sentenciaBuscar = "SELECT NIT, No_cuenta, nombreProveedor, telefono, direccionProveedor, correo, saldoPendiente FROM Proveedor "
+                      + "where NIT LIKE '%" + nit + "%'";
+            stmt = conn.prepareStatement(sentenciaBuscar);
+            rs = stmt.executeQuery(sentenciaBuscar);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProveedorSql.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(conn != null){
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return rs;
+    }
+    
+    public ResultSet listarPorNombre(String nombre) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = ConexionSql.getConnection();
+            String sentenciaBuscar = "SELECT NIT, No_cuenta, nombreProveedor, telefono, direccionProveedor, correo, saldoPendiente FROM Proveedor "
+                      + "where nombreProveedor LIKE '%" + nombre + "%'";
+            stmt = conn.prepareStatement(sentenciaBuscar);
+            rs = stmt.executeQuery(sentenciaBuscar);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProveedorSql.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(conn != null){
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return rs;
+    }
+    
+    public int actualizarSaldo(Proveedor proveedor) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int rows = 0;
+        
+        try {
+            conn = ConexionSql.getConnection();
+            String sentenciaActualizarSaldo = "UPDATE Proveedor SET saldoPendiente=? WHERE idProveedor=?";
+            stmt = conn.prepareStatement(sentenciaActualizarSaldo);
+            stmt.setDouble(1, proveedor.getSaldoPendiente());
+            stmt.setInt(2, proveedor.getIdProveedor());
+            rows = stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProveedorSql.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if(conn != null){
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return rows;
+    }
+    
+    public int actualizarProveedores(Proveedor proveedor) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int rows = 0;
+        
+        try {
+            conn = ConexionSql.getConnection();
+            String sentenciaActualizar = "UPDATE Proveedor SET nombreProveedor=?, direccionProveedor=?, telefono=?, correo=? WHERE NIT=?";
+            stmt = conn.prepareStatement(sentenciaActualizar);
+            stmt.setString(1, proveedor.getNombreProveedor());
+            stmt.setString(2, proveedor.getDireccionProveedor());
+            stmt.setString(3, proveedor.getTelefono());
+            stmt.setString(4, proveedor.getCorreo());
+            stmt.setString(5, proveedor.getNit());
+            rows = stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProveedorSql.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if(conn != null){
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return rows;
+    }
+    
+    public int eliminarProveedor(String nit) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int rows = 0;
+        
+        try {
+            conn = ConexionSql.getConnection();
+            String sentenciaEliminar = "DELETE FROM Proveedor WHERE NIT LIKE '%" + nit + "%'";
+            stmt = conn.prepareStatement(sentenciaEliminar);
+            rows = stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProveedorSql.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if(conn != null){
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return rows;
+    }
+    
+    public static ResultSet listarProveedores() {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            conn = ConexionSql.getConnection();
+            String sentenciaBuscar = "SELECT NIT, No_cuenta, nombreProveedor, telefono, direccionProveedor, correo, saldoPendiente FROM Proveedor";
+            stmt = conn.prepareStatement(sentenciaBuscar);
+            rs = stmt.executeQuery(sentenciaBuscar);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdenSql.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(conn != null){
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return rs;
     }
 }
