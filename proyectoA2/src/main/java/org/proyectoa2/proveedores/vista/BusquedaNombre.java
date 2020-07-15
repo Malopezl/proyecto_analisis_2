@@ -174,7 +174,7 @@ public class BusquedaNombre extends javax.swing.JFrame {
         if (tablaProveedores.getSelectedRowCount() == 1) {
             if(JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar este proveedor", "Eliminar", JOptionPane.YES_NO_OPTION) == 0) {
                 DefaultTableModel modelo = (DefaultTableModel) tablaProveedores.getModel();
-                String nit = (String) tablaProveedores.getValueAt(tablaProveedores.getSelectedRow(), 1);
+                String nit = (String) tablaProveedores.getValueAt(tablaProveedores.getSelectedRow(), 0);
                 manejoProveedor.eliminarProveedores(nit);
                 modelo.setRowCount(0);
                 tablaProveedores.setModel(modelo);

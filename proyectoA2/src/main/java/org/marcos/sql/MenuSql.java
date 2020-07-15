@@ -89,7 +89,7 @@ public class MenuSql {
         ResultSet rs = null;
         try {
             conn = ConexionSql.getConnection();
-            String SQL_UPDATE = "UPDATE Menu SET nombreMenu = '%"+ menu.getNombreMenu()+"%' ,descripcionMenu = '%"+ menu.getDescripcionMenu()+"%', precio = '%"+ menu.getPrecio()+"%', receta = '%"+ menu.getReceta()+"%', estado = '%"+ menu.getEstado()+"%' WHERE idMenu="+ menu.getIdMenu();
+            String SQL_UPDATE = "UPDATE Menu SET nombreMenu = '"+ menu.getNombreMenu()+"', descripcionMenu = '"+ menu.getDescripcionMenu()+"' , precio = "+ menu.getPrecio()+" , receta = '"+menu.getReceta()+"' , estado ='"+menu.getEstado()+"' WHERE idMenu="+ menu.getIdMenu();
             stmt = conn.prepareStatement(SQL_UPDATE);
             int rows = stmt.executeUpdate();
         
@@ -106,7 +106,7 @@ public class MenuSql {
         ResultSet rs = null;
         try {
             conn = ConexionSql.getConnection();
-            String SQL_DELETE = "DELETE FROM Menu WHERE idMenu = "+ idMenu;
+            String SQL_DELETE = "DELETE * FROM Menu WHERE idMenu = "+ idMenu;
             stmt = conn.prepareStatement(SQL_DELETE);
             int rows = stmt.executeUpdate();
         
