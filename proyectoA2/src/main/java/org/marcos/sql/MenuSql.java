@@ -106,7 +106,7 @@ public class MenuSql {
         ResultSet rs = null;
         try {
             conn = ConexionSql.getConnection();
-            String SQL_DELETE = "DELETE * FROM Menu WHERE idMenu = "+ idMenu;
+            String SQL_DELETE = "DELETE FROM Menu WHERE idMenu = "+ idMenu;
             stmt = conn.prepareStatement(SQL_DELETE);
             int rows = stmt.executeUpdate();
         
