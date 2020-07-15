@@ -41,13 +41,7 @@ public class CrearMenu extends javax.swing.JFrame {
         this.setSize(new Dimension(1000, 700));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        DefaultListModel modelo = new DefaultListModel();
-        this.listaInventario=listarIngredientes.listarInventario();
-        System.out.println(listaInventario.size());
-        for(Inventario i : listaInventario){
-            modelo.addElement(i.getNombre());
-        }
-        this.listaIngredientes.setModel(modelo);
+        this.inicioListaIngredientes();
         this.listaIngredientesSeleccionados.setModel(new DefaultListModel());
         this.botonEliminarIngrediente.setEnabled(false);
         
@@ -57,6 +51,14 @@ public class CrearMenu extends javax.swing.JFrame {
         this.listaDimensiones = new ArrayList<>();
    
     }
+     private void inicioListaIngredientes() throws SQLException{
+       DefaultListModel modelo = new DefaultListModel();
+       this.listaInventario=listarIngredientes.listarInventario();
+       for(Inventario i : listaInventario){
+            modelo.addElement(i.getNombre());
+        }  
+        this.listaIngredientes.setModel(modelo);
+     }
      private void actualizarLista(){
          DefaultListModel seleccionados = new DefaultListModel();
          if(this.listaNombres.isEmpty())
@@ -122,6 +124,20 @@ public class CrearMenu extends javax.swing.JFrame {
          return true;
      } 
      
+     }
+     private void clearForm() throws SQLException
+     {
+         this.jTextFieldNombre.setText("");
+         this.jTextAreaDescripcion.setText("");
+         this.jTextFieldPrecio.setText("");
+         this.jTextAreaReceta.setText("");
+         this.jTextFieldCantidad.setText("");
+         this.inicioListaIngredientes();
+         this.listaNombres = new ArrayList<>();
+         this.listaCantidad = new ArrayList<>();
+         this.listaDimensiones = new ArrayList<>();
+         this.listaIngredientesSeleccionados.setModel(new DefaultListModel());
+         this.ingredientesAgregados = new ArrayList<>();
      }
      private String buscarDimensiones(String nombreInventario)
      {
@@ -398,18 +414,22 @@ public class CrearMenu extends javax.swing.JFrame {
                     im.setIdInventario(idInventarioTemp);
                     this.ingredientesAgregados.add(im);
                 }
-                ControladorMenu.AgregarMenu(
+                boolean ingresoCorrecto= ControladorMenu.AgregarMenu(
                         this.jTextFieldNombre.getText().trim(),
                         this.jTextAreaDescripcion.getText().trim(),
                         Double.parseDouble(this.jTextFieldPrecio.getText().trim()),
                         this.jTextAreaReceta.getText().trim(),
                         this.ingredientesAgregados
                 );
+                if(ingresoCorrecto){
+                  JOptionPane.showMessageDialog(this, "El menú ha sido creado exitosamente. Ha sido enviado para su aprobación", "Menu creado exitosamente.", JOptionPane.INFORMATION_MESSAGE);
+                  this.clearForm();
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(CrearMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            this.dispose();
+            
         }
     }//GEN-LAST:event_botonGuardarActionPerformed
 

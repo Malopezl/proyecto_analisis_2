@@ -6,6 +6,9 @@
 package org.proyecto2a.administracion.vista;
 
 import java.awt.Dimension;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -150,8 +153,14 @@ public class PrincipalMenu extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        CrearMenu nuevo = new CrearMenu();
-        nuevo.setVisible(true);
+        CrearMenu nuevo;
+        try {
+            nuevo = new CrearMenu();
+            nuevo.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(PrincipalMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
