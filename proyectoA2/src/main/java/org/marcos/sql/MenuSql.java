@@ -89,7 +89,7 @@ public class MenuSql {
         ResultSet rs = null;
         try {
             conn = ConexionSql.getConnection();
-            String SQL_UPDATE = "UPDATE Menu SET nombreMenu = '%"+ menu.getNombreMenu()+"%' ,descripcionMenu = '%"+ menu.getDescripcionMenu()+"%', precio = '%"+ menu.getPrecio()+"%', recete = '%"+ menu.getReceta()+"%', estado = '%"+ menu.getEstado()+"%' WHERE idMenu='%"+ menu.getIdMenu()+"%'";
+            String SQL_UPDATE = "UPDATE Menu SET nombreMenu = '%"+ menu.getNombreMenu()+"%' ,descripcionMenu = '%"+ menu.getDescripcionMenu()+"%', precio = '%"+ menu.getPrecio()+"%', recete = '%"+ menu.getReceta()+"%', estado = '%"+ menu.getEstado()+"%' WHERE idMenu="+ menu.getIdMenu();
             stmt = conn.prepareStatement(SQL_UPDATE);
             int rows = stmt.executeUpdate();
         
@@ -106,7 +106,7 @@ public class MenuSql {
         ResultSet rs = null;
         try {
             conn = ConexionSql.getConnection();
-            String SQL_DELETE = "DELETE FROM Menu WHERE idMenu = '%"+ idMenu+"%'";
+            String SQL_DELETE = "DELETE FROM Menu WHERE idMenu = "+ idMenu;
             stmt = conn.prepareStatement(SQL_DELETE);
             int rows = stmt.executeUpdate();
         
@@ -125,7 +125,7 @@ public class MenuSql {
         Menu menu = new Menu();
         try{
             conn = ConexionSql.getConnection();
-            String SQL_CONSULTA = "SELECT idMenu, nombreMenu, descripcionMenu, precio, receta, estado FROM Menu WHERE idMenu = '%"+ idMenu+"%'";
+            String SQL_CONSULTA = "SELECT * FROM Menu WHERE idMenu ="+ idMenu;
             stmt = conn.prepareStatement(SQL_CONSULTA);
             rs = stmt.executeQuery();
             while(rs.next()){
@@ -155,7 +155,7 @@ public class MenuSql {
         
         try{
             conn = ConexionSql.getConnection();
-            String SQL_CONSULTA = "SELECT idMenu, nombreMenu, descripcionMenu, precio, receta, estado FROM Menu WHERE nombreMenu = '%"+nombre+"%'";
+            String SQL_CONSULTA = "SELECT * FROM Menu WHERE nombreMenu LIKE '%"+nombre+"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
             rs = stmt.executeQuery();
             Menu menu;
@@ -187,7 +187,7 @@ public class MenuSql {
         ArrayList<Menu> lista = new ArrayList<>();
         try{
             conn = ConexionSql.getConnection();
-            String SQL_CONSULTA = "SELECT idMenu, nombreMenu, descripcionMenu, precio, receta, estado FROM Menu WHERE precio = '%"+ precio+"%'";
+            String SQL_CONSULTA = "SELECT * FROM Menu WHERE precio LIKE '%"+ precio+"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
             rs = stmt.executeQuery();
             Menu menu;
@@ -220,7 +220,7 @@ public class MenuSql {
         ArrayList<Menu> lista = new ArrayList<>();
         try{
             conn = ConexionSql.getConnection();
-            String SQL_CONSULTA = "SELECT idMenu, nombreMenu, descripcionMenu, precio, receta, estado FROM Menu WHERE estado = '%"+ estado +"%'";
+            String SQL_CONSULTA = "SELECT * FROM Menu WHERE estado LIKE '%"+ estado +"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
             rs = stmt.executeQuery();
             Menu menu;
