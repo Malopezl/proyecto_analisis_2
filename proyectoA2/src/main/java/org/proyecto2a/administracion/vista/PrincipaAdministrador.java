@@ -6,6 +6,7 @@
 package org.proyecto2a.administracion.vista;
 
 import java.awt.Dimension;
+import org.proyecto2a.administracion.controller.ControladorMenu;
 
 /**
  *
@@ -135,6 +136,8 @@ public class PrincipaAdministrador extends javax.swing.JFrame {
         // TODO add your handling code here:
         AutorizarMenu autorizar = new AutorizarMenu();
         autorizar.setVisible(true);
+        ControladorMenu cm = new ControladorMenu();
+        cm.agregarObservables(autorizar);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

@@ -12,12 +12,13 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import org.marcos.dto.Menu;
 import org.marcos.sql.MenuSql;
+import org.proyecto2a.administracion.controller.ObservadorMenu;
 
 /**
  *
  * @author sharon
  */
-public class AutorizarMenu extends javax.swing.JFrame {
+public class AutorizarMenu extends javax.swing.JFrame implements ObservadorMenu {
 
     /**
      * Creates new form SeleccionarMenu
@@ -214,4 +215,9 @@ public class AutorizarMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableMenus;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void Actualizar() {
+        this.obtenerMenus();
+    }
 }

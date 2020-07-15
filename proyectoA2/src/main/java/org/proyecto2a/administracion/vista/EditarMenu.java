@@ -442,16 +442,19 @@ public class EditarMenu extends javax.swing.JFrame {
                         this.menu.getEstado(),
                         this.ingredientesAgregados
                 );
-                if(ingresoCorrecto){
-                  JOptionPane.showMessageDialog(this, "El menú ha sido actualizado exitosamente.", "Menu actualizado exitosamente.", JOptionPane.INFORMATION_MESSAGE);
+                if(ingresoCorrecto==true){
+                  JOptionPane.showMessageDialog(this, "El menú ha sido actualizado exitosamente.", "Menu actualizado exitosamente.", JOptionPane.PLAIN_MESSAGE);
                   this.dispose();
                 }
+                
             } catch (SQLException ex) {
                 Logger.getLogger(CrearMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
 
             
         }
+        
         
     }//GEN-LAST:event_botonGuardarActionPerformed
 

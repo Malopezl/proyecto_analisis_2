@@ -189,8 +189,6 @@ public class SeleccionarMenu extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(SeleccionarMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
-        this.dispose();
         }else{
             JOptionPane.showMessageDialog(this, "Seleccione un menú de la lista para editar.", "Selección de menú incorrecta", JOptionPane.ERROR_MESSAGE);
         }

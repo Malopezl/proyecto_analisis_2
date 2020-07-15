@@ -7,8 +7,15 @@ package org.proyecto2a.administracion.vista;
 
 import java.awt.Dimension;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import org.marcos.dto.Menu;
+import org.marcos.sql.MenuSql;
+import org.proyecto2a.administracion.controller.ControladorMenu;
 
 /**
  *
@@ -19,6 +26,9 @@ public class PrincipalMenu extends javax.swing.JFrame {
     /**
      * Creates new form PrincipalMenu
      */
+    private ArrayList <Menu> menus = new ArrayList<>();
+    
+    
     public PrincipalMenu() {
         initComponents();
         this.inicializar();
@@ -27,7 +37,49 @@ public class PrincipalMenu extends javax.swing.JFrame {
         this.setSize(new Dimension(1000, 700));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        jTableMenus.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); 
     }
+    private void obtenerMenusEstado(String estado){
+        menus = new ArrayList<>();
+        this.menus = MenuSql.MENU_ESTADO(estado);
+        DefaultTableModel tabla = (DefaultTableModel) jTableMenus.getModel();
+        tabla.setRowCount(0);
+        for(int i=0; i<this.menus.size(); i++)
+        {
+           tabla.addRow(new Object[]{menus.get(i).getIdMenu(), menus.get(i).getNombreMenu(), menus.get(i).getPrecio(), menus.get(i).getEstado()});  
+        }
+    }
+    private void obtenerMenusid(int Id){
+        menus = new ArrayList<>();
+        this.menus.add(MenuSql.MENU_ID(Id));
+        DefaultTableModel tabla = (DefaultTableModel) jTableMenus.getModel();
+        tabla.setRowCount(0);
+        for(int i=0; i<this.menus.size(); i++)
+        {
+           tabla.addRow(new Object[]{menus.get(i).getIdMenu(), menus.get(i).getNombreMenu(), menus.get(i).getPrecio(), menus.get(i).getEstado()});  
+        }
+    }
+    private void obtenerMenusNombre(String Nombre){
+        menus = new ArrayList<>();
+        this.menus = MenuSql.MENU_NOMBRE(Nombre);
+        DefaultTableModel tabla = (DefaultTableModel) jTableMenus.getModel();
+        tabla.setRowCount(0);
+        for(int i=0; i<this.menus.size(); i++)
+        {
+           tabla.addRow(new Object[]{menus.get(i).getIdMenu(), menus.get(i).getNombreMenu(), menus.get(i).getPrecio(), menus.get(i).getEstado()});  
+        }
+    }
+    private void obtenerMenusPrecio(Double Precio){
+        menus = new ArrayList<>();
+        this.menus = MenuSql.MENU_PRECIO(Precio);
+        DefaultTableModel tabla = (DefaultTableModel) jTableMenus.getModel();
+        tabla.setRowCount(0);
+        for(int i=0; i<this.menus.size(); i++)
+        {
+          tabla.addRow(new Object[]{menus.get(i).getIdMenu(), menus.get(i).getNombreMenu(), menus.get(i).getPrecio(), menus.get(i).getEstado()});  
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,12 +92,19 @@ public class PrincipalMenu extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        botonVerMenu = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableMenus = new javax.swing.JTable();
+        jComboBoxFiltro = new javax.swing.JComboBox<>();
+        jTextFieldFiltro = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        botonBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,11 +119,11 @@ public class PrincipalMenu extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jButton2.setText("Editar /Eliminar Menú");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonVerMenu.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        botonVerMenu.setText("Ver Menú Seleccionado");
+        botonVerMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botonVerMenuActionPerformed(evt);
             }
         });
 
@@ -77,7 +136,7 @@ public class PrincipalMenu extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
-        jLabel2.setText("Lista de menús activos");
+        jLabel2.setText("Busqueda de Menús:");
 
         jButton5.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
         jButton5.setText("Ver todos los menús");
@@ -87,42 +146,97 @@ public class PrincipalMenu extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableMenus.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "id", "Menu", "Precio", "Estado"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jTableMenus);
+
+        jComboBoxFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Filtrar por:", "Estado ACTIVO", "Estado CREADO", "Nombre", "Precio", "Id" }));
+        jComboBoxFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxFiltroActionPerformed(evt);
+            }
+        });
+
+        jTextFieldFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldFiltroActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        jLabel3.setText("Seleccione modo de búsqueda:");
+
+        jLabel4.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        jLabel4.setText("Ingrese el parámetro a buscar:");
+
+        jButton3.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        jButton3.setText("Eliminar Menú Seleccionado");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        jButton6.setText("Editar Menú Seleccionado");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        botonBuscar.setFont(new java.awt.Font("FreeSerif", 1, 18)); // NOI18N
+        botonBuscar.setText("Buscar");
+        botonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(424, 424, 424)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboBoxFiltro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(31, 31, 31)
+                        .addComponent(botonBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(424, 424, 424)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(49, 49, 49)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton5)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jButton4))))))
-                .addContainerGap(26, Short.MAX_VALUE))
+                        .addGap(258, 258, 258)
+                        .addComponent(jButton4))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonVerMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton5))
+                        .addGap(15, 15, 15))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,21 +245,41 @@ public class PrincipalMenu extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(27, Short.MAX_VALUE))
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addComponent(jButton1)
+                        .addGap(33, 33, 33)
+                        .addComponent(jButton1)))
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jComboBoxFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jTextFieldFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4)
-                        .addGap(42, 42, 42))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(12, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(botonVerMenu)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton6)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton4)
+                                .addGap(42, 42, 42))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botonBuscar)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         pack();
@@ -163,10 +297,15 @@ public class PrincipalMenu extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        SeleccionarMenu seleccionar = new SeleccionarMenu();
-        seleccionar.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void botonVerMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVerMenuActionPerformed
+        if(this.jTableMenus.getSelectedRow()>=0){
+        Menu menu=this.menus.get(this.jTableMenus.getSelectedRow());
+        VerMenu ver = new VerMenu(menu);
+        ver.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione un menú de la lista para ver.", "Selección de menú incorrecta", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_botonVerMenuActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
@@ -178,6 +317,90 @@ public class PrincipalMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jComboBoxFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFiltroActionPerformed
+        // TODO add your handling code here:
+        if(jComboBoxFiltro.getSelectedIndex()>2)
+        {
+            this.jTextFieldFiltro.setEnabled(true);
+        }
+        else{
+            this.jTextFieldFiltro.setEnabled(false);
+        }
+    }//GEN-LAST:event_jComboBoxFiltroActionPerformed
+
+    private void jTextFieldFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldFiltroActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(this.jTableMenus.getSelectedRow()>=0){
+        String[] botones = {"Eliminar Menu", " Cancelar"};
+        int eleccion = JOptionPane.showOptionDialog(null, " ¿Esta seguro que desea eliminar este menu?. Esta acción será permanente y no podrá recuperar los datos.", "Eliminar menu", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null/*icono*/, botones, botones[0]);
+        if (eleccion == 0) {
+            Menu menu = this.menus.get(this.jTableMenus.getSelectedRow());
+            boolean eliminado = ControladorMenu.EliminarMenu(menu.getIdMenu());
+            JOptionPane.showMessageDialog(this, "El menú: fue eliminado exitosamemente.", "Menu eliminado exitosamente", JOptionPane.INFORMATION_MESSAGE);
+            this.obtenerMenusEstado("ACTIVO");
+        }
+       }else{
+           JOptionPane.showMessageDialog(this, "Seleccione un menú de la lista para eliminar.", "Selección de menú incorrecta", JOptionPane.ERROR_MESSAGE);
+       }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        if(this.jTableMenus.getSelectedRow()>=0){
+        Menu menu=this.menus.get(this.jTableMenus.getSelectedRow());
+        EditarMenu editar;
+            try {
+                editar = new EditarMenu(menu);
+                editar.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(SeleccionarMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione un menú de la lista para editar.", "Selección de menú incorrecta", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
+        // TODO add your handling code here:
+        switch(jComboBoxFiltro.getSelectedIndex())
+        {
+            case 0: {
+            JOptionPane.showMessageDialog(this, "Ingrese un filtro válido para realizar la búsqueda.", "Parámetro de filtro incorrecto", JOptionPane.ERROR_MESSAGE);     
+            }break;
+            case 1: {
+            this.obtenerMenusEstado("ACTIVO");
+            }break;
+            case 2: {
+            this.obtenerMenusEstado("CREADO");    
+            }break;
+            case 3: {
+            this.obtenerMenusNombre(jTextFieldFiltro.getText());
+            }break;
+            case 4: {
+            this.obtenerMenusPrecio(Double.parseDouble(jTextFieldFiltro.getText()));
+            }break;
+            case 5: {
+            this.obtenerMenusid(Integer.parseInt(jTextFieldFiltro.getText()));
+            }break;
+            default: {
+            JOptionPane.showMessageDialog(this, "Ingrese un filtro válido para realizar la búsqueda.", "Parámetro de filtro incorrecto", JOptionPane.ERROR_MESSAGE);     
+            }
+            
+        }
+        if(jComboBoxFiltro.getSelectedIndex()==0)
+        {
+           
+        }
+        else{
+            
+        }
+    }//GEN-LAST:event_botonBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -215,13 +438,20 @@ public class PrincipalMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonBuscar;
+    private javax.swing.JButton botonVerMenu;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JComboBox<String> jComboBoxFiltro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableMenus;
+    private javax.swing.JTextField jTextFieldFiltro;
     // End of variables declaration//GEN-END:variables
 }
