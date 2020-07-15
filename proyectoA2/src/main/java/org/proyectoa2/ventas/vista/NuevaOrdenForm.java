@@ -213,6 +213,7 @@ public class NuevaOrdenForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error, no se la seleccionado un platillo de la lista", "Error, no se puede procesar!!!", JOptionPane.WARNING_MESSAGE);
         }else{
             this.manejadorOrden.eliminarPlatillo(this.listaPlatillos.getSelectedIndex());
+            this.ActualizarListaPlatillos();
         }
     }//GEN-LAST:event_botonEliminarPlatilloActionPerformed
 

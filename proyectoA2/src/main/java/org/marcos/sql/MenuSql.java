@@ -18,16 +18,14 @@ import org.marcos.dto.Menu;
  */
 public class MenuSql {
     
-    private String selectAllPlatillos = "SELECT idMenu, nombreMenu, descripcionMenu, precio, receta, estado FROM Menu";
-    
-    
-    public ArrayList<Menu> getAllMenu(){
+    public static ArrayList<Menu> getAllMenu(){
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         ArrayList<Menu> lista = new ArrayList<>();
         try{
             conn = ConexionSql.getConnection();
+            String selectAllPlatillos = "SELECT idMenu, nombreMenu, descripcionMenu, precio, receta, estado FROM Menu";
             stmt = conn.prepareStatement(selectAllPlatillos);
             rs = stmt.executeQuery();
             Menu menu;
@@ -52,6 +50,7 @@ public class MenuSql {
         }
         return lista;
     }
+    
      public static int Insertar(Menu menu) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -71,7 +70,9 @@ public class MenuSql {
             String SQL_LAST_ID = "SELECT LAST_INSERT_ID() ";
             stmt = conn.prepareStatement(SQL_LAST_ID);
             rs = stmt.executeQuery(SQL_LAST_ID);
-            id = rs.getInt(1);
+            if(rs.next()){
+            id = rs.getInt("LAST_INSERT_ID()");
+            }
         
         } catch (SQLException ex) {
             Logger.getLogger(InventarioSql.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,5 +82,169 @@ public class MenuSql {
         }
         return id;
      }
+     
+     public static void ACTUALIZAR(Menu menu) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            conn = ConexionSql.getConnection();
+            String SQL_UPDATE = "UPDATE Menu SET nombreMenu = '%"+ menu.getNombreMenu()+"%' ,descripcionMenu = '%"+ menu.getDescripcionMenu()+"%', precio = '%"+ menu.getPrecio()+"%', receta = '%"+ menu.getReceta()+"%', estado = '%"+ menu.getEstado()+"%' WHERE idMenu="+ menu.getIdMenu();
+            stmt = conn.prepareStatement(SQL_UPDATE);
+            int rows = stmt.executeUpdate();
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(InventarioSql.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConexionSql.close(stmt);
+            ConexionSql.close(conn);
+        }
+     }
+     public static void ELIMINAR(int idMenu) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            conn = ConexionSql.getConnection();
+            String SQL_DELETE = "DELETE FROM Menu WHERE idMenu = "+ idMenu;
+            stmt = conn.prepareStatement(SQL_DELETE);
+            int rows = stmt.executeUpdate();
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(InventarioSql.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConexionSql.close(stmt);
+            ConexionSql.close(conn);
+        }
+     }
+     
+     public static Menu MENU_ID(int idMenu){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Menu menu = new Menu();
+        try{
+            conn = ConexionSql.getConnection();
+            String SQL_CONSULTA = "SELECT * FROM Menu WHERE idMenu ="+ idMenu;
+            stmt = conn.prepareStatement(SQL_CONSULTA);
+            rs = stmt.executeQuery();
+            while(rs.next()){
+                menu.setIdMenu(rs.getInt(1));
+                menu.setNombreMenu(rs.getString(2));
+                menu.setDescripcionMenu(rs.getString(3));
+                menu.setPrecio(rs.getDouble(4));
+                menu.setReceta(rs.getString(5));
+                menu.setEstado(rs.getString(6));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuSql.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(conn != null){
+                ConexionSql.close(rs);
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return menu;
+    }
+     public static ArrayList<Menu> MENU_NOMBRE(String nombre){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        ArrayList<Menu> lista = new ArrayList<>();
+        
+        try{
+            conn = ConexionSql.getConnection();
+            String SQL_CONSULTA = "SELECT * FROM Menu WHERE nombreMenu LIKE '%"+nombre+"%'";
+            stmt = conn.prepareStatement(SQL_CONSULTA);
+            rs = stmt.executeQuery();
+            Menu menu;
+            while(rs.next()){
+                menu = new Menu();
+                menu.setIdMenu(rs.getInt(1));
+                menu.setNombreMenu(rs.getString(2));
+                menu.setDescripcionMenu(rs.getString(3));
+                menu.setPrecio(rs.getDouble(4));
+                menu.setReceta(rs.getString(5));
+                menu.setEstado(rs.getString(6));
+                lista.add(menu);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuSql.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(conn != null){
+                ConexionSql.close(rs);
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return lista;
+    }
+     public static ArrayList<Menu> MENU_PRECIO(Double precio){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        ArrayList<Menu> lista = new ArrayList<>();
+        try{
+            conn = ConexionSql.getConnection();
+            String SQL_CONSULTA = "SELECT * FROM Menu WHERE precio ="+ precio;
+            stmt = conn.prepareStatement(SQL_CONSULTA);
+            rs = stmt.executeQuery();
+            Menu menu;
+            while(rs.next()){
+                menu = new Menu();
+                menu.setIdMenu(rs.getInt(1));
+                menu.setNombreMenu(rs.getString(2));
+                menu.setDescripcionMenu(rs.getString(3));
+                menu.setPrecio(rs.getDouble(4));
+                menu.setReceta(rs.getString(5));
+                menu.setEstado(rs.getString(6));
+                lista.add(menu);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuSql.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(conn != null){
+                ConexionSql.close(rs);
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return lista;
+    }
+     
+     public static ArrayList<Menu> MENU_ESTADO(String estado){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        ArrayList<Menu> lista = new ArrayList<>();
+        try{
+            conn = ConexionSql.getConnection();
+            String SQL_CONSULTA = "SELECT * FROM Menu WHERE estado LIKE '%"+ estado +"%'";
+            stmt = conn.prepareStatement(SQL_CONSULTA);
+            rs = stmt.executeQuery();
+            Menu menu;
+            while(rs.next()){
+                menu = new Menu();
+                menu.setIdMenu(rs.getInt(1));
+                menu.setNombreMenu(rs.getString(2));
+                menu.setDescripcionMenu(rs.getString(3));
+                menu.setPrecio(rs.getDouble(4));
+                menu.setReceta(rs.getString(5));
+                menu.setEstado(rs.getString(6));
+                lista.add(menu);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuSql.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(conn != null){
+                ConexionSql.close(rs);
+                ConexionSql.close(stmt);
+                ConexionSql.close(conn);
+            }
+        }
+        return lista;
+    }
+     
 
 }

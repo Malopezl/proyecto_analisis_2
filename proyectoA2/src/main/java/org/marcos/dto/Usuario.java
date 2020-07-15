@@ -16,19 +16,19 @@ public class Usuario {
     private String direccion;
     private String correo;
     private String telefono;
-    private Puesto puesto;
+    //private Puesto puesto;
     private int idPuesto;
 
     public Usuario() {
     }
 
-    public Usuario(String nombreUsuario, String password, String direccion, String correo, String telefono, Puesto puesto) {
+    public Usuario(String nombreUsuario, String password, String direccion, String correo, String telefono, int idPuesto) {
         this.nombreUsuario = nombreUsuario;
         this.password = password;
         this.direccion = direccion;
         this.correo = correo;
         this.telefono = telefono;
-        this.puesto = puesto;
+        this.idPuesto = idPuesto;
     }
     
     
@@ -73,14 +73,6 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public Puesto getPuesto() {
-        return puesto;
-    }
-
-    public void setPuesto(Puesto puesto) {
-        this.puesto = puesto;
-    }
-
     public int getIdUsuario() {
         return idUsuario;
     }
@@ -100,7 +92,7 @@ public class Usuario {
     
     @Override
     public String toString() {
-        return "Usuario{" + "idUsuario=" + idUsuario + ", nombreUsuario=" + nombreUsuario + ", password=" + password + ", direccion=" + direccion + ", correo=" + correo + ", telefono=" + telefono + ", puesto=" + puesto + '}';
+        return "Usuario{" + "idUsuario=" + idUsuario + ", nombreUsuario=" + nombreUsuario + ", password=" + password + ", direccion=" + direccion + ", correo=" + correo + ", telefono=" + telefono + ", Id puesto=" + idPuesto + '}';
     }
     
     
