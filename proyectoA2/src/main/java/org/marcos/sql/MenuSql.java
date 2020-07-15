@@ -70,7 +70,9 @@ public class MenuSql {
             String SQL_LAST_ID = "SELECT LAST_INSERT_ID() ";
             stmt = conn.prepareStatement(SQL_LAST_ID);
             rs = stmt.executeQuery(SQL_LAST_ID);
-            id = rs.getInt(1);
+            if(rs.next()){
+            id = rs.getInt("LAST_INSERT_ID()");
+            }
         
         } catch (SQLException ex) {
             Logger.getLogger(InventarioSql.class.getName()).log(Level.SEVERE, null, ex);
