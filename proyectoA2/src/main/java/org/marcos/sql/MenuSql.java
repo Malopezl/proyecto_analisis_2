@@ -125,9 +125,9 @@ public class MenuSql {
         Menu menu = new Menu();
         try{
             conn = ConexionSql.getConnection();
-            String SQL_CONSULTA = "SELECT *FROM Menu WHERE idMenu = '%"+ idMenu+"%'";
+            String SQL_CONSULTA = "SELECT idMenu, nombreMenu, descripcionMenu, precio, receta, estado FROM Menu WHERE idMenu = '%"+ idMenu+"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
-            rs = stmt.executeQuery(SQL_CONSULTA);
+            rs = stmt.executeQuery();
             while(rs.next()){
                 menu.setIdMenu(rs.getInt(1));
                 menu.setNombreMenu(rs.getString(2));
@@ -155,9 +155,9 @@ public class MenuSql {
         
         try{
             conn = ConexionSql.getConnection();
-            String SQL_CONSULTA = "SELECT *FROM Menu WHERE nombreMenu = '%"+nombre+"%'";
+            String SQL_CONSULTA = "SELECT idMenu, nombreMenu, descripcionMenu, precio, receta, estado FROM Menu WHERE nombreMenu = '%"+nombre+"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
-            rs = stmt.executeQuery(SQL_CONSULTA);
+            rs = stmt.executeQuery();
             Menu menu;
             while(rs.next()){
                 menu = new Menu();
@@ -187,9 +187,9 @@ public class MenuSql {
         ArrayList<Menu> lista = new ArrayList<>();
         try{
             conn = ConexionSql.getConnection();
-            String SQL_CONSULTA = "SELECT *FROM Menu WHERE precio = '%"+ precio+"%'";
+            String SQL_CONSULTA = "SELECT idMenu, nombreMenu, descripcionMenu, precio, receta, estado FROM Menu WHERE precio = '%"+ precio+"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
-            rs = stmt.executeQuery(SQL_CONSULTA);
+            rs = stmt.executeQuery();
             Menu menu;
             while(rs.next()){
                 menu = new Menu();
@@ -220,9 +220,9 @@ public class MenuSql {
         ArrayList<Menu> lista = new ArrayList<>();
         try{
             conn = ConexionSql.getConnection();
-            String SQL_CONSULTA = "SELECT *FROM Menu WHERE estado = '%"+ estado +"%'";
+            String SQL_CONSULTA = "SELECT idMenu, nombreMenu, descripcionMenu, precio, receta, estado FROM Menu WHERE estado = '%"+ estado +"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
-            rs = stmt.executeQuery(SQL_CONSULTA);
+            rs = stmt.executeQuery();
             Menu menu;
             while(rs.next()){
                 menu = new Menu();
