@@ -80,7 +80,7 @@ public class UsuarioSql {
         PreparedStatement stmt = null;
         try {
             conn = ConexionSql.getConnection();
-            String SQL_UPDATE = "UPDATE Usuario SET nombreUsuario = '%"+ usuario.getNombreUsuario()+"%' ,password = '%"+ usuario.getPassword()+"%', direccionUsuario = '%"+ usuario.getDireccion()+"%', correoUsuario = '%"+ usuario.getCorreo()+"%', telefonoUsuario = '%"+ usuario.getTelefono()+"%', Puesto_id = '%"+ usuario.getIdPuesto()+"%' WHERE idUsuario='%"+ usuario.getIdUsuario()+"%'";
+            String SQL_UPDATE = "UPDATE Usuario SET nombreUsuario = '"+ usuario.getNombreUsuario()+"' , password = '"+ usuario.getPassword()+"' , direccionUsuario = '"+ usuario.getDireccion()+"' , correoUsuario = '"+ usuario.getCorreo()+"' , telefonoUsuario = '"+ usuario.getTelefono()+"', Puesto_id ="+ usuario.getIdPuesto()+" WHERE idUsuario= "+usuario.getIdUsuario();
             stmt = conn.prepareStatement(SQL_UPDATE);
             int rows = stmt.executeUpdate();
 
@@ -96,7 +96,7 @@ public class UsuarioSql {
         PreparedStatement stmt = null;
         try {
             conn = ConexionSql.getConnection();
-            String SQL_DELETE = "DELETE FROM Usuario WHERE idUsuario = '%"+ id+"%'";
+            String SQL_DELETE = "DELETE FROM Usuario WHERE idUsuario = "+id;
             stmt = conn.prepareStatement(SQL_DELETE);
             int rows = stmt.executeUpdate();
 
@@ -115,9 +115,9 @@ public class UsuarioSql {
         usuario.setIdUsuario(0);
         try{
             conn = ConexionSql.getConnection();
-            String SQL_CONSULTA = "SELECT *FROM Usuario WHERE nombreUsuario = '%"+ nombreUsuario+"%' AND password ='%" + pass + "%'";
+            String SQL_CONSULTA = "SELECT *FROM Usuario WHERE nombreUsuario = '"+ nombreUsuario+"' AND password ='" + pass + "'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
-            rs = stmt.executeQuery(SQL_CONSULTA);
+            rs = stmt.executeQuery();
             if(rs.next()){
                 usuario.setIdUsuario(rs.getInt("idUsuario"));
                 usuario.setNombreUsuario(rs.getString("nombreUsuario"));
@@ -145,7 +145,7 @@ public class UsuarioSql {
         Usuario usuario = new Usuario();
         try{
             conn = ConexionSql.getConnection();
-            String SQL_CONSULTA = "SELECT *FROM Usuario WHERE idUsuario = '%"+ idUsuario+"%'";
+            String SQL_CONSULTA = "SELECT *FROM Usuario WHERE idUsuario = "+ idUsuario;
             stmt = conn.prepareStatement(SQL_CONSULTA);
             rs = stmt.executeQuery(SQL_CONSULTA);
             while(rs.next()){
@@ -177,9 +177,9 @@ public class UsuarioSql {
         Usuario usuario = new Usuario();
         try{
             conn = ConexionSql.getConnection();
-            String SQL_CONSULTA = "SELECT *FROM Usuario WHERE correoUsuario = '%"+ correo +"%'";
+            String SQL_CONSULTA = "SELECT *FROM Usuario WHERE correoUsuario LIKE '%"+ correo +"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
-            rs = stmt.executeQuery(SQL_CONSULTA);
+            rs = stmt.executeQuery();
             while(rs.next()){
                 usuario = new Usuario();
                 usuario.setIdUsuario(rs.getInt("idUsuario"));
@@ -209,7 +209,7 @@ public class UsuarioSql {
         Usuario usuario = new Usuario();
         try{
             conn = ConexionSql.getConnection();
-            String SQL_CONSULTA = "SELECT *FROM Usuario WHERE telefonoUsuario = '%"+ telefono +"%'";
+            String SQL_CONSULTA = "SELECT *FROM Usuario WHERE telefonoUsuario LIKE '%"+ telefono +"%'";
             stmt = conn.prepareStatement(SQL_CONSULTA);
             rs = stmt.executeQuery(SQL_CONSULTA);
             while(rs.next()){

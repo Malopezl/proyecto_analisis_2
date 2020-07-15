@@ -26,7 +26,7 @@ public class PuestoSql {
         ArrayList<Puesto> lista = new ArrayList<>();
         try{
             conn = ConexionSql.getConnection();
-            String selectAllPuestos = "SELECT *FROM Puesto ";
+            String selectAllPuestos = "SELECT id, Nombre, Descripcion, Rol FROM Puesto ";
             stmt = conn.prepareStatement(selectAllPuestos);
             rs = stmt.executeQuery();
             Puesto puesto;
@@ -73,7 +73,7 @@ public class PuestoSql {
         PreparedStatement stmt = null;
         try {
             conn = ConexionSql.getConnection();
-            String SQL_UPDATE = "UPDATE Puesto SET Nombre = '%"+ puesto.getNombre()+"%' ,Descripcion = '%"+ puesto.getDescripcion()+"%', Rol = '%"+ puesto.getRol()+"%' WHERE id='%"+ puesto.getId()+"%'";
+            String SQL_UPDATE = "UPDATE Puesto SET Nombre = '"+ puesto.getNombre()+"' , Descripcion = '"+ puesto.getDescripcion()+"', Rol = '"+ puesto.getRol()+"' WHERE id="+ puesto.getId();
             stmt = conn.prepareStatement(SQL_UPDATE);
             int rows = stmt.executeUpdate();
 
@@ -89,7 +89,7 @@ public class PuestoSql {
         PreparedStatement stmt = null;
         try {
             conn = ConexionSql.getConnection();
-            String SQL_DELETE = "DELETE FROM Puesto WHERE id = '%"+ id+"%'";
+            String SQL_DELETE = "DELETE FROM Puesto WHERE id = "+ id;
             stmt = conn.prepareStatement(SQL_DELETE);
             int rows = stmt.executeUpdate();
 
@@ -103,15 +103,14 @@ public class PuestoSql {
     public static Puesto PUESTO_ID(int id){
         Connection conn = null;
         PreparedStatement stmt = null;
-        Puesto puesto = null;
+        Puesto puesto = new Puesto();
         try {
             conn = ConexionSql.getConnection();
-            String SQL_Consulta = "SELECT *FROM Puesto WHERE id = '%"+ id+"%'";
+            String SQL_Consulta = "SELECT *FROM Puesto WHERE id = "+ id;
             stmt = conn.prepareStatement(SQL_Consulta);
             ResultSet rs = stmt.executeQuery(SQL_Consulta);
             while(rs.next())
             {
-                puesto = new Puesto();
                 puesto.setId(rs.getInt("id"));
                 puesto.setNombre(rs.getString("Nombre"));
                 puesto.setDescripcion(rs.getString("Descripcion"));
@@ -127,15 +126,16 @@ public class PuestoSql {
         }
         return puesto;
     }
-    public static Puesto PUESTO_NOMBRE(String nombre){
+    public static ArrayList<Puesto> PUESTO_NOMBRE(String nombre){
         Connection conn = null;
         PreparedStatement stmt = null;
-        Puesto puesto = null;
+        ArrayList<Puesto> lista = new ArrayList<>();
         try {
             conn = ConexionSql.getConnection();
-            String SQL_Consulta = "SELECT *FROM Puesto WHERE Nombre = '%"+ nombre+"%'";
+            String SQL_Consulta = "SELECT *FROM Puesto WHERE Nombre LIKE '%"+nombre+"%'";
             stmt = conn.prepareStatement(SQL_Consulta);
-            ResultSet rs = stmt.executeQuery(SQL_Consulta);
+            ResultSet rs = stmt.executeQuery();
+            Puesto puesto;
             while(rs.next())
             {
                 puesto = new Puesto();
@@ -143,6 +143,7 @@ public class PuestoSql {
                 puesto.setNombre(rs.getString("Nombre"));
                 puesto.setDescripcion(rs.getString("Descripcion"));
                 puesto.setRol(rs.getString("Rol"));
+                lista.add(puesto);
             }
         
 
@@ -152,18 +153,19 @@ public class PuestoSql {
             ConexionSql.close(stmt);
             ConexionSql.close(conn);
         }
-        return puesto;
+        return lista;
     }
     
-    public static Puesto PUESTO_ROL(String rol){
+    public static ArrayList<Puesto> PUESTO_ROL(String rol){
         Connection conn = null;
         PreparedStatement stmt = null;
-        Puesto puesto = null;
+        ArrayList<Puesto>lista = new ArrayList<>();
         try {
             conn = ConexionSql.getConnection();
-            String SQL_Consulta = "SELECT *FROM Puesto WHERE Rol = '%"+ rol+"%'";
+            String SQL_Consulta = "SELECT *FROM Puesto WHERE Rol LIKE '%"+ rol+"%'";
             stmt = conn.prepareStatement(SQL_Consulta);
-            ResultSet rs = stmt.executeQuery(SQL_Consulta);
+            ResultSet rs = stmt.executeQuery();
+            Puesto puesto;
             while(rs.next())
             {
                 puesto = new Puesto();
@@ -171,6 +173,7 @@ public class PuestoSql {
                 puesto.setNombre(rs.getString("Nombre"));
                 puesto.setDescripcion(rs.getString("Descripcion"));
                 puesto.setRol(rs.getString("Rol"));
+                lista.add(puesto);
             }
         
 
@@ -180,7 +183,7 @@ public class PuestoSql {
             ConexionSql.close(stmt);
             ConexionSql.close(conn);
         }
-        return puesto;
+        return lista;
     }
     
         
